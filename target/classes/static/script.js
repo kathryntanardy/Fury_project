@@ -7,8 +7,8 @@ let timerStart = false;
 let numOfInputs = 0;
 let numOfCharacters;
 
-quoteInputElement.addEventListener('keydown', (event)=> {
-    if(event.code == "Backspace" && numOfInputs <= 0) {
+quoteInputElement.addEventListener('keydown', (event) => {
+    if (event.code == "Backspace" && numOfInputs <= 0) {
         --numOfInputs;
     }
 })
@@ -28,9 +28,9 @@ quoteInputElement.addEventListener('input', () => {
 
     arrayQuote.forEach((characterSpan, index) => {
         let character = arrayValue[index];
-        numOfCharacters = index+1;
+        numOfCharacters = index + 1;
 
-          if (character == null) {
+        if (character == null) {
             characterSpan.classList.remove('correct');
             characterSpan.classList.remove('incorrect');
             correct = false;
@@ -47,7 +47,7 @@ quoteInputElement.addEventListener('input', () => {
     })
     console.log(numOfInputs);
 
-    if (correct){
+    if (correct) {
         clearInterval(intervalId);
         timerStart = false;
         alert("Finish");

@@ -8,19 +8,20 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #1E0555;
+    background-color: lightgrey;
 }
 
-body, .quote-input {
+body,
+.quote-input {
     font-size: 1.2rem;
-    font-family:monospace;
+    font-family: monospace;
 }
 
-.container{
+.container {
     background-color: whitesmoke;
     padding: 1rem;
     border-radius: .5rem;
-    width:700px;
+    width: 700px;
     max-width: 90%;
 }
 
@@ -28,7 +29,7 @@ body, .quote-input {
     position: absolute;
     top: 8rem;
     font-size: 3rem;
-    color: khaki;
+    color: rgb(70, 64, 64);
     font-weight: bold;
 }
 
@@ -57,9 +58,10 @@ body, .quote-input {
 }
 
 .correct {
-    color:green;
+    color: green;
 }
+
 .incorrect {
-    color:red;
-    text-decoration:line-through;
+    color: red;
+    text-decoration: line-through;
 }
