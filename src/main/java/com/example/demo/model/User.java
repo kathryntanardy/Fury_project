@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name="User")
 public class User {
 
     @Id
@@ -13,15 +15,19 @@ public class User {
     private String password;
     private String emailAddress;
     private ArrayList<Float> records;
+    private float averageRecord;
+    private float bestRecord;
 
     public User() {
     }
 
-    public User(String username, String password, String emailAddress, ArrayList<Float> records) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.emailAddress = emailAddress;
-        this.records = records;
+        this.emailAddress = "";
+        this.records = new ArrayList<>();
+        this.averageRecord = 0;
+        this.bestRecord = 0;
     }
 
     public int getUid() {
@@ -62,5 +68,21 @@ public class User {
 
     public void setRecords(ArrayList<Float> records) {
         this.records = records;
+    }
+
+    public float getAverageRecord() {
+        return averageRecord;
+    }
+
+    public void setAverageRecord(float averageRecord) {
+        this.averageRecord = averageRecord;
+    }
+
+    public float getBestRecord() {
+        return bestRecord;
+    }
+
+    public void setBestRecord(float bestRecord) {
+        this.bestRecord = bestRecord;
     }
 }
