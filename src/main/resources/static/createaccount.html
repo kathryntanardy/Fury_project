@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login </title>
+    <title> Sign Up </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/createaccount.css">
+    <script type="text/javascript" src="./js/createaccount.js" defer></script>
 
 </head>
 
@@ -44,7 +45,10 @@
                         Sign In
                     </a>
 
-                    <input id="submit" type="submit" class="btn btn-dark" style="float:right; color:white" value="Continue">
+                    <div class="text-center">
+                        <button class="btn btn-dark text-white" style="float:right" id="submit" type="Submit" value="Continue">Continue</button>
+                    </div>
+                    
                 </form>
 
             </div>
@@ -52,30 +56,6 @@
     </div>
 </body>
 
-<script>
-    var btn = document.getElementById('submit')
-    btn.addEventListener("click", () => {
-        var username = document.getElementById('username')
-        var password = document.getElementById('password')
-        var retypePass = document.getElementById('retypePassword')
-        if (username.value == '') {
-            alert("Username is empty")
-        }
-        else if (password.value == '') {
-            alert("Password is empty")
-        }
-        else if (retypePass.value == '') {
-            alert("Re-type Password is empty")
-        }
-        else if (password.value != retypePass.value) {
-            alert("Password and Re-type Password do not match")
-        }
-        else {
-            document.getElementById('signup').onsubmit = function (event) {
-                return true;
-            };
-        }
-    })
-</script>
+
 
 </html>

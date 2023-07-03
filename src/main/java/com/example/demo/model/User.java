@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="User")
+@Table(name = "User")
 public class User {
 
     @Id
@@ -25,9 +25,19 @@ public class User {
         this.username = username;
         this.password = password;
         this.emailAddress = "";
-        this.records = new ArrayList<>();
+        this.records = new ArrayList<Float>();
         this.averageRecord = 0;
         this.bestRecord = 0;
+    }
+
+    public User(String username, String password, String emailAddress, ArrayList<Float> records, float averageRecord,
+            float bestRecord) {
+        this.username = username;
+        this.password = password;
+        this.emailAddress = emailAddress;
+        this.records = records;
+        this.averageRecord = averageRecord;
+        this.bestRecord = bestRecord;
     }
 
     public int getUid() {

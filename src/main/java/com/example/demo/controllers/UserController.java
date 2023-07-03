@@ -24,6 +24,7 @@ public class UserController {
 
     @GetMapping("/signUp")
     public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
+        System.out.println("sampe sini");
         List<User> alreadyExist = userRepo.findByUsername(account.get("username"));
         if (alreadyExist.isEmpty()) {
             String username = account.get("username");
