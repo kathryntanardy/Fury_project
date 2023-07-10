@@ -44,9 +44,9 @@ public class UserController {
             String password = account.get("password");
             userRepo.save(new User(username, password));
             response.setStatus(201);
-            return "/user/signin";
+            return "user/signin";
         }
-        return "/user/usernameTaken";
+        return "user/usernameTaken";
     }
 
     //4 note: add model to the parameters, for user centre purpose
@@ -54,13 +54,13 @@ public class UserController {
     public String login(@RequestParam Map<String, String> info,Model model) {
         List<User> user = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
         if (user.isEmpty()) {
-            return "/user/loginFailed";
+            return "user/loginFailed";
         }
 
         // added by 4
         model.addAttribute("uid", user.get(0).getUid());
         model.addAttribute("username", user.get(0).getUsername());
-        return "/user/userCentre";
+        return "user/userCentre";
     }
 
 
@@ -70,21 +70,21 @@ public class UserController {
     public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
         model.addAttribute("uid",info.get("uid"));
         if (buttonValue.equals("Game")) {
-            return "/user/game";
+            return "user/game";
         } 
         if(buttonValue.equals("ContactAdmin")){
-            return "/user/ContactAdmin";
+            return "user/ContactAdmin";
         }
         if(buttonValue.equals("Inbox")){
             List<adminMessage> inbox =adminMsgRepo.findByToUid(Integer.parseInt(info.get("uid")));
             System.out.println("Number of msg: "+inbox.size());
             model.addAttribute("inbox",inbox);
-            return "/user/userInbox";
+            return "user/userInbox";
         }
         else {
             List<User> user =userRepo.findByUid(Integer.parseInt(info.get("uid")));
             model.addAttribute("username", user.get(0).getUsername());
-            return "/user/userCentre";
+            return "user/userCentre";
         }
     }
 
@@ -95,7 +95,7 @@ public class UserController {
         model.addAttribute("uid",info.get("uid"));
         List<adminMessage> inbox =adminMsgRepo.findByMid(Integer.parseInt(info.get("mid")));
         model.addAttribute("msg",inbox.get(0));
-        return "/user/userReadInbox";
+        return "user/userReadInbox";
     }
 
     //by 4
@@ -127,13 +127,13 @@ public class UserController {
             System.out.println(feedback);
             model.addAttribute("feedback", feedback);
             System.out.println("bad msg");
-            return "/user/sendResult";
+            return "user/sendResult";
         }
 
         //None of the rows are null
         System.out.println("Good msg");
         userMsgRepo.save(new userMessage(Integer.parseInt(message.get("uid")), message.get("content"), message.get("subject"), 0));
         model.addAttribute("feedback", "Message sent!!");
-        return "/user/sendResult";
+        return "user/sendResult";
     }
 }
