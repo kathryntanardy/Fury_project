@@ -13,19 +13,40 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <!-- Link to function: handleButtonClick in UserController.java -->
+                <!-- Please modify the style only :] -->
+                <!-- mapping function in UserController.java  -->
                 <form action="/buttonClicked" method="POST">
-                    <div style="border: solid 1px black; padding: 20px;">
-                        <button type="submit" name="buttonValue" value="Game">Game</button>
-                        <button type="submit" name="buttonValue" value="Statistic">Statistic</button>
-                        <button type="submit" name="buttonValue" value="ContactAdmin">Contact Admin</button>
+                    <!-- div purpose: For identifying the user identity -->
+                    <div>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
+
                     <div style="border: solid 1px black; padding: 20px;">
-                        <a>Hi keyboard warrior :]</a>
-                        <!-- To identify the user identity -->
-                        <input id="userKey" name="userKey" th:value="${userKey}" hidden>
+                        <button type="submit" name="buttonValue" value="Inbox">Inbox</button>
+                        <button type="submit" name="buttonValue" value="Statistic">Statistic</button>
+                        <button type="submit" name="buttonValue" value="ContactAdmin">Contact Us</button>
+                        <button type="submit" name="buttonValue" value="Setting">Setting</button>
                     </div>
                 </form>
+
+                <!-- Showing the username -->
+                <div style="border: solid 1px black; padding: 20px;">
+                    <a>Welcome</a>
+                    <a th:text="${username}"></a>
+                </div>
+
+                <!-- Please modify the style only :] -->
+                <!-- mapping function in UserController.java  -->
+                <form action="/buttonClicked" method="POST">
+                    <!-- div purpose: For identifying the user identity -->
+                    <div>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+                    <div style="border: solid 1px black; padding: 20px;">
+                        <button type="submit" name="buttonValue" value="Game">Game</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

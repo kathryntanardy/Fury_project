@@ -12,18 +12,30 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <p>Leave your comment or bug report here. If you have any complcated problem, send a email to ilovemygroup123@gmail.com.</p>
-                <!-- Link to function: sendMsg in UserController.java -->
+                <!-- mapping function in UserController.java  -->
                 <form action="/userSendMsg" method="post">
-                    <input id="subject" name="subject" placeholder="Subject">
+                    <p>Subject</p>
+                    <input id="subject" name="subject" placeholder="Type Here">
                     <br>
-                    <input id="msg" name="content" placeholder="Say somthing to us :]">
+                    <br>
+                    <p>Message</p>
+                    <input id="msg" name="content" placeholder="Type your message">
                     <br>
                     <!-- To identify the user identity -->
-                    <input id="userKey" name="userKey" th:value="${userKey}" hidden>
+                    <input id="uid" name="uid" th:value="${uid}" hidden>
                     <br>
-                    <input  type="submit" value="send"></input>
+                    <input  type="submit" value="Send"></input>
                     <br>
                 </form>	
+
+                <!-- mapping function in UserController.java  -->
+                <form action="/buttonClicked" method="POST">
+                    <div>
+                        <p th:text="${feedback}"></p>
+                        <button type="submit" name="buttonValue" value="back">Back To user centre</button>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
