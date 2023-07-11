@@ -7,12 +7,13 @@
     <title> Sign Up </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/userCentre.css">
 </head>
 
-<body style="background-color:lightgrey; position:relative; top:10rem; font-family: Arial, Helvetica, sans-serif;">
+<body style="background-color:lightgrey; font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="" style="width: 100%">
                 <!-- Please modify the style only :] -->
                 <!-- mapping function in UserController.java  -->
                 <form action="/buttonClicked" method="POST">
@@ -21,18 +22,32 @@
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
 
-                    <div style="border: solid 1px black; padding: 20px;">
-                        <button type="submit" name="buttonValue" value="Inbox">Inbox</button>
-                        <button type="submit" name="buttonValue" value="Statistic">Statistic</button>
-                        <button type="submit" name="buttonValue" value="ContactAdmin">Contact Us</button>
-                        <button type="submit" name="buttonValue" value="Setting">Setting</button>
+                    <div class="" style=" padding: 20px;">
+                        <div id="logo" style="float: left">
+                            <img src="./fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                        </div>
+
+                        <div id="icons" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="Inbox">Inbox</button>
+                            <button type="submit" name="buttonValue" value="Statistic">Statistic</button>
+                            <button type="submit" name="buttonValue" value="ContactAdmin">Contact Us</button>
+                            <button type="submit" name="buttonValue" value="Setting">Setting</button>
+                        </div>
+                        
                     </div>
                 </form>
 
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+
                 <!-- Showing the username -->
-                <div style="border: solid 1px black; padding: 20px;">
-                    <a>Welcome</a>
-                    <a th:text="${username}"></a>
+                <div style="padding: 20px; clear: both;">
+                    <p class="text-center display-3" th:text="'Welcome, ' + ${username} + '!'"></p>
                 </div>
 
                 <!-- Please modify the style only :] -->
@@ -42,8 +57,15 @@
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
-                    <div style="border: solid 1px black; padding: 20px;">
-                        <button type="submit" name="buttonValue" value="Game">Game</button>
+                    <div style="margin: auto; padding: 20px; width: 75%">
+                        <img src="./startbutton.png" alt="buttonimg">
+                        <button class="btn btn-secondary btn-lg btn-block active" type="submit" name="buttonValue" value="Game" style="background-color: black; height: 150px; font-size: 50px;">
+                            <div style="float: left;">
+                                <img src="./startbutton.png" alt="buttonimg">
+                                Start Game
+                            </div>
+                            
+                        </button>
                     </div>
                 </form>
 
