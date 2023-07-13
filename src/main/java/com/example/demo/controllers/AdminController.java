@@ -122,7 +122,8 @@ public class AdminController {
 
         //None of the rows are null
         System.out.println("Good msg");
-        adminMsgRepo.save(new adminMessage(Integer.parseInt(message.get("mid")), message.get("subject"), message.get("content")));
+        int toUid=userMsgRepo.findByMid(Integer.parseInt(message.get("mid"))).get(0).getFromUid();
+        adminMsgRepo.save(new adminMessage(toUid, message.get("subject"), message.get("content")));
         model.addAttribute("feedback", "Message sent!!");
         return "admin/sendResult";
     }
