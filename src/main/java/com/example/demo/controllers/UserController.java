@@ -130,9 +130,9 @@ public class UserController {
     //by 4
     //read msg from admin by its md in table: admin_message
     @PostMapping("/readUserInbox")
-    public String readUserInbox(@RequestParam Map<String, String> info, Model model) {
+    public String readUserInbox(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
         model.addAttribute("uid",info.get("uid"));
-        List<adminMessage> inbox =adminMsgRepo.findByMid(Integer.parseInt(info.get("mid")));
+        List<adminMessage> inbox =adminMsgRepo.findByMid(Integer.parseInt(buttonValue));
         model.addAttribute("msg",inbox.get(0));
         return "user/userReadInbox";
     }

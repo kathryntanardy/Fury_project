@@ -94,12 +94,12 @@
                                       <th>Date</th>
                                     </tr>
                                     <tr th:each="msg:${inbox}">
-                                        <td th:text="${msg.type}"></th>
+                                        <td th:text="${msg.type}"></td>
                                         <td>
-                                            <input id="mid" name="mid" th:value="${msg.mid}" hidden>
-                                            <button class="button-link" type="submit" name="buttonValue" th:text="${msg.subject}"></button>
-                                        </th>
-                                        <td th:text="${msg.sentDate}"></td>></th>
+                                            <!-- <input id="mid" name="mid" th:value="${msg.mid}" hidden> -->
+                                            <button class="button-link" type="submit" name="buttonValue" th:value="${msg.mid}" th:text="${msg.subject}"></button>
+                                        </td>
+                                        <td th:text="${msg.sentDate}"></td>
                                     </tr>
                                   </table>
                             </div>

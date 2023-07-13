@@ -82,8 +82,8 @@ public class AdminController {
     }
 
     @PostMapping("/readAdminInbox")
-    public String readUserInbox(@RequestParam Map<String, String> info, Model model) {
-        List<userMessage> msg =userMsgRepo.findByMid(Integer.parseInt(info.get("mid")));
+    public String readUserInbox(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
+        List<userMessage> msg =userMsgRepo.findByMid(Integer.parseInt(buttonValue));
         model.addAttribute("msg",msg.get(0));
         String fromUser=userRepo.findByUid(msg.get(0).getFromUid()).get(0).getUsername();
         model.addAttribute("fromUser", fromUser);

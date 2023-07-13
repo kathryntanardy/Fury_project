@@ -36,9 +36,10 @@
                   <!-- Link to function: handleButtonClick in UserController.java -->
                   <form action="/user/buttonClicked" method="POST">
                       <div style="border: solid 1px black; padding: 20px;">
-                          <button type="submit" name="buttonValue" value="back">Back To user centre</button>
+                            <button type="submit" name="buttonValue" value="Inbox">Back To Inbox</button>
+                            <button type="submit" name="buttonValue" value="back">Back To user centre</button>
                           <!-- To identify the user identity -->
-                          <input id="uid" name="uid" th:value="${uid}" hidden>
+                            <input id="uid" name="uid" th:value="${uid}" hidden>
                       </div>
                   </form>
             </div>
