@@ -72,10 +72,14 @@ public class AdminController {
             return "admin/adminInbox";
         } 
         if(buttonValue.equals("Reply")){
+            userMessage msg=userMsgRepo.findByMid(Integer.parseInt(info.get("mid"))).get(0);
             model.addAttribute("mid", info.get("mid"));
-            model.addAttribute("msg", userMsgRepo.findByMid(Integer.parseInt(info.get("mid"))).get(0));
+            model.addAttribute("msg", msg);
             int fromUid=userMsgRepo.findByMid(Integer.parseInt(info.get("mid"))).get(0).getFromUid();
-            model.addAttribute("fromUser", userRepo.findByUid(fromUid).get(0).getUsername());
+            String fromUser=userRepo.findByUid(fromUid).get(0).getUsername();
+            model.addAttribute("subject", "Re: "+msg.getSubject());
+            model.addAttribute("content","Dear "+fromUser+",\n\n"+"Best,\n"+"Team Fury\n\n"+"[Quote: "+msg.getContent()+"]");
+            model.addAttribute("fromUser", fromUser);
             return "admin/reply";
         }
         return "admin/adminCentre";

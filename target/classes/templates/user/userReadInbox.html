@@ -18,6 +18,13 @@
             cursor: pointer;
         }
     </style>
+    <script>
+        function adjustSize() {
+            var textarea = document.getElementById("content");
+            textarea.style.height = ""; // Reset the height to allow resizing
+            textarea.style.height = textarea.scrollHeight + "px";
+        }
+    </script>
 </head>
 
 <body style="background-color:lightgrey; position:relative; top:10rem; font-family: Arial, Helvetica, sans-serif;">
@@ -29,9 +36,14 @@
                 </div>
                 <div style="border: solid 1px black; padding: 20px;">
                     <p>Subject:</p>
-                    <p th:text="${msg.subject}"></p>
+                    <!-- <p th:text="${msg.subject}"></p> -->
+                    <input id="subject" th:value="${msg.subject}" style="width:90%;" readonly>
                     <p>Content:</p>
-                    <p th:text="${msg.content}"></p>
+                    <!-- <p th:text="${msg.content}"></p> -->
+                    <textarea id="content" th:text="${msg.content}" style="width:90%;" readonly></textarea>
+                    <script>
+                        adjustSize();
+                    </script>
                 </div>
                   <!-- Link to function: handleButtonClick in UserController.java -->
                   <form action="/user/buttonClicked" method="POST">
