@@ -15,9 +15,8 @@
 <body style="background-color:lightgrey; font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="" style="width: 100%">
-                <!-- Please modify the style only :] -->
-                <!-- mapping function in UserController.java  -->
+            <div class="" style="width:100%">
+                <!-- Added new nav bar and update css By: K -->
                 <form action="/user/buttonClicked" method="POST">
                     <!-- div purpose: For identifying the user identity -->
                     <div>
@@ -26,7 +25,7 @@
 
                     <div class="" style=" padding: 20px;">
                         <div id="logo" style="float: left">
-                            <img src="./fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                            <img src="../fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
                         </div>
 
                         <div id="icons" style="float: right;"> 
@@ -39,28 +38,25 @@
                                 <br>
                                 Statistic</button>
                             <button type="submit" name="buttonValue" value="ContactAdmin" style="width: 100px; height: 100px; background:transparent; border: transparent;">
-                                <img src="/src/main/resources/templates/phone.png" alt="phoneIcon" width="30px" height="30px">
+                                <img src="../phone.png" alt="phoneIcon" width="30px" height="30px">
                                 <br>
                                 Contact Us</button>
                             <button type="submit" name="buttonValue" value="Setting" style="width: 100px; height: 100px; background:transparent; border: transparent;">
-                                <img src="/src/main/resources/templates/settings.png" alt="settingsIcon" width="30px" height="30px">
+                                <img src="../settings.png" alt="settingsIcon" width="30px" height="30px">
                                 <br>
                                 Setting</button>
-                            
-                            <!-- by a, idk why it is working -->
-                            <button type="submit" name="buttonValue" value="Logout" style="width: 100px; height: 100px; background:transparent; border: transparent;">
-                                <img src="/src/main/resources/templates/logout.png" alt="logoutIcon" width="30px" height="30px">
+                                <!-- Added user logout, by: k. will comment this down for now, just uncomment when you finished editing the code -->
+                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="../logout.png" alt="logOutIcon" width="30px" height="30px">
                                 <br>
                                 Log Out</button>
+                        </div>
 
-                                <!-- Added Logout by: k, just uncomment this as adding this cause error to the entire system -->
-                            <!-- <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
-                                <img src="../logout.png" src="logOutIcon">
-                                <br>
-                                Log Out</button> -->
-                        </div>                        
+                        
+                        
                     </div>
                 </form>
+            </div>
 
                 <br>
                 <br>

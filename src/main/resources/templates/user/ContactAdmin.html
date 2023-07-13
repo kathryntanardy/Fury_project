@@ -7,32 +7,110 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-<body style="background-color:lightgrey; position:relative; top:10rem; font-family: Arial, Helvetica, sans-serif;">
+<body style="background-color:lightgrey;font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
+
+            <div class="" style="width:100%">
+                <!-- Added new nav bar and update css By: K -->
+                <form action="/user/buttonClicked" method="POST">
+                    <!-- div purpose: For identifying the user identity -->
+                    <div>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+
+                    <div class="" style=" padding: 20px;">
+                        <div id="logo" style="float: left">
+                            <img src="../fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                        </div>
+
+                        <div id="icons" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="Inbox" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="../mail.png" alt="mailIcon" width="40px" height="30px">
+                                <br>
+                                Inbox</button>
+                            <button type="submit" name="buttonValue" value="Statistic" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="../statistic.png" alt="statisticIcon" width="30px" height="30px">
+                                <br>
+                                Statistic</button>
+                            <button type="submit" name="buttonValue" value="ContactAdmin" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="../phone.png" alt="phoneIcon" width="30px" height="30px">
+                                <br>
+                                Contact Us</button>
+                            <button type="submit" name="buttonValue" value="Setting" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="../settings.png" alt="settingsIcon" width="30px" height="30px">
+                                <br>
+                                Setting</button>
+                                <!-- Added user logout, by: k. will comment this down for now, just uncomment when you finished editing the code -->
+                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="../logout.png" alt="logOutIcon" width="30px" height="30px">
+                                <br>
+                                Log Out</button>
+                        </div>
+
+                        
+                        
+                    </div>
+                </form>
+
+
+            </div>
+
+            
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            
+            
+            <div class="col-lg-6">
+                <h3>Leave your comment or bug report here. If you have any complicated problems, send an email to <a href="mailto:ilovemygroup123@gmail.com" style="color:rgb(84, 79, 79)">ilovemygroup123@gmail.com</a> 👋</h3>
+            </div>
+          
+        </div>
+
+        <br><br>
+        <div class="row justify-content-center">
             <div class="col-md-4">
-                <p>Leave your comment or bug report here. If you have any complcated problem, send a email to ilovemygroup123@gmail.com.</p>
+                
+                <!-- changed html code to correspond with css, by k, commenting because can be returned if error is present -->
                 <!-- mapping function in UserController.java  -->
                 <form action="/userSendMsg" method="post">
-                    <p>Subject</p>
+                    <!-- <p>Subject</p>
                     <input id="subject" name="subject" placeholder="Type Here">
                     <br>
-                    <br>
-                    <p>Message</p>
+                    <br> -->
+                    <!-- <p>Message</p>
                     <input id="msg" name="content" placeholder="Type your message">
-                    <br>
+                    <br> -->
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input class="form-control" id="subject" name="subject" placeholder="Type Here">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Message</label>
+                        <input class="form-control" id="msg" name="content" placeholder="Type your message">
+                    </div>
                     <!-- To identify the user identity -->
                     <input id="uid" name="uid" th:value="${uid}" hidden>
+                   
                     <br>
-                    <input  type="submit" value="Send"></input>
-                    <br>
+
+                    <div class="text-center">
+                        <input class="btn btn-dark" type="submit" value="Send"></input>
+                    </div>
+                    
+               
                 </form>	
 
                 <!-- mapping function in UserController.java  -->
                 <form action="/user/buttonClicked" method="POST">
-                    <div>
+                    <div class="text-center">
                         <p th:text="${feedback}"></p>
-                        <button type="submit" name="buttonValue" value="back">Back To user centre</button>
+                        <button class="btn btn-dark btn-md" type="submit" name="buttonValue" value="back">Return to User Center</button>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
                 </form>
