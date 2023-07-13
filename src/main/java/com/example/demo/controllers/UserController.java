@@ -66,7 +66,7 @@ public class UserController {
 
     //by 4
     //handle btn clicked
-    @PostMapping("/buttonClicked")
+    @PostMapping("/user/buttonClicked")
     public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
         model.addAttribute("uid",info.get("uid"));
         if (buttonValue.equals("Game")) {
@@ -80,6 +80,36 @@ public class UserController {
             System.out.println("Number of msg: "+inbox.size());
             model.addAttribute("inbox",inbox);
             return "user/userInbox";
+        }
+        if(buttonValue.equals("Statistic")){
+            List<User> user=userRepo.findByUid(Integer.parseInt(info.get("uid")));
+            ArrayList<Float> userRecords=user.get(0).getRecords();
+            user.get(0).setBestRecord(520);
+            Float sum=0f;
+            for(Float f:userRecords){
+                sum+=f;
+            }
+            int recordSize=userRecords.size();
+            user.get(0).setAverageRecord((sum*1f)/recordSize);
+
+            String lastTen="";
+            if(recordSize>0 && recordSize<=10){
+                for(Float f:userRecords){
+                    lastTen+=f+",";
+                }
+                model.addAttribute("recordSize",recordSize);
+            }
+            else if(recordSize>10){
+                for(int k=0;k<10;k++){
+                    lastTen=userRecords.get(recordSize-1-k)+","+lastTen;
+                }
+                model.addAttribute("recordSize",10);
+            }
+
+            model.addAttribute("userRecords",lastTen);
+            model.addAttribute("avgRecord",user.get(0).getAverageRecord());
+            model.addAttribute("bestRecord",user.get(0).getBestRecord());
+            return "user/statistic";
         }
         else {
             List<User> user =userRepo.findByUid(Integer.parseInt(info.get("uid")));

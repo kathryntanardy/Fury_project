@@ -16,7 +16,7 @@
             <div class="" style="width: 100%">
                 <!-- Please modify the style only :] -->
                 <!-- mapping function in UserController.java  -->
-                <form action="/buttonClicked" method="POST">
+                <form action="/user/buttonClicked" method="POST">
                     <!-- div purpose: For identifying the user identity -->
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
@@ -44,6 +44,13 @@
                                 <img src="/src/main/resources/templates/settings.png" alt="settingsIcon" width="30px" height="30px">
                                 <br>
                                 Setting</button>
+                            
+                            <!-- by a, idk why it is working -->
+                            <button type="submit" name="buttonValue" value="Logout" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/src/main/resources/templates/logout.png" alt="logoutIcon" width="30px" height="30px">
+                                <br>
+                                Log Out</button>
+
                                 <!-- Added Logout by: k, just uncomment this as adding this cause error to the entire system -->
                             <!-- <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
                                 <img src="../logout.png" src="logOutIcon">
@@ -69,7 +76,7 @@
 
                 <!-- Please modify the style only :] -->
                 <!-- mapping function in UserController.java  -->
-                <form action="/buttonClicked" method="POST">
+                <form action="/user/buttonClicked" method="POST">
                     <!-- div purpose: For identifying the user identity -->
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>

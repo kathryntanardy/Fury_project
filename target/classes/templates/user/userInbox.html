@@ -25,7 +25,7 @@
         <div class="row justify-content-center">
             <div class="" style="width:100%">
                 <!-- Added new nav bar and update css By: K -->
-                <form action="/buttonClicked" method="POST">
+                <form action="/user/buttonClicked" method="POST">
                     <!-- div purpose: For identifying the user identity -->
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
@@ -87,7 +87,7 @@
                 </div>
                   
                   <!-- Link to function: handleButtonClick in UserController.java -->
-                  <form action="/buttonClicked" method="POST">
+                  <form action="/user/buttonClicked" method="POST">
                       <div style="padding: 20px;" class="text-center">
                           <button class="btn btn-dark btn-md" type="submit" name="buttonValue" value="back">Return to User Center</button>
                           <!-- To identify the user identity -->
