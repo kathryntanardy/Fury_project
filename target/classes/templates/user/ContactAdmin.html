@@ -74,7 +74,7 @@
 
         <br><br>
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 
                 <!-- changed html code to correspond with css, by k, commenting because can be returned if error is present -->
                 <!-- mapping function in UserController.java  -->
@@ -87,12 +87,12 @@
                     <input id="msg" name="content" placeholder="Type your message">
                     <br> -->
                     <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input class="form-control" id="subject" name="subject" placeholder="Type Here">
+                        <label for="subject" style="font-size: 25px;">Subject</label>
+                        <input class="form-control form-control-lg" id="subject" name="subject" placeholder="Type Here">
                     </div>
-                    <div class="form-group">
-                        <label for="subject">Message</label>
-                        <input class="form-control" id="msg" name="content" placeholder="Type your message">
+                    <div class="form-group" style="font-size: 25px;">
+                        <label for="subject" >Message</label>
+                        <input class="form-control form-control-lg" id="msg" name="content" placeholder="Type your message">
                     </div>
                     <!-- To identify the user identity -->
                     <input id="uid" name="uid" th:value="${uid}" hidden>
