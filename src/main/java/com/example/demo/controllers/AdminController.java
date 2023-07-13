@@ -128,8 +128,11 @@ public class AdminController {
 
         //None of the rows are null
         System.out.println("Good msg");
-        int toUid=userMsgRepo.findByMid(Integer.parseInt(message.get("mid"))).get(0).getFromUid();
-        adminMsgRepo.save(new adminMessage("reply",toUid, message.get("subject"), message.get("content"),LocalDate.now()));
+        userMessage msgFromUser=userMsgRepo.findByMid(Integer.parseInt(message.get("mid"))).get(0);
+        int toUid=msgFromUser.getFromUid();
+        msgFromUser.setSolved("Y");
+        userMsgRepo.save(msgFromUser);
+        adminMsgRepo.save(new adminMessage("Reply",toUid, message.get("subject"), message.get("content"),LocalDate.now(),"N"));
         model.addAttribute("feedback", "Message sent!!");
         return "admin/sendResult";
     }

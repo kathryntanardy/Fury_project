@@ -82,7 +82,7 @@
                 
                 <div class="d-flex justify-content-center" style="border: solid 1px black; padding: 20px;">
                     <div>
-                        <form action="/readUserInbox" method="POST">
+                        <form action="/user/readInbox" method="POST">
                             <!-- div purpose: For identifying the user identity -->
                             <div>
                                 <!-- <a th:text="${msg.subject}"></a> -->
@@ -92,6 +92,7 @@
                                       <th>Type</th>
                                       <th>Subject</th>
                                       <th>Date</th>
+                                      <th>Read</th>
                                     </tr>
                                     <tr th:each="msg:${inbox}">
                                         <td th:text="${msg.type}"></td>
@@ -100,6 +101,7 @@
                                             <button class="button-link" type="submit" name="buttonValue" th:value="${msg.mid}" th:text="${msg.subject}"></button>
                                         </td>
                                         <td th:text="${msg.sentDate}"></td>
+                                        <td th:text="${msg.read}"></td>
                                     </tr>
                                   </table>
                             </div>

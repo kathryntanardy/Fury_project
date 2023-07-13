@@ -13,16 +13,20 @@ public class adminMessage {
     private String subject;
     private String content;
     private LocalDate sentDate;
+    private String read;
     
     public adminMessage() {
     }
 
-    public adminMessage(String type, int toUid, String subject, String content, LocalDate sentDate) {
+    
+
+    public adminMessage(String type, int toUid, String subject, String content, LocalDate sentDate, String read) {
         this.type = type;
         this.toUid = toUid;
         this.subject = subject;
         this.content = content;
         this.sentDate = sentDate;
+        this.read = read;
     }
 
     public String getType() {
@@ -71,6 +75,14 @@ public class adminMessage {
 
     public void setSentDate(LocalDate sentDate) {
         this.sentDate = sentDate;
+    }
+
+    public String getRead() {
+        return read;
+    }
+
+    public void setRead(String read) {
+        this.read = read;
     }
     
     

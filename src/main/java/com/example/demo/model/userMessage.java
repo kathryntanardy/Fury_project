@@ -14,12 +14,12 @@ public class userMessage {
     private int fromUid;
     private String subject;
     private String content;
-    private int solved;
+    private String solved;
     private LocalDate sentDate;
     public userMessage() {
     }
 
-    public userMessage(int fromUid, String subject, String content, int solved, LocalDate sentDate) {
+    public userMessage(int fromUid, String subject, String content, String solved, LocalDate sentDate) {
         this.fromUid = fromUid;
         this.subject = subject;
         this.content = content;
@@ -59,11 +59,11 @@ public class userMessage {
         this.content = content;
     }
 
-    public int getSolved() {
+    public String getSolved() {
         return solved;
     }
 
-    public void setSolved(int solved) {
+    public void setSolved(String solved) {
         this.solved = solved;
     }
 

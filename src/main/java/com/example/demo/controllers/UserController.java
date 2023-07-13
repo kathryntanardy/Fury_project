@@ -85,7 +85,6 @@ public class UserController {
         if(buttonValue.equals("Statistic")){
             List<User> user=userRepo.findByUid(Integer.parseInt(info.get("uid")));
             ArrayList<Float> userRecords=user.get(0).getRecords();
-
             //Handle avg and best records
             Float sum=0f;
             for(Float f:userRecords){
@@ -129,11 +128,13 @@ public class UserController {
 
     //by 4
     //read msg from admin by its md in table: admin_message
-    @PostMapping("/readUserInbox")
+    @PostMapping("/user/readInbox")
     public String readUserInbox(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
         model.addAttribute("uid",info.get("uid"));
-        List<adminMessage> inbox =adminMsgRepo.findByMid(Integer.parseInt(buttonValue));
-        model.addAttribute("msg",inbox.get(0));
+        adminMessage msg =adminMsgRepo.findByMid(Integer.parseInt(buttonValue)).get(0);
+        msg.setRead("Y");
+        adminMsgRepo.save(msg);
+        model.addAttribute("msg",msg);
         return "user/userReadInbox";
     }
 
@@ -171,7 +172,7 @@ public class UserController {
 
         //None of the rows are null
         System.out.println("Good msg");
-        userMsgRepo.save(new userMessage(Integer.parseInt(message.get("uid")), message.get("subject"),message.get("content"), 0,LocalDate.now()));
+        userMsgRepo.save(new userMessage(Integer.parseInt(message.get("uid")), message.get("subject"),message.get("content"), "N",LocalDate.now()));
         model.addAttribute("feedback", "Message sent!!");
         return "user/sendResult";
     }
