@@ -84,14 +84,25 @@ public class UserController {
         if(buttonValue.equals("Statistic")){
             List<User> user=userRepo.findByUid(Integer.parseInt(info.get("uid")));
             ArrayList<Float> userRecords=user.get(0).getRecords();
-            user.get(0).setBestRecord(520);
+
+            //Handle avg and best records
             Float sum=0f;
             for(Float f:userRecords){
                 sum+=f;
             }
             int recordSize=userRecords.size();
             user.get(0).setAverageRecord((sum*1f)/recordSize);
+            if(recordSize>0){
+                model.addAttribute("avgRecord",user.get(0).getAverageRecord()+" cpm");
+                model.addAttribute("bestRecord",user.get(0).getBestRecord()+" cpm");
+            }
+            else{
+                model.addAttribute("avgRecord","N/A");
+                model.addAttribute("bestRecord","N/A");
+                model.addAttribute("recordSize",0);
+            }
 
+            //Handle stat for line graph
             String lastTen="";
             if(recordSize>0 && recordSize<=10){
                 for(Float f:userRecords){
@@ -105,10 +116,7 @@ public class UserController {
                 }
                 model.addAttribute("recordSize",10);
             }
-
             model.addAttribute("userRecords",lastTen);
-            model.addAttribute("avgRecord",user.get(0).getAverageRecord());
-            model.addAttribute("bestRecord",user.get(0).getBestRecord());
             return "user/statistic";
         }
         else {
