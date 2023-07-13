@@ -18,7 +18,7 @@
                     <br>
                     <br>
                     <p>Message</p>
-                    <input id="content" name="content" th:value="'Dear '+${fromUser}+', Quote: '+${msg.content}">
+                    <textarea id="content" name="content" th:text="'Dear '+${fromUser}+', Quote: '+${msg.content}"></textarea>
                     <br>
                     <input id="mid" name="mid" th:value="${msg.mid}" hidden>
                     <input  type="submit" value="Send"></input>

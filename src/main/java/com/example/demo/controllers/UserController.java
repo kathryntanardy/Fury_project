@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -170,7 +171,7 @@ public class UserController {
 
         //None of the rows are null
         System.out.println("Good msg");
-        userMsgRepo.save(new userMessage(Integer.parseInt(message.get("uid")), message.get("content"), message.get("subject"), 0));
+        userMsgRepo.save(new userMessage(Integer.parseInt(message.get("uid")), message.get("subject"),message.get("content"), 0,LocalDate.now()));
         model.addAttribute("feedback", "Message sent!!");
         return "user/sendResult";
     }

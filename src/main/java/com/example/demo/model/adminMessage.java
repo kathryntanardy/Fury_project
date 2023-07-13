@@ -1,5 +1,6 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "admin_message")
@@ -7,17 +8,29 @@ public class adminMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mid;
+    private String type;
     private int toUid;
     private String subject;
     private String content;
+    private LocalDate sentDate;
     
     public adminMessage() {
     }
 
-    public adminMessage(int toUid, String subject, String content) {
+    public adminMessage(String type, int toUid, String subject, String content, LocalDate sentDate) {
+        this.type = type;
         this.toUid = toUid;
         this.subject = subject;
         this.content = content;
+        this.sentDate = sentDate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getMid() {
@@ -51,6 +64,15 @@ public class adminMessage {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public LocalDate getSentDate() {
+        return sentDate;
+    }
+
+    public void setSentDate(LocalDate sentDate) {
+        this.sentDate = sentDate;
+    }
+    
     
 
 }

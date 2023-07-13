@@ -17,6 +17,14 @@
             text-decoration: underline;
             cursor: pointer;
         }
+        table {
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
     </style>
 </head>
 
@@ -73,15 +81,27 @@
                 </div>
                 
                 <div class="d-flex justify-content-center" style="border: solid 1px black; padding: 20px;">
-                    <div th:each="msg:${inbox}">
+                    <div>
                         <form action="/readUserInbox" method="POST">
                             <!-- div purpose: For identifying the user identity -->
                             <div>
                                 <!-- <a th:text="${msg.subject}"></a> -->
                                 <input id="uid" name="uid" th:value="${uid}" hidden>
-                                <input id="mid" name="mid" th:value="${msg.mid}" hidden>
-                                <button class="button-link" type="submit" name="buttonValue" th:text="${msg.subject}"></button>
-                                
+                                <table style="width:100%">
+                                    <tr>
+                                      <th>Type</th>
+                                      <th>Subject</th>
+                                      <th>Date</th>
+                                    </tr>
+                                    <tr th:each="msg:${inbox}">
+                                        <td th:text="${msg.type}"></th>
+                                        <td>
+                                            <input id="mid" name="mid" th:value="${msg.mid}" hidden>
+                                            <button class="button-link" type="submit" name="buttonValue" th:text="${msg.subject}"></button>
+                                        </th>
+                                        <td th:text="${msg.sentDate}"></td>></th>
+                                    </tr>
+                                  </table>
                             </div>
                         </form>   
                          

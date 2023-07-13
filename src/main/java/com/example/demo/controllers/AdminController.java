@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,8 @@ public class AdminController {
         if(buttonValue.equals("Reply")){
             model.addAttribute("mid", info.get("mid"));
             model.addAttribute("msg", userMsgRepo.findByMid(Integer.parseInt(info.get("mid"))).get(0));
-            model.addAttribute("fromUser", userRepo.findByUid(Integer.parseInt(info.get("mid"))).get(0).getUsername());
+            int fromUid=userMsgRepo.findByMid(Integer.parseInt(info.get("mid"))).get(0).getFromUid();
+            model.addAttribute("fromUser", userRepo.findByUid(fromUid).get(0).getUsername());
             return "admin/reply";
         }
         return "admin/adminCentre";
@@ -123,7 +125,7 @@ public class AdminController {
         //None of the rows are null
         System.out.println("Good msg");
         int toUid=userMsgRepo.findByMid(Integer.parseInt(message.get("mid"))).get(0).getFromUid();
-        adminMsgRepo.save(new adminMessage(toUid, message.get("subject"), message.get("content")));
+        adminMsgRepo.save(new adminMessage("reply",toUid, message.get("subject"), message.get("content"),LocalDate.now()));
         model.addAttribute("feedback", "Message sent!!");
         return "admin/sendResult";
     }

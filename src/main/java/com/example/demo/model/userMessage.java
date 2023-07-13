@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,15 +15,16 @@ public class userMessage {
     private String subject;
     private String content;
     private int solved;
+    private LocalDate sentDate;
     public userMessage() {
     }
 
-
-    public userMessage(int fromUid, String subject, String content, int solved) {
+    public userMessage(int fromUid, String subject, String content, int solved, LocalDate sentDate) {
         this.fromUid = fromUid;
         this.subject = subject;
         this.content = content;
         this.solved = solved;
+        this.sentDate = sentDate;
     }
 
     public int getMid() {
@@ -62,6 +65,14 @@ public class userMessage {
 
     public void setSolved(int solved) {
         this.solved = solved;
+    }
+
+    public LocalDate getSentDate() {
+        return sentDate;
+    }
+
+    public void setSentDate(LocalDate sentDate) {
+        this.sentDate = sentDate;
     }
     
     
