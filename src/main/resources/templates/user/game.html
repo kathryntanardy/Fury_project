@@ -15,5 +15,9 @@
         <div id="quoteDisplay" class="quote-display" oncopy="return false" onselectstart="return false"></div>
         <textarea id="quoteInput" class="quote-input" autofocus onpaste="return false"></textarea>
     </div>
+     <form style="position:absolute; bottom: 1rem" name="submitTime" action="/submitTime" method="post">
+        <input id="timer_input" style="background:transparent; border:none; outline:none; color:transparent" type="text" readonly onselectstart="return false" name="timer_input">
+        <input id="timer_input_btn" style="background:transparent; border:none; outline:none; color:transparent" type="button" readonly onselectstart="return false">
+    </form>
 </body>
 </html>
