@@ -20,6 +20,8 @@ import com.example.demo.model.adminMessageRepository;
 import com.example.demo.model.userMessage;
 import com.example.demo.model.userMessageRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class AdminController {
 
@@ -82,6 +84,11 @@ public class AdminController {
             model.addAttribute("fromUser", fromUser);
             return "admin/reply";
         }
+        if(buttonValue.equals("playerDatabase")){
+            List<User> userList=userRepo.findAll();
+            model.addAttribute("userList", userList);
+            return "admin/playerDatabase";
+        }
         return "admin/adminCentre";
     }
 
@@ -136,4 +143,18 @@ public class AdminController {
         model.addAttribute("feedback", "Message sent!!");
         return "admin/sendResult";
     }
+
+    @PostMapping("/admin/handleUser")
+    public String handleUser(HttpServletRequest request, Model model) {
+        String[] selectedUsers = request.getParameterValues("userRow");
+        String uidList="";
+        if (selectedUsers != null) {
+            for (String uid : selectedUsers) {
+              uidList+=uid+",";
+            }
+        }
+        System.out.println(uidList);
+        return "admin/adminCentre";
+    }
+
 }
