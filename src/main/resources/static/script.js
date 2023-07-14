@@ -61,7 +61,7 @@ quoteInputElement.addEventListener('input', () => {
 })
 
 function getRandomQuote() {
-    return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content)
+    return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content).catch(error => console.error('Error:', error));
 }
 
 async function renderNewQuote() {
