@@ -95,4 +95,17 @@ public class User {
     public void setBestRecord(float bestRecord) {
         this.bestRecord = bestRecord;
     }
+
+    public void addRecords(float record) {
+        this.records.add(record);
+        this.bestRecord = record;
+        float sumTime = 0;
+        for(int i = 0; i < records.size(); i++) {
+            if (bestRecord > records.get(i)) {
+                bestRecord = records.get(i);
+            }
+            sumTime += records.get(i);
+        }
+        averageRecord = sumTime/records.size();
+    }
 }
