@@ -1,4 +1,4 @@
-let RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random'
+let RANDOM_QUOTE_API_URL = 'https://api.quotable.io/random'
 let quoteDisplayElement = document.getElementById('quoteDisplay')
 let quoteInputElement = document.getElementById('quoteInput')
 let timerElement = document.getElementById('timer')
@@ -24,7 +24,6 @@ quoteInputElement.addEventListener('input', () => {
     if (quoteInputElement.value == '') {
         numOfInputs = 0;
     }
-    numOfInputs++;
 
     arrayQuote.forEach((characterSpan, index) => {
         let character = arrayValue[index];
@@ -50,15 +49,18 @@ quoteInputElement.addEventListener('input', () => {
     if (correct) {
         clearInterval(intervalId);
         timerStart = false;
-        alert("Finish");
+        alert("Finish the quote in: " + timerElement.innerText + " seconds");
         // alert("# of characters: " + numOfCharacters);
-        // alert("You've made: " + (numOfInputs - numOfCharacters) + " mistakes");
+        // alert("# of inputs: " + numOfInputs);
+        // alert("# of mistakes: " + (numOfInputs-numOfCharacters));
+        document.getElementById('timer_input').value = timerElement.innerText;
+        document.getElementsByName('submitTime')[0].submit();
         renderNewQuote();
     }
 })
 
 function getRandomQuote() {
-    return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content)
+    return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content).catch(error => console.error('Error:', error));
 }
 
 async function renderNewQuote() {
@@ -71,6 +73,7 @@ async function renderNewQuote() {
     })
     quoteInputElement.value = null;
     timer.innerText = 0;
+    document.getElementById('timer_input').value = '';
 }
 
 

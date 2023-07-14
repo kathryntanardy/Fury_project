@@ -1,0 +1,25 @@
+input#subject,
+textarea {
+    background-color: transparent;
+    border: solid 3px black;
+    width: 100%;
+}
+
+input#subject {
+    height: 50px;
+}
+
+input#subject:placeholder-shown {
+    font-size: 20px;
+    padding: 10px;
+}
+
+textarea {
+    height: 300px;
+}
+
+
+textarea:placeholder-shown {
+    font-size: 20px;
+    padding: 10px;
+}
