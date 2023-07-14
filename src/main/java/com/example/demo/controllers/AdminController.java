@@ -92,7 +92,7 @@ public class AdminController {
         return "admin/adminCentre";
     }
 
-    @PostMapping("/readAdminInbox")
+    @PostMapping("/admin/readInbox")
     public String readUserInbox(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
         List<userMessage> msg =userMsgRepo.findByMid(Integer.parseInt(buttonValue));
         model.addAttribute("msg",msg.get(0));
@@ -114,7 +114,7 @@ public class AdminController {
             feedback="subject is";
             System.out.println("bad subject");
         }
-        if(message.get("content").equals("")){
+        if(message.get("content").equals(message.get("tempContent"))){
             goodMsg=false;
             if(feedback.equals("")){
                 feedback="content is";
@@ -130,7 +130,7 @@ public class AdminController {
             System.out.println(feedback);
             model.addAttribute("feedback", feedback);
             System.out.println("bad msg");
-            return "user/sendResult";
+            return "admin/sendResult";
         }
 
         //None of the rows are null

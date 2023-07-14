@@ -25,6 +25,7 @@
                     <br>
                     <br>
                     <p>Message</p>
+                    <textarea id="content" name="tempContent" th:text="${content}" style="width:90%;" hidden></textarea>
                     <textarea id="content" name="content" th:text="${content}" style="width:90%;"></textarea>
                     <script>
                         adjustSize();
@@ -37,6 +38,9 @@
 
                 <!-- mapping function in UserController.java  -->
                 <form action="/admin/buttonClicked" method="POST">
+                    <div>
+                        <button type="submit" name="buttonValue" value="Inbox">Back to Inbox</button>
+                    </div>
                     <div>
                         <button type="submit" name="buttonValue" value="back">Back To Admin centre</button>
                     </div>
