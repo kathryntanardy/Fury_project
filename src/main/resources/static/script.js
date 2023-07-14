@@ -50,9 +50,12 @@ quoteInputElement.addEventListener('input', () => {
     if (correct) {
         clearInterval(intervalId);
         timerStart = false;
-        alert("Finish");
+        alert("Finish the quote in: " + timerElement.innerText + " seconds");
         // alert("# of characters: " + numOfCharacters);
-        // alert("You've made: " + (numOfInputs - numOfCharacters) + " mistakes");
+        // alert("# of inputs: " + numOfInputs);
+        // alert("# of mistakes: " + (numOfInputs-numOfCharacters));
+        document.getElementById('timer_input').value = timerElement.innerText;
+        document.getElementsByName('submitTime')[0].submit();
         renderNewQuote();
     }
 })
@@ -71,6 +74,7 @@ async function renderNewQuote() {
     })
     quoteInputElement.value = null;
     timer.innerText = 0;
+    document.getElementById('timer_input').value = '';
 }
 
 
