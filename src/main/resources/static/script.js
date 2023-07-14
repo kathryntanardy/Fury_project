@@ -24,7 +24,6 @@ quoteInputElement.addEventListener('input', () => {
     if (quoteInputElement.value == '') {
         numOfInputs = 0;
     }
-    numOfInputs++;
 
     arrayQuote.forEach((characterSpan, index) => {
         let character = arrayValue[index];
