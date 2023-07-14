@@ -6,9 +6,8 @@
         <title> Leave your comment! </title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/contactAdmin.css">
     </head>
-<body style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif">
+<body style="background-color:lightgrey;font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
 
@@ -69,13 +68,15 @@
             <br>
             <br>
             <br>
-
             
+            
+            <div class="col-lg-6">
+                <h3>Leave your comment or bug report here. If you have any complicated problems, send an email to <a href="mailto:ilovemygroup123@gmail.com" style="color:rgb(84, 79, 79)">ilovemygroup123@gmail.com</a> 👋</h3>
+            </div>
           
         </div>
-        
-        <br>
 
+        <br><br>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 
@@ -90,46 +91,35 @@
                     <input id="msg" name="content" placeholder="Type your message">
                     <br> -->
                     <div class="form-group">
-                        <p style="font-size: 25px;">Subject</p>
-                        <input id="subject" name="subject" placeholder="Type Here">
+                        <label for="subject" style="font-size: 25px;">Subject</label>
+                        <input class="form-control form-control-lg" id="subject" name="subject" placeholder="Type Here">
                     </div>
                     <div class="form-group" style="font-size: 25px;">
-                        <p style="font-size: 25px;">Message</p>
-                        <textarea id="content" name="content" placeholder="Type your message"></textarea>
+                        <label for="subject" >Message</label>
+                        <textarea class="form-control form-control-lg" id="content" name="content" placeholder="Type your message"></textarea>
                     </div>
-
-                    
-                    <medium>Leave your comment or bug report here. Message will be send directly to the admin's account. An admin will respond to you within the next 2-3 days. If you have any further inquiry, send an email to <a href="mailto:ilovemygroup123@gmail.com" style="color:darkslategrey">ilovemygroup123@gmail.com</a></medium>
-                   
-                    <br>
-
                     <!-- To identify the user identity -->
                     <input id="uid" name="uid" th:value="${uid}" hidden>
                    
                     <br>
 
                     <div class="text-center">
-                        <input id="sendButton" class="btn rounded-0" type="submit" value="Send"></input>
+                        <input class="btn btn-dark" type="submit" value="Send"></input>
                     </div>
                     
                
                 </form>	
 
-                <!-- Commented this part because display of returning to user css want to be changed as a nav bar, by k -->
                 <!-- mapping function in UserController.java  -->
-                <!-- <form action="/user/buttonClicked" method="POST">
+                <form action="/user/buttonClicked" method="POST">
                     <div class="text-center">
                         <p th:text="${feedback}"></p>
                         <button class="btn btn-dark btn-md" type="submit" name="buttonValue" value="back">Return to User Center</button>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
-                </form> -->
+                </form>
             </div>
-
-            
         </div>
-
-    
     </div>
 
 </body>

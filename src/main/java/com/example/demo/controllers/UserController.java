@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.security.auth.Subject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.WebProperties.Resources;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,8 +56,9 @@ public class UserController {
 
     // 4 note: add model to the parameters, for user centre purpose
     @PostMapping("/login")
-    public String login(@RequestParam Map<String, String> info, Model model) {
+    public String login(@RequestParam Map<String, String> info, Model model , HttpServletRequest request, HttpSession session) {
         List<User> user = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
+        User identity = (User) session.getAttribute("session_user");
         if (user.isEmpty()) {
             return "user/loginFailed";
         }
@@ -105,7 +107,8 @@ public class UserController {
     // handle btn clicked
     @PostMapping("/user/buttonClicked")
     public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,
-            @RequestParam Map<String, String> info, Model model) {
+            @RequestParam Map<String, String> info, Model model, 
+            HttpServletRequest request, HttpSession session) {
         model.addAttribute("uid", info.get("uid"));
         if (buttonValue.equals("Game")) {
             return "user/game";
@@ -153,7 +156,12 @@ public class UserController {
             }
             model.addAttribute("userRecords", lastTen);
             return "user/statistic";
-        } else {
+        } 
+        if(buttonValue.equals("LogOut")){
+            request.getSession().invalidate();
+            return "user/logoutSuccess";
+        }
+        else {
             List<User> user = userRepo.findByUid(Integer.parseInt(info.get("uid")));
             model.addAttribute("username", user.get(0).getUsername());
             return "user/userCentre";
