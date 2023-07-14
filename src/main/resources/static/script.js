@@ -1,4 +1,4 @@
-let RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random'
+let RANDOM_QUOTE_API_URL = 'https://api.quotable.io/random'
 let quoteDisplayElement = document.getElementById('quoteDisplay')
 let quoteInputElement = document.getElementById('quoteInput')
 let timerElement = document.getElementById('timer')
