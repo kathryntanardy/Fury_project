@@ -207,4 +207,13 @@ public class UserController {
         model.addAttribute("feedback", "Message sent!!");
         return "user/sendResult";
     }
+
+    @PostMapping("/submitTime")
+    public String addRecord(@RequestParam Map<String, String> time, Model model, HttpSession session,
+            HttpServletRequest request) {
+        User user = (User) session.getAttribute("session_user");
+        user.addRecords(Float.parseFloat(time.get("timer_input")));
+        userRepo.save(user);
+        return "/user/game";
+    }
 }
