@@ -71,7 +71,7 @@ public class UserController {
             return "/user/loginFailed";
         } else {
             model.addAttribute("user", user);
-            return "/user/game";
+            return "/user/userCentre";
         }
     }
 
@@ -84,7 +84,7 @@ public class UserController {
         User user = userList.get(0);
         request.getSession().setAttribute("session_user",user);
         model.addAttribute("user",user);
-        return "user/game";
+        return "user/userCentre";
         }
     }
 
