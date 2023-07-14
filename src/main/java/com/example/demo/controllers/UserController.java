@@ -51,17 +51,48 @@ public class UserController {
     }
 
     //4 note: add model to the parameters, for user centre purpose
-    @PostMapping("/login")
-    public String login(@RequestParam Map<String, String> info,Model model) {
-        List<User> user = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
-        if (user.isEmpty()) {
-            return "user/loginFailed";
-        }
+    // @PostMapping("/login")
+    // public String login(@RequestParam Map<String, String> info,Model model) {
+    //     List<User> user = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
+    //     if (user.isEmpty()) {
+    //         return "user/loginFailed";
+    //     }
 
-        // added by 4
-        model.addAttribute("uid", user.get(0).getUid());
-        model.addAttribute("username", user.get(0).getUsername());
-        return "user/userCentre";
+    //     // added by 4
+    //     model.addAttribute("uid", user.get(0).getUid());
+    //     model.addAttribute("username", user.get(0).getUsername());
+    //     return "user/userCentre";
+    // }
+
+    @GetMapping("/login")
+    public String getLogin(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("session_user");
+        if (user == null) {
+            return "/user/loginFailed";
+        } else {
+            model.addAttribute("user", user);
+            return "/user/game";
+        }
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam Map<String, String> info, Model model, HttpServletRequest request, HttpSession session) {
+        List<User> userList = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
+        if (userList.isEmpty()) {
+            return "/user/loginFailed";
+        } else {
+        User user = userList.get(0);
+        request.getSession().setAttribute("session_user",user);
+        model.addAttribute("user",user);
+        return "user/game";
+        }
+    }
+
+    // NOT YET TESTED
+    @GetMapping("/logout")
+    public String destroySession(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "/user/signin";
     }
 
 
