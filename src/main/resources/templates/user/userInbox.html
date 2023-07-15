@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/userInbox.css">
 </head>
 
-<body style="background-color:lightgrey; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+<body>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="" style="width:100%">
@@ -66,14 +66,14 @@
                     <h1>Inbox</h1>
                 </div>
                 
-                <div class="d-flex justify-content-center" style="border: solid 1px black; padding: 20px;">
+                <div class="d-flex justify-content-center" style="padding: 20px;">
                     <div>
                         <form action="/user/readInbox" method="POST">
                             <!-- div purpose: For identifying the user identity -->
                             <div>
                                 <!-- <a th:text="${msg.subject}"></a> -->
                                 <input id="uid" name="uid" th:value="${uid}" hidden>
-                                <table style="width:100%">
+                                <table class="table table-striped w-auto" style="width:100%">
                                     <tr>
                                       <th>Type</th>
                                       <th>Subject</th>
@@ -99,7 +99,7 @@
                   <!-- Link to function: handleButtonClick in UserController.java -->
                   <form action="/user/buttonClicked" method="POST">
                       <div style="padding: 20px;" class="text-center">
-                          <button class="btn btn-dark btn-md" type="submit" name="buttonValue" value="back">Return to User Center</button>
+                          <button id="backHome" class="btn rounded-0" type="submit" name="buttonValue" value="back">Home</button>
                           <!-- To identify the user identity -->
                           <input id="uid" name="uid" th:value="${uid}" hidden>
                       </div>
