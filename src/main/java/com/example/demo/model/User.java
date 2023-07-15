@@ -14,9 +14,9 @@ public class User {
     private String username;
     private String password;
     private String emailAddress;
-    private ArrayList<Float> records;
-    private float averageRecord;
-    private float bestRecord;
+    private ArrayList<Float> WPM;
+    private float averageWPM;
+    private float bestWPM;
 
     public User() {
     }
@@ -25,19 +25,19 @@ public class User {
         this.username = username;
         this.password = password;
         this.emailAddress = "";
-        this.records = new ArrayList<Float>();
-        this.averageRecord = 0;
-        this.bestRecord = 0;
+        this.WPM = new ArrayList<Float>();
+        this.averageWPM = 0;
+        this.bestWPM = 0;
     }
 
-    public User(String username, String password, String emailAddress, ArrayList<Float> records, float averageRecord,
-            float bestRecord) {
+    public User(String username, String password, String emailAddress, ArrayList<Float> records, float averageWPM,
+            float bestWPM) {
         this.username = username;
         this.password = password;
         this.emailAddress = emailAddress;
-        this.records = records;
-        this.averageRecord = averageRecord;
-        this.bestRecord = bestRecord;
+        this.WPM = records;
+        this.averageWPM = averageWPM;
+        this.bestWPM = bestWPM;
     }
 
     public int getUid() {
@@ -72,40 +72,40 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public ArrayList<Float> getRecords() {
-        return records;
+    public ArrayList<Float> getWPM() {
+        return WPM;
     }
 
-    public void setRecords(ArrayList<Float> records) {
-        this.records = records;
+    public void setWPM(ArrayList<Float> wpm) {
+        this.WPM = wpm;
     }
 
-    public float getAverageRecord() {
-        return averageRecord;
+    public float getAverageWPM() {
+        return averageWPM;
     }
 
-    public void setAverageRecord(float averageRecord) {
-        this.averageRecord = averageRecord;
+    public void setAverageRecord(float averageWPM) {
+        this.averageWPM = averageWPM;
     }
 
-    public float getBestRecord() {
-        return bestRecord;
+    public float getBestWPM() {
+        return bestWPM;
     }
 
-    public void setBestRecord(float bestRecord) {
-        this.bestRecord = bestRecord;
+    public void setBestWPM(float bestWPM) {
+        this.bestWPM = bestWPM;
     }
 
-    public void addRecords(float record) {
-        this.records.add(record);
-        this.bestRecord = record;
+    public void addRecords(float wpm) {
+        this.WPM.add(wpm);
+        this.bestWPM = wpm;
         float sumTime = 0;
-        for(int i = 0; i < records.size(); i++) {
-            if (bestRecord < records.get(i)) {
-                bestRecord = records.get(i);
+        for(int i = 0; i < WPM.size(); i++) {
+            if (bestWPM < WPM.get(i)) {
+                bestWPM = WPM.get(i);
             }
-            sumTime += records.get(i);
+            sumTime += WPM.get(i);
         }
-        averageRecord = sumTime/records.size();
+        averageWPM = sumTime/WPM.size();
     }
 }
