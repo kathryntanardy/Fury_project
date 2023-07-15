@@ -56,8 +56,8 @@ quoteInputElement.addEventListener('input', () => {
         alert("WPM: " + wpm + " WPM");
         alert("Accuracy: " + accuracy + "%");
         document.getElementById('wpm').value = wpm;
-        document.getElementsByName('submitWPM')[0].submit();
-        renderNewQuote();
+        // document.getElementsByName('submitWPM')[0].submit();
+        // renderNewQuote();
     }
 })
 
