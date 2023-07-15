@@ -220,11 +220,11 @@ public class UserController {
         return "user/sendResult";
     }
 
-    @PostMapping("/submitTime")
-    public String addRecord(@RequestParam Map<String, String> time, Model model, HttpSession session,
+    @PostMapping("/submitWPM")
+    public String addRecord(@RequestParam Map<String, String> wpm, Model model, HttpSession session,
             HttpServletRequest request) {
         User user = (User) session.getAttribute("session_user");
-        user.addRecords(Float.parseFloat(time.get("timer_input")));
+        user.addRecords(Float.parseFloat(wpm.get("wpm")));
         userRepo.save(user);
         return "/user/game";
     }
