@@ -7,17 +7,87 @@
     <title> feedback </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/sendResult.css">
 </head>
 
-<body style="background-color:lightgrey; position:relative; top:10rem; font-family: Arial, Helvetica, sans-serif;">
+<body>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+
+            <div class="" style="width:100%">
+                <!-- Added new nav bar and update css By: K -->
+                <form action="/user/buttonClicked" method="POST">
+                    <!-- div purpose: For identifying the user identity -->
+                    <div>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+
+                    <div class="" style=" padding: 20px;">
+                        <div id="logo" style="float: left">
+                            <img src="/imageFiles/fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                        </div>
+
+                        <div id="icons" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="Home" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/home.png" alt="homeIcon" width="30px" height="30px">
+                                <br>
+                                Home</button>
+                            <button type="submit" name="buttonValue" value="Inbox" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/mail.png" alt="mailIcon" width="40px" height="30px">
+                                <br>
+                                Inbox</button>
+                            <button type="submit" name="buttonValue" value="Statistic" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/statistic.png" alt="statisticIcon" width="30px" height="30px">
+                                <br>
+                                Statistic</button>
+                            <button type="submit" name="buttonValue" value="ContactAdmin" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/phone.png" alt="phoneIcon" width="30px" height="30px">
+                                <br>
+                                Contact Us</button>
+                            <button type="submit" name="buttonValue" value="Setting" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/settings.png" alt="settingsIcon" width="30px" height="30px">
+                                <br>
+                                Setting</button>
+                                <!-- Added user logout, by: k. will comment this down for now, just uncomment when you finished editing the code -->
+                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                                <br>
+                                Log Out</button>
+                        </div>
+
+                        
+                        
+                    </div>
+                </form>
+
+
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="col-md-4 text-center justify-content-center" >
                 <!-- Link to function: handleButtonClick in UserController.java -->
                 <form action="/user/buttonClicked" method="POST">
-                    <div style="border: solid 1px black; padding: 20px;">
-                        <p th:text="${feedback}"></p>
-                        <button type="submit" name="buttonValue" value="back">Back To user centre</button>
+                    <div id="msgvalue">
+                        <p class="font-weight-bold" th:text="${feedback}"></p>
+                        <br>
+                        <br>
+                        <br>
+                        
+
+                        <button type="submit" name="buttonValue" value="back">Home</button>
                         <!-- To identify the user identity -->
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>

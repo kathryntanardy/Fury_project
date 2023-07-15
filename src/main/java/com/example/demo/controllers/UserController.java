@@ -56,7 +56,8 @@ public class UserController {
 
     // 4 note: add model to the parameters, for user centre purpose
     @PostMapping("/login")
-    public String login(@RequestParam Map<String, String> info, Model model , HttpServletRequest request, HttpSession session) {
+    public String login(@RequestParam Map<String, String> info, Model model, HttpServletRequest request,
+            HttpSession session) {
         List<User> user = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
         User identity = (User) session.getAttribute("session_user");
         if (user.isEmpty()) {
@@ -107,7 +108,7 @@ public class UserController {
     // handle btn clicked
     @PostMapping("/user/buttonClicked")
     public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,
-            @RequestParam Map<String, String> info, Model model, 
+            @RequestParam Map<String, String> info, Model model,
             HttpServletRequest request, HttpSession session) {
         model.addAttribute("uid", info.get("uid"));
         if (buttonValue.equals("Game")) {
@@ -156,12 +157,11 @@ public class UserController {
             }
             model.addAttribute("userRecords", lastTen);
             return "user/statistic";
-        } 
-        if(buttonValue.equals("LogOut")){
+        }
+        if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
             return "user/logoutSuccess";
-        }
-        else {
+        } else {
             List<User> user = userRepo.findByUid(Integer.parseInt(info.get("uid")));
             model.addAttribute("username", user.get(0).getUsername());
             return "user/userCentre";

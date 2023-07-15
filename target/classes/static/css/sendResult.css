@@ -1,0 +1,14 @@
+#msgvalue {
+    border: solid 3px black;
+    padding: 20px;
+    width: 75%;
+}
+
+body {
+    background-color: lightgrey;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    font-size: 20px;
+}

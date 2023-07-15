@@ -3,6 +3,8 @@ textarea {
     background-color: transparent;
     border: solid 3px black;
     width: 100%;
+    font-size: 20px;
+    padding: 5px;
 }
 
 input#subject {
