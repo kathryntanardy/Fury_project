@@ -1,0 +1,25 @@
+.button-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    background-color: transparent;
+    border: solid 3px black;
+    width: 100%;
+    font-size: 20px;
+    padding: 5px;
+}
+
+#backToInbox {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
+}
