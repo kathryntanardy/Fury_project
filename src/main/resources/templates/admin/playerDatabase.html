@@ -47,16 +47,16 @@
                                     <tr>
                                         <th>Select</th>
                                         <th>username</th>
-                                        <th>Average cpm</th>
-                                        <th>Best cpm</th>
+                                        <th>Average wpm</th>
+                                        <th>Best wpm</th>
                                     </tr>
                                     <tr th:each="user:${userList}">
                                         <td>
                                             <input type="checkbox" name="userRow" th:value="${user.uid}">
                                         </td>
                                         <td th:text="${user.username}"></td>
-                                        <td th:text="${user.averageRecord}"></td>
-                                        <td th:text="${user.bestRecord}"></td>
+                                        <td th:text="${user.averageWPM}"></td>
+                                        <td th:text="${user.bestWPM}"></td>
                                     </tr>
                                   </table>
                             </div>
