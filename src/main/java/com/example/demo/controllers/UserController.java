@@ -54,55 +54,34 @@ public class UserController {
         return "user/usernameTaken";
     }
 
-    // 4 note: add model to the parameters, for user centre purpose
-    @PostMapping("/login")
-    public String login(@RequestParam Map<String, String> info, Model model, HttpServletRequest request,
-            HttpSession session) {
-        List<User> user = userRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
-        User identity = (User) session.getAttribute("session_user");
-        if (user.isEmpty()) {
-            return "user/loginFailed";
+ @GetMapping("/login")
+    public String getLogin(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("session_user");
+        if (user == null) {
+            return "/user/loginFailed";
+        } else {
+            model.addAttribute("user", user);
+            return "/user/userCentre";
         }
-
-        // added by 4
-        model.addAttribute("uid", user.get(0).getUid());
-        model.addAttribute("username", user.get(0).getUsername());
-        return "user/userCentre";
     }
 
-    // @GetMapping("/login")
-    // public String getLogin(Model model, HttpSession session) {
-    // User user = (User) session.getAttribute("session_user");
-    // if (user == null) {
-    // return "/user/loginFailed";
-    // } else {
-    // model.addAttribute("user", user);
-    // return "/user/userCentre";
-    // }
-    // }
-
-    // @PostMapping("/login")
-    // public String login(@RequestParam Map<String, String> info, Model model,
-    // HttpServletRequest request, HttpSession session) {
-    // List<User> userList =
-    // userRepo.findByUsernameAndPassword(info.get("username"),
-    // info.get("password"));
-    // if (userList.isEmpty()) {
-    // return "/user/loginFailed";
-    // } else {
-    // User user = userList.get(0);
-    // request.getSession().setAttribute("session_user",user);
-    // model.addAttribute("user",user);
-    // return "user/userCentre";
-    // }
-    // }
-
-    // // NOT YET TESTED
-    // @GetMapping("/logout")
-    // public String destroySession(HttpServletRequest request) {
-    // request.getSession().invalidate();
-    // return "/user/signin";
-    // }
+    @PostMapping("/login")
+    public String login(@RequestParam Map<String, String> info, Model model,
+            HttpServletRequest request, HttpSession session) {
+        List<User> userList = userRepo.findByUsernameAndPassword(info.get("username"),
+                info.get("password"));
+        if (userList.isEmpty()) {
+            return "/user/loginFailed";
+        } else {
+            User user = userList.get(0);
+            request.getSession().setAttribute("session_user", user);
+            model.addAttribute("user", user);
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("uid", user.getUid());
+            return "user/userCentre";
+        }
+    }
+  
 
     // by 4
     // handle btn clicked
