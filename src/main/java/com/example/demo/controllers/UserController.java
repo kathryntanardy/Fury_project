@@ -114,7 +114,7 @@ public class UserController {
             int recordSize = userRecords.size();
             user.get(0).setAverageRecord((sum * 1f) / recordSize);
             if (recordSize > 0) {
-                model.addAttribute("avgWPM", user.get(0).getAverageWPM() + " WPM");
+                model.addAttribute("avgRecord", user.get(0).getAverageWPM() + " WPM");
                 model.addAttribute("bestRecord", user.get(0).getBestWPM() + " WPM");
             } else {
                 model.addAttribute("avgRecord", "N/A");
