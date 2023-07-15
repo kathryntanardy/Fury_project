@@ -59,21 +59,21 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-8" style="width: 100%">
+            <div style="width: 75%">
                 
              
                 <div class="text-center" style="padding: 20px">
                     <h1>Inbox</h1>
                 </div>
                 
-                <div class="d-flex justify-content-center" style="padding: 20px;">
+                <div class="w-80" style="width: 100%; padding: 20px">
                     <div>
                         <form action="/user/readInbox" method="POST">
                             <!-- div purpose: For identifying the user identity -->
-                            <div>
+                            <div style="width: 100%">
                                 <!-- <a th:text="${msg.subject}"></a> -->
                                 <input id="uid" name="uid" th:value="${uid}" hidden>
-                                <table class="table table-striped w-auto" style="width:100%">
+                                <table class="table table-striped">
                                     <tr>
                                       <th>Type</th>
                                       <th>Subject</th>
