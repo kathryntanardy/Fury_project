@@ -7,15 +7,15 @@
     <title> Sign Up </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/userCentre.css">
+    <link rel="stylesheet" href="./css/adminCentre.css">
 </head>
 
 <body style="background-color:lightgrey; font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="" style="width: 100%">
-                <div id="logo" style="float: left">
-                    <img src="/imageFiles/fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                <div id="logo" style="float: left; padding: 20px;">
+                    <img src="/imageFiles/Fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
                 </div>
                 <br>
                 <br>
@@ -23,12 +23,10 @@
                 <br>
                 <br>
                 <br>
+                <br>
+                <br>
+                <br>
 
-
-                <!-- Showing the username -->
-                <div style="padding: 20px; clear: both;">
-                    <p class="text-center display-3">Welcome Admin</p>
-                </div>
 
                 <!-- Please modify the style only :] -->
                 <!-- mapping function in UserController.java  -->
@@ -37,16 +35,20 @@
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
-                    <div style="margin: auto; padding: 20px; width: 75%">
-                        <button class="btn btn-secondary btn-lg btn-block active" type="submit" name="buttonValue" value="Inbox" style="background-color: black; height: 150px; font-size: 50px;">
+                    <div style="margin: auto; padding: 20px; width: 70%">
+                        <button class="btn btn-secondary btn-md btn-block active" type="submit" name="buttonValue" value="Inbox" style="background-color: black; height: 150px; font-size: 50px;">
                             <div style="float: left;">
-                                <img src="/imageFiles/playbutton.png" alt="buttonimg" width="135px" height="135px">
-                                View message
+                                <img src="/imageFiles/adminInbox.png" alt="messageIcon" width="120px" height="120px">
+                                View messages
                             </div>
                         </button>
-                        <button class="btn btn-secondary btn-lg btn-block active" type="submit" name="buttonValue" value="playerDatabase" style="background-color: black; height: 150px; font-size: 50px;">
+
+                        <br>
+                        <br>
+
+                        <button class="btn btn-secondary btn-md btn-block active" type="submit" name="buttonValue" value="playerDatabase" style="background-color: black; height: 150px; font-size: 50px;">
                             <div style="float: left;">
-                                <img src="/imageFiles/playbutton.png" alt="buttonimg" width="135px" height="135px">
+                                <img src="/imageFiles/databaseIcon.png" alt="databaseIcon" width="120px" height="120px">
                                 Players Database
                             </div>
                         </button>
