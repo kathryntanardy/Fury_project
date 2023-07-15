@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Sign Up </title>
+    <title> Dashboard </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -12,17 +12,29 @@
 <body style="background-color:lightgrey; font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="" style="width: 100%">
-                <div id="logo" style="float: left; padding: 20px;">
+
+             <!-- A separate div to separate the nav bar/header to the content, by k -->
+            <div class="w-100"style="width: 100px; padding: 20px;">
+                <div id="logo d-flex align-items-center" style="float: left;">
                     <img src="/imageFiles/Fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
                 </div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+
+                <!-- two additional buttons, can you implement the pathways for this?  -->
+                 <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                    <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                    <br>
+                    Log Out</button>
+
+                <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                    <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
+                    <br>
+                   Home</button>
+            </div> 
+
+            <div class="col-md-8" style="padding: 20px;">
+
+               
+            
                 <br>
                 <br>
 
@@ -34,7 +46,7 @@
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
-                    <div style="margin: auto; padding: 20px; width: 70%">
+                    <div style="margin: auto; padding: 20px; width: 80%">
                         <button class="btn btn-secondary btn-md btn-block active" type="submit" name="buttonValue" value="Inbox" style="background-color: black; height: 150px; font-size: 50px;">
                             <div style="float: left;">
                                 <img src="/imageFiles/adminInbox.png" alt="messageIcon" width="120px" height="120px">
