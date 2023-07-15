@@ -74,7 +74,7 @@
                     <a th:text="${userRecords}" id="userRecords" hidden></a>
                     <a th:text="${recordSize}" id="recordSize" hidden></a>
                     <div class="d-flex justify-content-center" style="border: solid 1px black; padding: 20px;width: 80%;">
-                        <p>Statistic: Charater per minute (cpm)</p>
+                        <p>Statistic: Words Per Minute (WPM)</p>
                     </div>
                     <div class="d-flex justify-content-center" style="border: solid 1px black; padding: 20px;width: 80%;">
                         <p>Latest 10 games</p>
@@ -94,7 +94,7 @@
                                 data: {
                                     labels: labels,
                                     datasets: [{
-                                    label: 'cpm',
+                                    label: 'WPM',
                                     data: data,
                                     fill: false,
                                     borderColor: 'rgb(75, 192, 192)',
