@@ -7,6 +7,7 @@ let timerStart = false;
 let numOfInputs = 0;
 let numOfCharacters;
 
+
 quoteInputElement.addEventListener('keydown', (event) => {
     if (event.code == "Backspace" && numOfInputs <= 0) {
         --numOfInputs;
@@ -17,6 +18,8 @@ quoteInputElement.addEventListener('input', () => {
     let arrayQuote = quoteDisplayElement.querySelectorAll('span')
     let arrayValue = quoteInputElement.value.split('')
     let correct = true;
+    numOfCharacters = arrayQuote.length
+    
     if (timerStart === false) {
         startTimer();
         timerStart = true;
@@ -27,7 +30,6 @@ quoteInputElement.addEventListener('input', () => {
 
     arrayQuote.forEach((characterSpan, index) => {
         let character = arrayValue[index];
-        numOfCharacters = index + 1;
 
         if (character == null) {
             characterSpan.classList.remove('correct');
@@ -44,23 +46,26 @@ quoteInputElement.addEventListener('input', () => {
             correct = false;
         }
     })
-    console.log(numOfInputs);
 
     if (correct) {
         clearInterval(intervalId);
         timerStart = false;
         alert("Finish the quote in: " + timerElement.innerText + " seconds");
-        // alert("# of characters: " + numOfCharacters);
-        // alert("# of inputs: " + numOfInputs);
-        // alert("# of mistakes: " + (numOfInputs-numOfCharacters));
-        document.getElementById('timer_input').value = timerElement.innerText;
-        document.getElementsByName('submitTime')[0].submit();
+        let wpm = ((numOfInputs/5)/(timerElement.innerText/60)).toFixed(2);
+        let accuracy = ((numOfCharacters/numOfInputs)*100).toFixed(2);
+        alert("WPM: " + wpm + " WPM");
+        alert("Accuracy: " + accuracy + "%");
+        document.getElementById('wpm').value = wpm;
+        document.getElementsByName('submitWPM')[0].submit();
         renderNewQuote();
     }
 })
 
 function getRandomQuote() {
     return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content).catch(error => console.error('Error:', error));
+}
+function getRandomWords () {
+    return fetch('https://random-word-api.herokuapp.com/word?number=25').then(response => response.text());
 }
 
 async function renderNewQuote() {
@@ -75,12 +80,29 @@ async function renderNewQuote() {
     timer.innerText = 0;
     document.getElementById('timer_input').value = '';
 }
-
+async function renderRandomWords() {
+    let quote = await getRandomWords();
+    quoteDisplayElement.innerHTML = '';
+    quote.split('').forEach(character => {
+        if (character == ',') {
+            let characterSpan = document.createElement('span');
+            characterSpan.innerText = ' ';
+            quoteDisplayElement.appendChild(characterSpan)
+        }
+        else if (character.charCodeAt() >= 97 && character.charCodeAt() <= 122) {
+            let characterSpan = document.createElement('span');
+            characterSpan.innerText = character;
+            quoteDisplayElement.appendChild(characterSpan)
+        }
+    })
+    quoteInputElement.value = null;
+    timer.innerText = 0;
+    document.getElementById('wpm').value = '';
+}
 
 let startTime
 let intervalId
 function startTimer() {
-    // timerElement.innerText = 0;
     startTime = new Date();
     intervalId = setInterval(() => {
         timer.innerText = getTimerTime()
