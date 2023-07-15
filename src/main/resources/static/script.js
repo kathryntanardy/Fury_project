@@ -78,7 +78,7 @@ async function renderNewQuote() {
     })
     quoteInputElement.value = null;
     timer.innerText = 0;
-    document.getElementById('timer_input').value = '';
+    document.getElementById('wpm').value = '';
 }
 async function renderRandomWords() {
     let quote = await getRandomWords();
