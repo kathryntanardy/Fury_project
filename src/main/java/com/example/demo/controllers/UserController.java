@@ -61,6 +61,8 @@ public class UserController {
             return "/user/loginFailed";
         } else {
             model.addAttribute("user", user);
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("uid", user.getUid());
             return "/user/userCentre";
         }
     }
