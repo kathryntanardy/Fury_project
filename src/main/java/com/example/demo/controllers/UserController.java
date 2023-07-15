@@ -54,7 +54,8 @@ public class UserController {
         return "user/usernameTaken";
     }
 
- @GetMapping("/login")
+
+    @GetMapping("/login")
     public String getLogin(Model model, HttpSession session) {
         User user = (User) session.getAttribute("session_user");
         if (user == null) {
@@ -83,8 +84,6 @@ public class UserController {
             return "user/userCentre";
         }
     }
-  
-
     // by 4
     // handle btn clicked
     @PostMapping("/user/buttonClicked")
@@ -106,7 +105,7 @@ public class UserController {
         }
         if (buttonValue.equals("Statistic")) {
             List<User> user = userRepo.findByUid(Integer.parseInt(info.get("uid")));
-            ArrayList<Float> userRecords = user.get(0).getRecords();
+            ArrayList<Float> userRecords = user.get(0).getWPM();
             // Handle avg and best records
             Float sum = 0f;
             for (Float f : userRecords) {
@@ -115,8 +114,8 @@ public class UserController {
             int recordSize = userRecords.size();
             user.get(0).setAverageRecord((sum * 1f) / recordSize);
             if (recordSize > 0) {
-                model.addAttribute("avgRecord", user.get(0).getAverageRecord() + " cpm");
-                model.addAttribute("bestRecord", user.get(0).getBestRecord() + " cpm");
+                model.addAttribute("avgWPM", user.get(0).getAverageWPM() + " WPM");
+                model.addAttribute("bestRecord", user.get(0).getBestWPM() + " WPM");
             } else {
                 model.addAttribute("avgRecord", "N/A");
                 model.addAttribute("bestRecord", "N/A");
