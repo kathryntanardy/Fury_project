@@ -28,6 +28,8 @@ quoteInputElement.addEventListener('input', () => {
         numOfInputs = 0;
     }
 
+    numOfInputs++;
+
     arrayQuote.forEach((characterSpan, index) => {
         let character = arrayValue[index];
 
