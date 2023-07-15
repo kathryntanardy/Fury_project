@@ -101,7 +101,7 @@ public class User {
         this.bestRecord = record;
         float sumTime = 0;
         for(int i = 0; i < records.size(); i++) {
-            if (bestRecord > records.get(i)) {
+            if (bestRecord < records.get(i)) {
                 bestRecord = records.get(i);
             }
             sumTime += records.get(i);
