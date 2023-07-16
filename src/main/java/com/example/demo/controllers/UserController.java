@@ -55,19 +55,6 @@ public class UserController {
         return "user/usernameTaken";
     }
 
-    // @GetMapping("/login")
-    // public String getLogin(Model model, HttpSession session) {
-    // User user = (User) session.getAttribute("session_user");
-    // if (user == null) {
-    // return "/user/loginFailed";
-    // } else {
-    // model.addAttribute("user", user);
-    // model.addAttribute("username", user.getUsername());
-    // model.addAttribute("uid", user.getUid());
-    // return "/user/userCentre";
-    // }
-    // }
-
     @GetMapping("/user/login")
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
     User user = (User) session.getAttribute("session_user");
