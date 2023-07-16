@@ -20,7 +20,7 @@
                 </div>
 
                 <!-- two additional buttons, can you implement the pathways for this?  -->
-                 <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                 <!-- <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
                     <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
                     <br>
                     Log Out</button>
@@ -28,7 +28,23 @@
                 <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
                     <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
                     <br>
-                   Home</button>
+                   Home</button> -->
+
+                   <form action="/admin/buttonClicked" method="POST">
+                    <div class="" style=" padding: 20px;">
+                        <div id="icons" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                                <br>
+                                Log Out</button>
+            
+                            <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                                <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
+                                <br>
+                               Home</button>
+                        </div>
+                    </div>
+                </form>
             </div> 
 
             <div class="col-md-8" style="padding: 20px;">

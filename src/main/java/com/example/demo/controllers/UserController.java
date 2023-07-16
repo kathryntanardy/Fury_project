@@ -125,8 +125,8 @@ public class UserController {
         if (buttonValue.equals("Game")) {
             return "user/game";
         }
-        if (buttonValue.equals("ContactAdmin")) {
-            return "user/ContactAdmin";
+        if (buttonValue.equals("ContactUs")) {
+            return "user/ContactUs";
         }
         if (buttonValue.equals("Inbox")) {
             List<adminMessage> inbox = adminMsgRepo.findByToUid(Integer.parseInt(info.get("uid")));
@@ -171,8 +171,10 @@ public class UserController {
         }
         if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
-            return "user/logoutSuccess";
-        } else {
+            return "user/login";
+        } 
+        
+        else {
             List<User> user = userRepo.findByUid(Integer.parseInt(info.get("uid")));
             model.addAttribute("username", user.get(0).getUsername());
             return "user/userCentre";
@@ -219,6 +221,8 @@ public class UserController {
             feedback = "Error: " + feedback;
             System.out.println(feedback);
             model.addAttribute("feedback", feedback);
+            model.addAttribute("btnValue", "ContactUs");
+            model.addAttribute("btnText", "Back to Contact Us");
             System.out.println("bad msg");
             return "user/sendResult";
         }
@@ -228,6 +232,8 @@ public class UserController {
         userMsgRepo.save(new userMessage(Integer.parseInt(message.get("uid")), message.get("subject"),
                 message.get("content"), "N", LocalDate.now()));
         model.addAttribute("feedback", "Message sent!!");
+        model.addAttribute("btnValue", "back");
+        model.addAttribute("btnText", "Home");
         return "user/sendResult";
     }
 

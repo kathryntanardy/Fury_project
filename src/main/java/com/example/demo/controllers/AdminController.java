@@ -53,8 +53,8 @@ public class AdminController {
         Boolean badLogin=false;
         Boolean blankName=info.get("username").equals("");
         Boolean blankPassword=info.get("password").equals("");
-        Boolean wrongPassword=userRepo.findByUsername(info.get("username")).size()!=0 && adminList.size()==0;
-        Boolean noUser=userRepo.findByUsername(info.get("username")).size()==0;
+        Boolean wrongPassword=adminRepo.findByUsername(info.get("username")).size()!=0 && adminList.size()==0;
+        Boolean noUser=adminRepo.findByUsername(info.get("username")).size()==0;
         if(blankName){
             model.addAttribute("usernameAlert", "Username required");
             badLogin=true;
@@ -116,7 +116,7 @@ public class AdminController {
     //by 4
     //handle btn clicked
     @PostMapping("/admin/buttonClicked")
-    public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
+    public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model,HttpServletRequest request, HttpSession session) {
         if (buttonValue.equals("Inbox")) {
             List<userMessage> inbox=userMsgRepo.findAll();
             model.addAttribute("inbox", inbox);
@@ -138,6 +138,10 @@ public class AdminController {
             model.addAttribute("userList", userList);
             return "admin/playerDatabase";
         }
+        if (buttonValue.equals("LogOut")) {
+            request.getSession().invalidate();
+            return "admin/login";
+        }
         return "admin/adminCentre";
     }
 
@@ -155,6 +159,7 @@ public class AdminController {
     //add msg to database
     @PostMapping("/admin/reply")
     public String sendMsg(@RequestParam Map<String, String> message, Model model) {
+        //return "/admin/adminCentre";
         //Check if any of the input is/are null
         boolean goodMsg=true;
         String feedback="";
@@ -178,6 +183,9 @@ public class AdminController {
             feedback="Error: "+feedback;
             System.out.println(feedback);
             model.addAttribute("feedback", feedback);
+            model.addAttribute("mid", message.get("mid"));
+            model.addAttribute("btnValue", "Reply");
+            model.addAttribute("btnText", "back to reply");
             System.out.println("bad msg");
             return "admin/sendResult";
         }
@@ -190,6 +198,8 @@ public class AdminController {
         userMsgRepo.save(msgFromUser);
         adminMsgRepo.save(new adminMessage("Reply",toUid, message.get("subject"), message.get("content"),LocalDate.now(),"N"));
         model.addAttribute("feedback", "Message sent!!");
+        model.addAttribute("btnValue", "back");
+            model.addAttribute("btnText", "Back to admin centre");
         return "admin/sendResult";
     }
 

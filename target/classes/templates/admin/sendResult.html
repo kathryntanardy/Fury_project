@@ -13,11 +13,12 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <!-- Link to function: handleButtonClick in UserController.java -->
+                <!-- Link to function: handleButtonClick in AdminController.java -->
                 <form action="/admin/buttonClicked" method="POST">
                     <div style="border: solid 1px black; padding: 20px;">
+                        <input id="mid" name="mid" th:value="${mid}" hidden>
                         <p th:text="${feedback}"></p>
-                        <button type="submit" name="buttonValue" value="back">Back To Admin centre</button>
+                        <button class="btn btn-dark" type="submit" name="buttonValue" th:value="${btnValue}" th:text="${btnText}"></button>
                     </div>
                 </form>
             </div>
