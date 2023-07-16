@@ -152,13 +152,23 @@ public class UserController {
                 for (Float f : userRecords) {
                     lastTen += f + ",";
                 }
-                model.addAttribute("recordSize", recordSize);
+                //model.addAttribute("recordSize", recordSize);
             } else if (recordSize > 10) {
                 for (int k = 0; k < 10; k++) {
                     lastTen = userRecords.get(recordSize - 1 - k) + "," + lastTen;
                 }
-                model.addAttribute("recordSize", 10);
+                //model.addAttribute("recordSize", 10);
             }
+
+            if(recordSize > 0){
+                lastTen=lastTen.substring(0, lastTen.length()-1);
+            }
+
+            System.out.println("----------------------");
+            System.out.println(lastTen);
+            System.out.println("----------------------");
+
+            model.addAttribute("recordSize", recordSize);
             model.addAttribute("userRecords", lastTen);
             return "user/statistic";
         }
