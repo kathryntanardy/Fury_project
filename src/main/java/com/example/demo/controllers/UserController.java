@@ -47,25 +47,25 @@ public class UserController {
         if (alreadyExist.isEmpty()) {
             String username = account.get("username");
             String password = account.get("password");
-            userRepo.save(new User(username, password));
+            String email = account.get("email");
+            userRepo.save(new User(username, password, email));
             response.setStatus(201);
             return "user/signin";
         }
         return "user/usernameTaken";
     }
 
-
     // @GetMapping("/login")
     // public String getLogin(Model model, HttpSession session) {
-    //     User user = (User) session.getAttribute("session_user");
-    //     if (user == null) {
-    //         return "/user/loginFailed";
-    //     } else {
-    //         model.addAttribute("user", user);
-    //         model.addAttribute("username", user.getUsername());
-    //         model.addAttribute("uid", user.getUid());
-    //         return "/user/userCentre";
-    //     }
+    // User user = (User) session.getAttribute("session_user");
+    // if (user == null) {
+    // return "/user/loginFailed";
+    // } else {
+    // model.addAttribute("user", user);
+    // model.addAttribute("username", user.getUsername());
+    // model.addAttribute("uid", user.getUid());
+    // return "/user/userCentre";
+    // }
     // }
 
     @GetMapping("/user/goLogin")
@@ -80,34 +80,34 @@ public class UserController {
             HttpServletRequest request, HttpSession session) {
         List<User> userList = userRepo.findByUsernameAndPassword(info.get("username"),
                 info.get("password"));
-        Boolean badLogin=false;
-        Boolean blankName=info.get("username").equals("");
-        Boolean blankPassword=info.get("password").equals("");
-        Boolean wrongPassword=userRepo.findByUsername(info.get("username")).size()!=0 && userList.size()==0;
-        Boolean noUser=userRepo.findByUsername(info.get("username")).size()==0;
-        if(blankName){
+        Boolean badLogin = false;
+        Boolean blankName = info.get("username").equals("");
+        Boolean blankPassword = info.get("password").equals("");
+        Boolean wrongPassword = userRepo.findByUsername(info.get("username")).size() != 0 && userList.size() == 0;
+        Boolean noUser = userRepo.findByUsername(info.get("username")).size() == 0;
+        if (blankName) {
             model.addAttribute("usernameAlert", "Username required");
-            badLogin=true;
+            badLogin = true;
         }
 
-        if(blankPassword){
+        if (blankPassword) {
             model.addAttribute("passwordAlert", "Password required");
-            badLogin=true;
-        } 
-        if(noUser && !blankPassword){
+            badLogin = true;
+        }
+        if (noUser && !blankPassword) {
             model.addAttribute("usernameAlert", "User not found");
             model.addAttribute("passwordAlert", "");
-            badLogin=true;
+            badLogin = true;
         }
-        if(!blankName && !blankPassword && wrongPassword){
+        if (!blankName && !blankPassword && wrongPassword) {
             model.addAttribute("passwordAlert", "Wrong password");
-            badLogin=true;
+            badLogin = true;
         }
         if (badLogin) {
             return "user/login";
         } else {
             User user = userList.get(0);
-            //User user = (User) session.getAttribute("session_user");
+            // User user = (User) session.getAttribute("session_user");
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
@@ -115,6 +115,7 @@ public class UserController {
             return "user/userCentre";
         }
     }
+
     // by 4
     // handle btn clicked
     @PostMapping("/user/buttonClicked")
@@ -172,8 +173,8 @@ public class UserController {
         if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
             return "user/login";
-        } 
-        
+        }
+
         else {
             List<User> user = userRepo.findByUid(Integer.parseInt(info.get("uid")));
             model.addAttribute("username", user.get(0).getUsername());
