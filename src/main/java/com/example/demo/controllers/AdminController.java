@@ -74,7 +74,7 @@ public class AdminController {
             badLogin=true;
         }
         if (badLogin) {
-            return "/admin/login";
+            return "admin/login";
         } else {
             Admin admin = adminList.get(0);
             //User user = (User) session.getAttribute("session_user");
