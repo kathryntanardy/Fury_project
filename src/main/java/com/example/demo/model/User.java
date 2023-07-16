@@ -30,6 +30,12 @@ public class User {
         this.bestWPM = 0;
     }
 
+    public User(String username, String password, String emailAddress) {
+        this.username = username;
+        this.password = password;
+        this.emailAddress = emailAddress;
+    }
+
     public User(String username, String password, String emailAddress, ArrayList<Float> records, float averageWPM,
             float bestWPM) {
         this.username = username;
@@ -100,12 +106,12 @@ public class User {
         this.WPM.add(wpm);
         this.bestWPM = wpm;
         float sumTime = 0;
-        for(int i = 0; i < WPM.size(); i++) {
+        for (int i = 0; i < WPM.size(); i++) {
             if (bestWPM < WPM.get(i)) {
                 bestWPM = WPM.get(i);
             }
             sumTime += WPM.get(i);
         }
-        averageWPM = sumTime/WPM.size();
+        averageWPM = sumTime / WPM.size();
     }
 }
