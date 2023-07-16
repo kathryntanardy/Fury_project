@@ -104,7 +104,7 @@ public class UserController {
             badLogin=true;
         }
         if (badLogin) {
-            return "/user/login";
+            return "user/login";
         } else {
             User user = userList.get(0);
             //User user = (User) session.getAttribute("session_user");
