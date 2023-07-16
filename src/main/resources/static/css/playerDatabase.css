@@ -1,0 +1,20 @@
+.button-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+table {
+    font-size: 20px;
+}
+
+#backHome {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
+}

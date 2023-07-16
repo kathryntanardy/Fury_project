@@ -6,3 +6,17 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+#backHome {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+body {
+    background-color: lightgrey;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+    font-size: 20px;
+}
