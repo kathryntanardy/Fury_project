@@ -55,28 +55,59 @@ public class UserController {
     }
 
 
-    @GetMapping("/login")
-    public String getLogin(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("session_user");
-        if (user == null) {
-            return "/user/loginFailed";
-        } else {
-            model.addAttribute("user", user);
-            model.addAttribute("username", user.getUsername());
-            model.addAttribute("uid", user.getUid());
-            return "/user/userCentre";
-        }
+    // @GetMapping("/login")
+    // public String getLogin(Model model, HttpSession session) {
+    //     User user = (User) session.getAttribute("session_user");
+    //     if (user == null) {
+    //         return "/user/loginFailed";
+    //     } else {
+    //         model.addAttribute("user", user);
+    //         model.addAttribute("username", user.getUsername());
+    //         model.addAttribute("uid", user.getUid());
+    //         return "/user/userCentre";
+    //     }
+    // }
+
+    @GetMapping("/user/goLogin")
+    public String goSignin(@RequestParam Map<String, String> info, Model model) {
+        // model.addAttribute("usernameAlert", "");
+        // model.addAttribute("passwordAlert", "");
+        return "user/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public String login(@RequestParam Map<String, String> info, Model model,
             HttpServletRequest request, HttpSession session) {
         List<User> userList = userRepo.findByUsernameAndPassword(info.get("username"),
                 info.get("password"));
-        if (userList.isEmpty()) {
-            return "/user/loginFailed";
+        Boolean badLogin=false;
+        Boolean blankName=info.get("username").equals("");
+        Boolean blankPassword=info.get("password").equals("");
+        Boolean wrongPassword=userRepo.findByUsername(info.get("username")).size()!=0 && userList.size()==0;
+        Boolean noUser=userRepo.findByUsername(info.get("username")).size()==0;
+        if(blankName){
+            model.addAttribute("usernameAlert", "Username required");
+            badLogin=true;
+        }
+
+        if(blankPassword){
+            model.addAttribute("passwordAlert", "Password required");
+            badLogin=true;
+        } 
+        if(noUser && !blankPassword){
+            model.addAttribute("usernameAlert", "User not found");
+            model.addAttribute("passwordAlert", "");
+            badLogin=true;
+        }
+        if(!blankName && !blankPassword && wrongPassword){
+            model.addAttribute("passwordAlert", "Wrong password");
+            badLogin=true;
+        }
+        if (badLogin) {
+            return "/user/login";
         } else {
             User user = userList.get(0);
+            //User user = (User) session.getAttribute("session_user");
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());

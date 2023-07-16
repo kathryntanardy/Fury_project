@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,6 +22,7 @@ import com.example.demo.model.userMessage;
 import com.example.demo.model.userMessageRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {
@@ -37,32 +39,79 @@ public class AdminController {
     @Autowired
     private adminMessageRepository adminMsgRepo;
 
-    @PostMapping("/adminLogin")
-    public String adminLogin(@RequestParam Map<String, String> info) {
-        List<Admin> admin = adminRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
-
-        //By A
-        if(admin.size()==0){
-            return "admin/failed";
+    @GetMapping("/admin/goLogin")
+    public String goSignin(@RequestParam Map<String, String> info, Model model) {
+        // model.addAttribute("usernameAlert", "");
+        // model.addAttribute("passwordAlert", "");
+        return "admin/login";
+    }
+    @PostMapping("/admin/login")
+    public String login(@RequestParam Map<String, String> info, Model model,
+            HttpServletRequest request, HttpSession session) {
+        List<Admin> adminList = adminRepo.findByUsernameAndPassword(info.get("username"),
+                info.get("password"));
+        Boolean badLogin=false;
+        Boolean blankName=info.get("username").equals("");
+        Boolean blankPassword=info.get("password").equals("");
+        Boolean wrongPassword=userRepo.findByUsername(info.get("username")).size()!=0 && adminList.size()==0;
+        Boolean noUser=userRepo.findByUsername(info.get("username")).size()==0;
+        if(blankName){
+            model.addAttribute("usernameAlert", "Username required");
+            badLogin=true;
         }
-        else{
+
+        if(blankPassword){
+            model.addAttribute("passwordAlert", "Password required");
+            badLogin=true;
+        } 
+        if(noUser && !blankPassword){
+            model.addAttribute("usernameAlert", "User not found");
+            model.addAttribute("passwordAlert", "");
+            badLogin=true;
+        }
+        if(!blankName && !blankPassword && wrongPassword){
+            model.addAttribute("passwordAlert", "Wrong password");
+            badLogin=true;
+        }
+        if (badLogin) {
+            return "/admin/login";
+        } else {
+            Admin admin = adminList.get(0);
+            //User user = (User) session.getAttribute("session_user");
+            request.getSession().setAttribute("session_user", admin);
+            model.addAttribute("admin", admin);
+            //model.addAttribute("username", user.getUsername());
+            //model.addAttribute("uid", user.getUid());
             return "admin/adminCentre";
         }
-
-
-
-        // System.out.println(info.get("username"));
-
-        // if (!info.get("username").equals("adminaccount")) {
-        //     return "/admin/failed";
-        // }
-        // if (!info.get("password").equals("furygroup18")) {
-        //     return "/admin/failed";
-        // } else{
-        //     return "/admin/dashboard";
-        // }
-            
     }
+
+    // @PostMapping("/adminLogin")
+    // public String adminLogin(@RequestParam Map<String, String> info) {
+    //     List<Admin> admin = adminRepo.findByUsernameAndPassword(info.get("username"), info.get("password"));
+
+    //     //By A
+    //     if(admin.size()==0){
+    //         return "admin/failed";
+    //     }
+    //     else{
+    //         return "admin/adminCentre";
+    //     }
+
+
+
+    //     // System.out.println(info.get("username"));
+
+    //     // if (!info.get("username").equals("adminaccount")) {
+    //     //     return "/admin/failed";
+    //     // }
+    //     // if (!info.get("password").equals("furygroup18")) {
+    //     //     return "/admin/failed";
+    //     // } else{
+    //     //     return "/admin/dashboard";
+    //     // }
+            
+    // }
 
     //by 4
     //handle btn clicked
