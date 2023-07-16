@@ -57,16 +57,16 @@ public class UserController {
 
     @GetMapping("/user/login")
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
-    User user = (User) session.getAttribute("session_user");
-        if (user == null) {
-            return "/user/login";
-        } else {
-            model.addAttribute("user", user);
-            model.addAttribute("username", user.getUsername());
-            model.addAttribute("uid", user.getUid());
-            return "/user/userCentre";
-        }
+       User user = (User) session.getAttribute("session_user");
+    if (user == null) {
+    return "/user/login";
+    } else {
+    model.addAttribute("user", user);
+    model.addAttribute("username", user.getUsername());
+    model.addAttribute("uid", user.getUid());
+    return "/user/userCentre";
     }
+}
 
     @PostMapping("/user/login")
     public String login(@RequestParam Map<String, String> info, Model model,
@@ -100,7 +100,6 @@ public class UserController {
             return "user/login";
         } else {
             User user = userList.get(0);
-            // User user = (User) session.getAttribute("session_user");
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
