@@ -185,7 +185,7 @@ public class AdminController {
             model.addAttribute("feedback", feedback);
             model.addAttribute("mid", message.get("mid"));
             model.addAttribute("btnValue", "Reply");
-            model.addAttribute("btnText", "back to reply");
+            model.addAttribute("btnText", "Back to Reply");
             System.out.println("bad msg");
             return "admin/sendResult";
         }

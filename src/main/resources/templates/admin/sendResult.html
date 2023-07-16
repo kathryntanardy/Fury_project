@@ -9,15 +9,58 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body style="background-color:lightgrey; position:relative; top:10rem; font-family: Arial, Helvetica, sans-serif;">
+<body style="background-color:lightgrey; font-family: Arial, Helvetica, sans-serif;">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <!-- Link to function: handleButtonClick in AdminController.java -->
+
+            <div class="w-100"style="width: 100px; padding: 20px;">
+                <div id="logo d-flex align-items-center" style="float: left;">
+                    <img src="/imageFiles/Fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                </div>
+
+                   <form action="/admin/buttonClicked" method="POST">
+                    <div class="" style=" padding: 20px;">
+                        <div id="icons" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                                <br>
+                                Log Out</button>
+            
+                            <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                                <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
+                                <br>
+                               Home</button>
+                        </div>
+                    </div>
+                </form>
+            </div> 
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+           
+
+
+
+            <div class="col-md-3 text-center justify-content-center" >
+                <!-- Link to function: handleButtonClick in UserController.java -->
                 <form action="/admin/buttonClicked" method="POST">
-                    <div style="border: solid 1px black; padding: 20px;">
+                    <div id="msgvalue" style="border: 3px solid black; padding: 20px; ">
                         <input id="mid" name="mid" th:value="${mid}" hidden>
-                        <p th:text="${feedback}"></p>
+                        <p class="font-weight-bold" th:text="${feedback}"></p>
+                        <br>
+                        <br>
+                        <br>
                         <button class="btn btn-dark" type="submit" name="buttonValue" th:value="${btnValue}" th:text="${btnText}"></button>
                     </div>
                 </form>

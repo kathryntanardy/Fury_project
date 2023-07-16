@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Leave your comment! </title>
+        <title>Reply</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/adminReply.css">
@@ -39,36 +39,53 @@
                         </div>
                     </div>
                 </form>
-            </div> 
+            </div>
+            
+            <div style="width: 75%">
 
-            <div class="col-md-4">
+                <!-- Please specify pathway, return to the admin read message , by k -->
+                <!-- <form action="/admin/buttonClicked" method="POST"> -->
+                    <div class="text-center">
+                        <button id="backHome" type="submit" name="buttonValue" value="back" style="float: left;">
+                            <img src="/imageFiles/back.png" alt="backIcon" width="60px" height="60px;">
+                            <br>
+                            Back</button>
+                    </div>
+                <!-- </form> -->
+
+                <br>
+                
+            
+                <div class="text-center" style="padding: 20px">
+                    <h1>Reply</h1>
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <!-- mapping function in UserController.java  -->
                 <form action="/admin/reply" method="post">
                     <p>Subject</p>
-                    <input id="subject" name="subject" th:value="${subject}" style="width:90%;">
+                    <input id="subject" name="subject" th:value="${subject}" style="width:100%;">
                     <br>
                     <br>
                     <p>Message</p>
-                    <textarea id="content" name="tempContent" th:text="${content}" style="width:90%;" hidden></textarea>
-                    <textarea id="content" name="content" th:text="${content}" style="width:90%;"></textarea>
+                    <textarea id="content" name="tempContent" th:text="${content}" style="width:100%;" hidden></textarea>
+                    <textarea id="content" name="content" th:text="${content}" style="width:100%;"></textarea>
                     <script>
                         adjustSize();
                     </script>
                     <br>
                     <input id="mid" name="mid" th:value="${msg.mid}" hidden>
-                    <input  type="submit" value="Send"></input>
+                    <div class="text-center"> 
+                        <input id="mid" name="mid" th:value="${msg.mid}" hidden> 
+                    </div>
+                    
+                    <input  id="sendBtn" type="submit" value="Send"></input>
                     <br>
                 </form>	
 
                 <!-- mapping function in UserController.java  -->
-                <form action="/admin/buttonClicked" method="POST">
-                    <div>
-                        <button type="submit" name="buttonValue" value="Inbox">Back to Inbox</button>
-                    </div>
-                    <div>
-                        <button type="submit" name="buttonValue" value="back">Back To Admin centre</button>
-                    </div>
-                </form>
+                
             </div>
         </div>
     </div>
