@@ -240,7 +240,7 @@ public class UserController {
         }
         if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
-            return "user/login";
+            return "user/siginin";
         }
 
         else {
