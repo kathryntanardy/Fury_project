@@ -40,26 +40,92 @@ public class UserController {
     @Autowired
     private adminMessageRepository adminMsgRepo;
 
-    @GetMapping("/signUp")
+    // @GetMapping("/signUp")
+    // public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
+    //     System.out.println("sampe sini");
+    //     List<User> alreadyExist = userRepo.findByUsername(account.get("username"));
+    //     if (alreadyExist.isEmpty()) {
+    //         String username = account.get("username");
+    //         String password = account.get("password");
+    //         String email = account.get("email");
+    //         userRepo.save(new User(username, password, email));
+    //         response.setStatus(201);
+    //         return "user/signin";
+    //     }
+    //     return "user/usernameTaken";
+    // }
+    @GetMapping("/user/signUp")
+    public String goSignUp(){
+        return "user/signup";
+    }
+
+    @PostMapping("/user/signUp")
     public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
         System.out.println("sampe sini");
         List<User> alreadyExist = userRepo.findByUsername(account.get("username"));
-        if (alreadyExist.isEmpty()) {
-            String username = account.get("username");
-            String password = account.get("password");
-            String email = account.get("email");
-            userRepo.save(new User(username, password, email));
-            response.setStatus(201);
-            return "user/signin";
+        Boolean emptyUsername=account.get("username").equals("");
+        Boolean emptyPassword=account.get("password").equals("");
+        Boolean emptyRePassword=account.get("retypePassword").equals("");
+        Boolean emptyEmail=account.get("email").equals("");
+        Boolean badSignUp=false;
+        if(emptyUsername){
+            model.addAttribute("usernameAlert", "Username is required");
+            badSignUp=true;
         }
-        return "user/usernameTaken";
+        if(emptyPassword){
+            model.addAttribute("passwordAlert", "Password is required");
+            badSignUp=true;
+        }
+        if(emptyRePassword){
+            model.addAttribute("rePasswordAlert", "Please confirm your password");
+            badSignUp=true;
+        }
+        if(emptyEmail){
+            model.addAttribute("emailAlert", "Email is required");
+            badSignUp=true;
+        }
+        if(!emptyPassword && !emptyRePassword && !account.get("password").equals(account.get("retypePassword"))){
+            model.addAttribute("rePasswordAlert", "Not same as password");
+            badSignUp=true;
+        }
+        if(!emptyUsername && alreadyExist.size()!=0){
+            model.addAttribute("usernameAlert", "Username already exsit!");
+            badSignUp=true;
+        }
+
+        if(badSignUp){
+            return "user/signup";
+        }
+        String username = account.get("username");
+        String password = account.get("password");
+        String email=account.get("email");
+        userRepo.save(new User(username, password, email));
+        response.setStatus(201);
+        return "user/siginin";
+
+        // if (alreadyExist.isEmpty()) {
+        //     String username = account.get("username");
+        //     String password = account.get("password");
+        //     //userRepo.save(new User(username, password, email));
+        //     response.setStatus(201);
+        //     return "user/login";
+        // }
+        //return "user/usernameTaken";
+    }
+
+    private Boolean isGoodEmailFormat(String email){
+        Boolean existSigns=email.indexOf('@')!=-1  && email.indexOf('.')!=-1;
+        Boolean onlyOneSign=email.indexOf('@', email.indexOf('@'))==-1 && email.indexOf('.', email.indexOf('.'))==-1;
+        Boolean goodSignFormat=email.indexOf('@', email.indexOf('.'))!=-1;
+
+        return existSigns && onlyOneSign && goodSignFormat;
     }
 
     @GetMapping("/user/login")
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
        User user = (User) session.getAttribute("session_user");
         if (user == null) {
-            return "user/login";
+            return "user/siginin";
         } else {
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
@@ -97,7 +163,7 @@ public class UserController {
             badLogin = true;
         }
         if (badLogin) {
-            return "user/login";
+            return "user/siginin";
         } else {
             User user = userList.get(0);
             request.getSession().setAttribute("session_user", user);

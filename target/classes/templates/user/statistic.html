@@ -85,7 +85,9 @@
                         <canvas id="lineChart" style="width: 80%; height: 80%;"></canvas>
                         <script>  
                             const data = document.getElementById('userRecords').textContent.split(",").map(Number);
-                            const recordSize=Number(document.getElementById('recordSize').textContent);
+                            //const recordSize=Number(document.getElementById('recordSize').textContent);
+                            console.log(data);
+                            const recordSize=data.length;
                             const labels = [];
                             for (let i = 1; i <= recordSize; i++) {
                                 labels.push("Game "+i);

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Sign Up </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/createaccount.css">
+    <!-- <script type="text/javascript" src="./js/createaccount.js" defer></script> -->
+
+</head>
+
+<body style="background-color:lightgrey; position:relative; top:3rem; font-family: Arial, Helvetica, sans-serif;">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <img src="/imageFiles/fury.png" alt="Fury Logo" width="150" height="150">
+                <br>
+
+                <h4>Create your Fury Account</h4>
+
+                <form action="/user/signUp" id="signup" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" type="text" id="username" name="username" autofocus placeholder="Username" style="background-color: transparent; border: black solid 1px">
+                        <p style="color: red;" name="usernameAlert" th:text="${usernameAlert}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" id="email" name="email" placeholder="Email address"
+                            style="background-color: transparent; border: black solid 1px">
+                        <p style="color: red;" name="emailAlert" th:text="${emailAlert}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" placeholder="Password"
+                            style="background-color: transparent; border: black solid 1px">
+                            <p style="color: red;" name="passwordAlert" th:text="${passwordAlert}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reTypePassword">Confirm Password</label>
+                        <input class="form-control" type="password" id="retypePassword" name="retypePassword" placeholder="Re-type Password"
+                            style="background-color: transparent; border: black solid 1px">
+                            <p style="color: red;" name="rePasswordAlert" th:text="${rePasswordAlert}"></p>
+                    </div>
+
+                    <br>
+
+                    <a class="btn btn-light" style="float: left;" href="/user/login">
+                        Sign In
+                    </a>
+
+                    <div class="text-center">
+                        <button class="btn btn-dark text-white" style="float:right" id="submit" type="Submit" value="Continue">Continue</button>
+                    </div>
+                    
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+</html>
