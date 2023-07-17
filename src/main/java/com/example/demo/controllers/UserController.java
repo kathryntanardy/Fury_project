@@ -101,7 +101,7 @@ public class UserController {
         String email=account.get("email");
         userRepo.save(new User(username, password, email));
         response.setStatus(201);
-        return "user/siginin";
+        return "user/signin";
 
         // if (alreadyExist.isEmpty()) {
         //     String username = account.get("username");
@@ -125,7 +125,7 @@ public class UserController {
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
        User user = (User) session.getAttribute("session_user");
         if (user == null) {
-            return "user/siginin";
+            return "user/signin";
         } else {
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
@@ -163,7 +163,7 @@ public class UserController {
             badLogin = true;
         }
         if (badLogin) {
-            return "user/siginin";
+            return "user/signin";
         } else {
             User user = userList.get(0);
             request.getSession().setAttribute("session_user", user);
@@ -240,7 +240,7 @@ public class UserController {
         }
         if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
-            return "user/siginin";
+            return "user/signin";
         }
 
         else {
@@ -312,6 +312,6 @@ public class UserController {
         User user = (User) session.getAttribute("session_user");
         user.addRecords(Float.parseFloat(wpm.get("wpm")));
         userRepo.save(user);
-        return "/user/game";
+        return "user/game";
     }
 }

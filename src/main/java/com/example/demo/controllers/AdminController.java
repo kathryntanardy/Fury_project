@@ -43,11 +43,11 @@ public class AdminController {
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("session_user");
         if (admin == null) {
-        return "/admin/login";
+        return "admin/login";
         } else {
         model.addAttribute("user", admin);
         model.addAttribute("username", admin.getUsername());
-        return "/admin/adminCentre";
+        return "admin/adminCentre";
     }
 }
     @PostMapping("/admin/login")
