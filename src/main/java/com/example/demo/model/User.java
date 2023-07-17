@@ -21,29 +21,13 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.emailAddress = "";
-        this.WPM = new ArrayList<Float>();
-        this.averageWPM = 0;
-        this.bestWPM = 0;
-    }
-
     public User(String username, String password, String emailAddress) {
         this.username = username;
         this.password = password;
         this.emailAddress = emailAddress;
-    }
-
-    public User(String username, String password, String emailAddress, ArrayList<Float> records, float averageWPM,
-            float bestWPM) {
-        this.username = username;
-        this.password = password;
-        this.emailAddress = emailAddress;
-        this.WPM = records;
-        this.averageWPM = averageWPM;
-        this.bestWPM = bestWPM;
+        this.WPM = new ArrayList<Float>();
+        this.averageWPM = 0;
+        this.bestWPM = 0;
     }
 
     public int getUid() {
