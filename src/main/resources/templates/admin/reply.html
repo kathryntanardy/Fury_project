@@ -45,12 +45,24 @@
 
                 <!-- Please specify pathway, return to the admin read message , by k -->
                 <!-- <form action="/admin/buttonClicked" method="POST"> -->
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                         <button id="backHome" type="submit" name="buttonValue" value="back" style="float: left;">
                             <img src="/imageFiles/back.png" alt="backIcon" width="60px" height="60px;">
                             <br>
                             Back</button>
-                    </div>
+                    </div> -->
+                    <form action="/admin/readInbox" method="POST">
+                        <div class="text-center">
+                            <div style="float: left">
+                                
+                                <button id="backHome" type="submit" name="buttonValue" th:value="${msg.mid}" >
+                                    <img src="/imageFiles/back.png" alt="backIcon" width="60px" height="60px;">
+                                    <br>
+                                    Back</button>
+                            </div>
+                            
+                        </div>
+                    </form>
                 <!-- </form> -->
 
                 <br>
