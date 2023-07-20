@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -196,7 +197,15 @@ public class UserController {
             return "user/ContactUs";
         }
         if (buttonValue.equals("Inbox")) {
-            List<adminMessage> inbox = adminMsgRepo.findByToUid(Integer.parseInt(info.get("uid")));
+            int uid=Integer.parseInt(info.get("uid"));
+            List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
+            //List<adminMessage> inbox = adminMsgRepo.findByToUid(Integer.parseInt(info.get("uid")));
+            List<adminMessage> inbox=new ArrayList<>();
+            for(adminMessage m:allAdminMessages){
+                if(m.getToUid()==uid || m.getToUid()==0){
+                    inbox.add(m);
+                } 
+            }
             System.out.println("Number of msg: " + inbox.size());
             model.addAttribute("inbox", inbox);
             return "user/userInbox";

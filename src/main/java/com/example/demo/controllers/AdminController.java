@@ -106,7 +106,7 @@ public class AdminController {
             int fromUid=userMsgRepo.findByMid(Integer.parseInt(info.get("mid"))).get(0).getFromUid();
             String fromUser=userRepo.findByUid(fromUid).get(0).getUsername();
             model.addAttribute("subject", "Re: "+msg.getSubject());
-            model.addAttribute("content","Dear "+fromUser+",\n\n"+"Best,\n"+"Team Fury\n\n"+"[Quote: "+msg.getContent()+"]");
+            model.addAttribute("content","Dear "+fromUser+",\n\n"+"Best,\n"+"Team Fury\n\n"+"[Quote: \n"+msg.getContent()+"\n]");
             model.addAttribute("fromUser", fromUser);
             return "admin/reply";
         }
@@ -128,7 +128,50 @@ public class AdminController {
             model.addAttribute("otherType", "Commulative users");
             return "admin/trend";
         }
+        if(buttonValue.equals("announcement")){
+            return "admin/announcement";
+        }
         return "admin/adminCentre";
+    }
+    
+    @PostMapping("/admin/announcement")
+    public String postAnnouncement(@RequestParam Map<String, String> message, Model model){
+        boolean goodMsg=true;
+        String feedback="";
+        if(message.get("subject").equals("")){
+            goodMsg=false;
+            feedback="subject is";
+            System.out.println("bad subject");
+        }
+        if(message.get("content").equals("")){
+            goodMsg=false;
+            if(feedback.equals("")){
+                feedback="content is";
+            }
+            else{
+                feedback="subject and content are";
+            }
+            System.out.println("bad content");
+        }
+        if(!goodMsg){
+            feedback+=" null";
+            feedback="Error: "+feedback;
+            System.out.println(feedback);
+            model.addAttribute("feedback", feedback);
+            model.addAttribute("mid", message.get("mid"));
+            model.addAttribute("btnValue", "Reply");
+            model.addAttribute("btnText", "Back to Reply");
+            System.out.println("bad msg");
+            return "admin/sendResult";
+        }
+
+        //None of the rows are null
+        System.out.println("Good msg");
+        adminMsgRepo.save(new adminMessage("Announcement",0, message.get("subject"), message.get("content"),LocalDate.now(),"N"));
+        model.addAttribute("feedback", "Message sent!!");
+        model.addAttribute("btnValue", "back");
+            model.addAttribute("btnText", "Back to admin centre");
+        return "admin/sendResult";
     }
 
     @PostMapping("/admin/trend")
@@ -234,7 +277,7 @@ public class AdminController {
             feedback="subject is";
             System.out.println("bad subject");
         }
-        if(message.get("content").equals(message.get("tempContent"))){
+        if(message.get("content").equals("") || message.get("content").equals(message.get("tempContent"))){
             goodMsg=false;
             if(feedback.equals("")){
                 feedback="content is";
