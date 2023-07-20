@@ -31,6 +31,7 @@
                                 <img src="/imageFiles/home.png" alt="homeIcon" width="30px" height="30px">
                                 <br>
                                 Home</button>
+                                <input id="currentPage" name="currentPage" value="1" hidden>
                             <button type="submit" name="buttonValue" value="Inbox" style="width: 100px; height: 100px; background:transparent; border: transparent;">
                                 <img src="/imageFiles/mail.png" alt="mailIcon" width="40px" height="30px">
                                 <br>
@@ -64,10 +65,30 @@
                 <div class="text-center" style="padding: 20px">
                     <h1>Inbox</h1>
                 </div>
-                
+                <!-- <form id="sortForm" action="/user/readInbox">
+                    <label>
+                        <input type="checkbox" name="option1" value="Option 1" onchange="submitForm()">
+                        Option 1
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="option2" value="Option 2" onchange="submitForm()">
+                        Option 2
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="option3" value="Option 3" onchange="submitForm()">
+                        Option 3
+                    </label><br>
+                </form> -->
+            
+                <script>
+                    function submitForm() {
+                        document.getElementById("sortForm").submit();
+                    }
+                </script>
                 <div class="w-80" style="width: 100%; padding: 20px">
                     <div>
                         <form action="/user/readInbox" method="POST">
+                            <input id="currentPage" name="currentPage" th:value="${currentPage}" hidden>
                             <!-- div purpose: For identifying the user identity -->
                             <div style="width: 100%">
                                 <!-- <a th:text="${msg.subject}"></a> -->
@@ -94,6 +115,19 @@
                          
                     </div>
                 </div>
+                <form action="/user/inbox" method="POST">
+                    <div style="padding: 20px;" class="text-center">
+                        <a th:text="${currentPage}+'/'+${maxPage}"></a>
+                        <br>
+                        <button id="backHome" class="btn rounded-0" type="submit" name="buttonValue" value="previous">Previous</button>
+                        <br>
+                        <br>
+                        <button id="backHome" class="btn rounded-0" type="submit" name="buttonValue" value="next">Next</button>
+                        <!-- To identify the user identity -->
+                        <input id="currentPage" name="currentPage" th:value="${currentPage}" hidden>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+                </form>
                   
                   <!-- Link to function: handleButtonClick in UserController.java -->
                   <form action="/user/buttonClicked" method="POST">
@@ -103,6 +137,12 @@
                           <input id="uid" name="uid" th:value="${uid}" hidden>
                       </div>
                   </form>
+                  <form action="/user/get10Msg" method="POST">
+                    <div style="padding: 20px;" class="text-center">
+                        <button id="backHome" class="btn rounded-0" type="submit" name="buttonValue" value="back" hidden>Get 10 Msg</button>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

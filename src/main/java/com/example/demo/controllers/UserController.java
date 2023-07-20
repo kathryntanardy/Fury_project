@@ -1,10 +1,14 @@
 package com.example.demo.controllers;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.security.auth.Subject;
 
@@ -197,17 +201,31 @@ public class UserController {
             return "user/ContactUs";
         }
         if (buttonValue.equals("Inbox")) {
+            int currentPage=Integer.parseInt(info.get("currentPage"));
             int uid=Integer.parseInt(info.get("uid"));
             List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
-            //List<adminMessage> inbox = adminMsgRepo.findByToUid(Integer.parseInt(info.get("uid")));
+            List<adminMessage> allInbox=new ArrayList<>();
             List<adminMessage> inbox=new ArrayList<>();
+            Comparator<adminMessage> sentDateComparator = Comparator.comparing(adminMessage::getSentDate).reversed();
             for(adminMessage m:allAdminMessages){
                 if(m.getToUid()==uid || m.getToUid()==0){
-                    inbox.add(m);
+                    allInbox.add(m);
                 } 
             }
-            System.out.println("Number of msg: " + inbox.size());
+            Collections.sort(allInbox, sentDateComparator);
+            for(int i=0;i<currentPage*5;i++){
+                if(i<allInbox.size()){
+                    inbox.add(allInbox.get(i));         
+                }
+                else{
+                    break;
+                }
+            }
+            System.out.println("Number of msg: " + allInbox.size());
             model.addAttribute("inbox", inbox);
+            model.addAttribute("currentPage", currentPage);
+            model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
+
             return "user/userInbox";
         }
         if (buttonValue.equals("Statistic")) {
@@ -273,12 +291,56 @@ public class UserController {
     public String readUserInbox(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,
             Model model) {
         model.addAttribute("uid", info.get("uid"));
+        int currentPage=Integer.parseInt(info.get("currentPage"));
         adminMessage msg = adminMsgRepo.findByMid(Integer.parseInt(buttonValue)).get(0);
         msg.setRead("Y");
         adminMsgRepo.save(msg);
         model.addAttribute("msg", msg);
+        model.addAttribute("currentPage", currentPage);
+        //model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
         return "user/userReadInbox";
     }
+
+
+    @PostMapping("/user/inbox")
+    public String switchPage(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,Model model){
+        List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
+        List<adminMessage> allInbox=new ArrayList<>();
+        List<adminMessage> inbox=new ArrayList<>();
+        int uid=Integer.parseInt(info.get("uid"));
+        Comparator<adminMessage> sentDateComparator = Comparator.comparing(adminMessage::getSentDate).reversed();
+        for(adminMessage m:allAdminMessages){
+            if(m.getToUid()==uid || m.getToUid()==0){
+                allInbox.add(m);
+            } 
+        }
+        Collections.sort(allInbox, sentDateComparator);
+        int currentPage=Integer.parseInt(info.get("currentPage"));
+        int maxPage=(int)Math.ceil(allInbox.size()/5.0); 
+        if(buttonValue.equals("next") && currentPage<maxPage){
+            currentPage++;        
+        }
+        else if(buttonValue.equals("previous") && currentPage>1){
+            currentPage--;
+        }
+        for(int i=(currentPage-1)*5;i<(currentPage)*5;i++){
+            if(i<allInbox.size()){
+                inbox.add(allInbox.get(i));         
+            }
+            else{
+                break;
+            }
+        }
+        
+        System.out.println("Number of msg: " + allInbox.size());
+        model.addAttribute("uid", info.get("uid"));
+        model.addAttribute("inbox", inbox);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
+        return "user/userInbox";
+    }
+        
+    
 
     // by 4
     // add msg to database
@@ -330,5 +392,32 @@ public class UserController {
         user.addRecords(Float.parseFloat(wpm.get("wpm")));
         userRepo.save(user);
         return "user/game";
+    }
+
+    @PostMapping("/user/get10Msg")
+    public String get10msg(@RequestParam Map<String, String> info,Model model, HttpSession session){
+       int uid=Integer.parseInt(info.get("uid"));
+            for(int i=1;i<=10;i++){
+                adminMsgRepo.save(new adminMessage("Test", uid, "Test subject"+i, "Test content"+i,ranDateB4(LocalDate.now()),"N"));
+            }
+            List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
+            List<adminMessage> inbox=new ArrayList<>();
+            for(adminMessage m:allAdminMessages){
+                if(m.getToUid()==uid || m.getToUid()==0){
+                    inbox.add(m);
+                } 
+            }
+            System.out.println("Number of msg: " + inbox.size());
+            model.addAttribute("inbox", inbox);
+            return "user/userInbox";
+
+    }
+
+    private LocalDate ranDateB4(LocalDate now){
+        LocalDate firstDate=LocalDate.parse(now.getYear()+"-01-01");
+        int diff=(int)ChronoUnit.DAYS.between(firstDate,now);
+        diff=new Random().nextInt(diff);
+        now=now.minusDays(diff);
+        return now;
     }
 }
