@@ -99,7 +99,9 @@ public class UserController {
         String username = account.get("username");
         String password = account.get("password");
         String email=account.get("email");
-        userRepo.save(new User(username, password, email));
+        User newUser=new User(username, password, email);
+        newUser.setRegisterDate(LocalDate.now());
+        userRepo.save(newUser);
         response.setStatus(201);
         return "user/signin";
 
@@ -127,6 +129,7 @@ public class UserController {
         if (user == null) {
             return "user/signin";
         } else {
+            user.setLastLoginDate(LocalDate.now());
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
             model.addAttribute("uid", user.getUid());
@@ -166,6 +169,11 @@ public class UserController {
             return "user/signin";
         } else {
             User user = userList.get(0);
+            user.setLastLoginDate(LocalDate.now());
+            System.out.println("======================================");
+            System.out.println(user.getLastLoginDate());
+            System.out.println("======================================");
+            userRepo.save(user);
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());

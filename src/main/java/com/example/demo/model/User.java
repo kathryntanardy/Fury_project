@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import jakarta.persistence.*;
@@ -17,6 +18,9 @@ public class User {
     private ArrayList<Float> WPM;
     private float averageWPM;
     private float bestWPM;
+    private LocalDate registerDate;
+    private LocalDate lastLoginDate;
+    
 
     public User() {
     }
@@ -98,4 +102,22 @@ public class User {
         }
         averageWPM = sumTime / WPM.size();
     }
+
+    public LocalDate getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDate registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public LocalDate getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public void setLastLoginDate(LocalDate lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+    }
+
+    
 }

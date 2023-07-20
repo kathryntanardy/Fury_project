@@ -18,18 +18,23 @@
                     <img src="/imageFiles/Fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
                 </div>
 
-                   <form action="/admin/buttonClicked" method="POST">
+                <form action="/admin/buttonClicked" method="POST">
                     <div class="" style=" padding: 20px;">
                         <div id="icons" style="float: right;"> 
                             <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
                                 <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
                                 <br>
                                 Log Out</button>
-            
+                            <button type="submit" name="buttonValue" value="trend"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                                    <img src="/imageFiles/statistic.png" alt="homeIcon" width="35px" height="35px">
+                                    <br>
+                                   Trend</button>
                             <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
                                 <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
                                 <br>
                                Home</button>
+
+                            
                         </div>
                     </div>
                 </form>
@@ -40,7 +45,14 @@
                 <div class="text-center" style="padding: 20px">
                     <h1>Database</h1>
                 </div>
-                
+                <div id="summary" class="container text-center" style="padding: 20px; width: 100%;">
+                    <div class="row"> 
+                        <div class="col-sm">
+                            <a>Total users: </a>
+                            <a th:text="${userNum}"></a>
+                        </div>
+                    </div>
+                </div>
                 <div class="w-80" style="width: 100%; padding: 20px">
                     <div>
                         <form action="/admin/handleUser" method="POST">
@@ -48,15 +60,15 @@
                             <div>
                                 <table class="table table-striped">
                                     <tr>
-                                        <th>Select</th>
-                                        <th>username</th>
+                                        <!-- <th>Select</th> -->
+                                        <th>Username</th>
                                         <th>Average wpm</th>
                                         <th>Best wpm</th>
                                     </tr>
                                     <tr th:each="user:${userList}">
-                                        <td>
+                                        <!-- <td>
                                             <input type="checkbox" name="userRow" th:value="${user.uid}">
-                                        </td>
+                                        </td> -->
                                         <td th:text="${user.username}"></td>
                                         <td th:text="${user.averageWPM}"></td>
                                         <td th:text="${user.bestWPM}"></td>

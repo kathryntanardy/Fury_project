@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -111,6 +112,7 @@ public class AdminController {
         }
         if(buttonValue.equals("playerDatabase")){
             List<User> userList=userRepo.findAll();
+            model.addAttribute("userNum",userList.size());
             model.addAttribute("userList", userList);
             return "admin/playerDatabase";
         }
@@ -118,8 +120,96 @@ public class AdminController {
             request.getSession().invalidate();
             return "admin/login";
         }
+        if(buttonValue.equals("trend")){
+            int currentYear=LocalDate.now().getYear();
+            model.addAttribute("year", currentYear);
+            model.addAttribute("data", activeUserInYear(currentYear));
+            model.addAttribute("type", "Actice Users");
+            model.addAttribute("otherType", "Commulative users");
+            return "admin/trend";
+        }
         return "admin/adminCentre";
     }
+
+    @PostMapping("/admin/trend")
+    public String switchYear(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model){
+        int year=Integer.parseInt(info.get("year"));
+        String type=info.get("type");
+        String otherType=info.get("otherType");
+        String data="";
+        if(buttonValue.equals("switchType")){
+            otherType=info.get("type");
+            if(type.equals("Actice Users")){
+                type="Commulative users";
+            }
+            else{
+                type="Actice Users";
+            }
+        }
+        else if(buttonValue.equals("nextYear")){
+            year++;
+        }
+        else if (buttonValue.equals("previousYear")) {
+            year--;
+        }
+        
+        if(type.equals("Actice Users")){
+            data=activeUserInYear(year);
+        }
+        else{
+            data=commulativUserInYear(year);
+        }
+        model.addAttribute("type", type);
+        model.addAttribute("otherType", otherType);
+        model.addAttribute("year", year);
+        model.addAttribute("data", data);
+        return "admin/trend";
+    }
+
+    private String activeUserInYear(int year){
+        List<User> allUsers = userRepo.findAll();
+        allUsers.sort(Comparator.comparing(User::getLastLoginDate));
+        int[] dataArr=new int[12];
+        String data="";
+        for(User u :allUsers){
+            LocalDate lastLogin=u.getLastLoginDate();
+            if(lastLogin.getYear()==year){
+                int month=lastLogin.getMonthValue();
+                dataArr[month-1]++;
+            }
+        }
+        for(int i:dataArr){
+            data+=i+",";
+        }
+        return data.substring(0, data.length()-1);
+    }
+
+    private String commulativUserInYear(int year){
+        List<User> allUsers = userRepo.findAll();
+        allUsers.sort(Comparator.comparing(User::getLastLoginDate));
+        int[] dataArr=new int[12];
+        String data="";
+        for(User u :allUsers){
+            LocalDate registerDate=u.getRegisterDate();
+            if(registerDate.getYear()<year){
+                for(int i=0;i<12;i++){
+                    dataArr[i]++;
+                }
+            }
+            else if(registerDate.getYear()==year){
+                int month=registerDate.getMonthValue();
+                for(int i=month-1;i<12;i++){
+                    dataArr[i]++;
+                }
+            }
+
+        }
+        for(int i:dataArr){
+            data+=i+",";
+        }
+        return data.substring(0, data.length()-1);
+    }
+
 
     @PostMapping("/admin/readInbox")
     public String readUserInbox(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info, Model model) {
