@@ -68,12 +68,14 @@
                 <br>
                 
             
-                <div class="text-center" style="padding: 20px">
-                    <h1>Reply</h1>
-                </div>
+                
             </div>
 
             <div class="col-md-6">
+                <div class="text-center" style="padding: 20px">
+                    <h1>Reply</h1>
+                </div>
+
                 <!-- mapping function in UserController.java  -->
                 <form action="/admin/reply" method="post">
                     <p>Subject</p>
@@ -91,8 +93,14 @@
                     <div class="text-center"> 
                         <input id="mid" name="mid" th:value="${msg.mid}" hidden> 
                     </div>
+
+                    <br>
+                    <br>
                     
-                    <input  id="sendBtn" type="submit" value="Send"></input>
+                    <div class="text-center">
+                        <input  id="sendBtn" type="submit" value="Send"></input>
+                    </div>
+                    
                     <br>
                 </form>	
 
