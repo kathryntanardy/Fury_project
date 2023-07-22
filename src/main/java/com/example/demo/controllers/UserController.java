@@ -391,7 +391,18 @@ public class UserController {
         User user = (User) session.getAttribute("session_user");
         user.addRecords(Float.parseFloat(wpm.get("wpm")));
         userRepo.save(user);
-        return "user/game";
+        return "user/game2";
+    }
+
+    @GetMapping("/submitWPM")
+    public String refresh(HttpSession session) {
+        User user = (User) session.getAttribute("session_user");
+        if (user == null) {
+            return "user/signin";
+        } else {
+            return "user/game";
+
+        }
     }
 
     @PostMapping("/user/get10Msg")
