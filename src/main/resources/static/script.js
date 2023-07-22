@@ -7,6 +7,9 @@ let timerStart = false;
 let numOfInputs = 0;
 let numOfCharacters;
 
+let theLength;
+let theFirstLetter;
+
 
 quoteInputElement.addEventListener('keydown', (event) => {
     if (event.code == "Backspace" && numOfInputs <= 0) {
@@ -66,9 +69,25 @@ quoteInputElement.addEventListener('input', () => {
 function getRandomQuote() {
     return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content).catch(error => console.error('Error:', error));
 }
-function getRandomWords () {
-    return fetch('https://random-word-api.herokuapp.com/word?number=25').then(response => response.text());
+function getEasyRandomWords() {
+    return fetch('https://random-word-api.vercel.app/api?words=13').then(response=> response.text());
 }
+function getHardRandomWords () {
+    return fetch('https://random-word-api.herokuapp.com/word?number=12').then(response => response.text());
+}
+function getCustomWords() {
+    if (theFirstLetter == '' && theLength != '') {
+        return fetch('https://random-word-api.vercel.app/api?words=15&length='+theLength).then(response => response.text());
+
+    }
+    else if (theLength == '' && theFirstLetter != '') {
+        return fetch('https://random-word-api.vercel.app/api?words=15&letter='+ theFirstLetter).then(response => response.text());
+    }
+    else if(theLength != '' && theFirstLetter != '') {
+        return fetch('https://random-word-api.vercel.app/api?words=15&length=' + theLength + '&letter=' + theFirstLetter).then(response => response.text());
+    }
+}
+
 
 async function renderNewQuote() {
     let quote = await getRandomQuote()
@@ -82,8 +101,8 @@ async function renderNewQuote() {
     timer.innerText = 0;
     document.getElementById('wpm').value = '';
 }
-async function renderRandomWords() {
-    let quote = await getRandomWords();
+async function renderHardRandomWords() {
+    let quote = await getHardRandomWords();
     quoteDisplayElement.innerHTML = '';
     quote.split('').forEach(character => {
         if (character == ',') {
@@ -100,6 +119,67 @@ async function renderRandomWords() {
     quoteInputElement.value = null;
     timer.innerText = 0;
     document.getElementById('wpm').value = '';
+}
+async function renderEasyRandomWords() {
+    let quote = await getEasyRandomWords();
+    quoteDisplayElement.innerHTML = '';
+    quote.split('').forEach(character => {
+        if (character == ',') {
+            let characterSpan = document.createElement('span');
+            characterSpan.innerText = ' ';
+            quoteDisplayElement.appendChild(characterSpan)
+        }
+        else if (character.charCodeAt() >= 97 && character.charCodeAt() <= 122) {
+            let characterSpan = document.createElement('span');
+            characterSpan.innerText = character;
+            quoteDisplayElement.appendChild(characterSpan)
+        }
+    })
+    quoteInputElement.value = null;
+    timer.innerText = 0;
+    document.getElementById('wpm').value = '';
+}
+
+async function renderCustomWords() {
+    theLength = document.getElementById('wordLength').value;
+    theFirstLetter = document.getElementById('firstLetter').value;
+    if (theLength == '' && theFirstLetter == '') {
+    }
+    else {
+        if (theLength > 9) {
+            theLength = '9'
+            document.getElementById('wordLength').value = '9'
+        }
+        if (theLength < 4) {
+            theLength = '4'
+            document.getElementById('wordLength').value = '4'
+        }
+
+       if ((theFirstLetter.toLowerCase().charCodeAt() >= 97 && theFirstLetter.toLowerCase().charCodeAt() <= 122)){ // Uppercase
+            theFirstLetter = theFirstLetter.toLowerCase();
+        }
+        else {
+            theFirstLetter = '';
+            document.getElementById('firstLetter').value = '';
+        } 
+        let quote = await getCustomWords();
+        quoteDisplayElement.innerHTML = '';
+        quote.split('').forEach(character => {
+            if (character == ',') {
+                let characterSpan = document.createElement('span');
+                characterSpan.innerText = ' ';
+                quoteDisplayElement.appendChild(characterSpan)
+            }
+            else if (character.charCodeAt() >= 97 && character.charCodeAt() <= 122) {
+                let characterSpan = document.createElement('span');
+                characterSpan.innerText = character;
+                quoteDisplayElement.appendChild(characterSpan)
+            }
+        })
+        quoteInputElement.value = null;
+        timer.innerText = 0;
+        document.getElementById('wpm').value = '';
+    }
 }
 
 let startTime
