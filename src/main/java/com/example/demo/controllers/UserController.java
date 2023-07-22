@@ -25,6 +25,8 @@ import com.example.demo.model.User;
 import com.example.demo.model.UserRepository;
 import com.example.demo.model.adminMessage;
 import com.example.demo.model.adminMessageRepository;
+import com.example.demo.model.ladderBoard;
+import com.example.demo.model.ladderRepository;
 import com.example.demo.model.userMessage;
 import com.example.demo.model.userMessageRepository;
 
@@ -44,6 +46,9 @@ public class UserController {
 
     @Autowired
     private adminMessageRepository adminMsgRepo;
+
+    @Autowired
+    private ladderRepository ladderRepo;
 
     // @GetMapping("/signUp")
     // public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
@@ -203,6 +208,10 @@ public class UserController {
         if (buttonValue.equals("Inbox")) {
             int currentPage=Integer.parseInt(info.get("currentPage"));
             int uid=Integer.parseInt(info.get("uid"));
+            // User user = (User) session.getAttribute("session_user");
+            // System.out.println("==================");
+            // System.out.println("uid: "+user.getUid());
+            // System.out.println("==================");
             List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
             List<adminMessage> allInbox=new ArrayList<>();
             List<adminMessage> inbox=new ArrayList<>();
@@ -272,6 +281,21 @@ public class UserController {
             model.addAttribute("recordSize", recordSize);
             model.addAttribute("userRecords", lastTen);
             return "user/statistic";
+        }
+        if(buttonValue.equals("Ladder")){
+            List<ladderBoard>entireBoard=ladderRepo.findAll();
+            if(entireBoard.size()>10){
+                List<ladderBoard> listOf10=new ArrayList<>();
+                for(int i=0;i<10;i++){
+                    listOf10.add(entireBoard.get(i));
+                }
+            }
+            ladderBoard userInfo=ladderRepo.findByUid(Integer.parseInt(info.get("uid"))).get(0);
+            model.addAttribute("ladderBoard", entireBoard);
+            model.addAttribute("userRank", userInfo.getRank());
+            model.addAttribute("username", userInfo.getUsername());
+            model.addAttribute("userAvgWpm", userInfo.getAverageWPM());
+            return "user/ladderBoard";
         }
         if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
@@ -385,12 +409,46 @@ public class UserController {
         return "user/sendResult";
     }
 
+    private void handleLadderBoard(User user){
+        List<Float> last10=new ArrayList<>();
+        int WPMsize=user.getWPM().size();
+        Float last10Avg=0f;
+        if(WPMsize>=10f){
+            for(int i=WPMsize-10;i<WPMsize;i++){
+                last10.add(user.getWPM().get(i));
+                last10Avg+=user.getWPM().get(i);
+            }
+            last10Avg/=10f;
+            List<ladderBoard> row=ladderRepo.findByUid(user.getUid());
+            if(row.size()==0){
+                ladderRepo.save(new ladderBoard(user.getUid(),user.getUsername(), last10Avg));
+            }
+            else{
+                row.get(0).setAverageWPM(last10Avg);
+            }
+            
+            List<ladderBoard> entireBoard=ladderRepo.findAll();
+            Comparator<ladderBoard> avgWpmComparator = Comparator.comparing(ladderBoard::getAverageWPM).reversed();
+            Collections.sort(entireBoard, avgWpmComparator);
+            for (int i=0;i<entireBoard.size();i++){
+                entireBoard.get(i).setRank(i+1);
+                ladderRepo.save(entireBoard.get(i));
+            }
+        }
+
+
+    }
+
     @PostMapping("/submitWPM")
     public String addRecord(@RequestParam Map<String, String> wpm, Model model, HttpSession session,
             HttpServletRequest request) {
         User user = (User) session.getAttribute("session_user");
         user.addRecords(Float.parseFloat(wpm.get("wpm")));
         userRepo.save(user);
+        //by A, it wont affect your system, just adding info for to the ladder board : D
+        handleLadderBoard(userRepo.findByUid(Integer.parseInt(wpm.get("uid"))).get(0));
+        //done
+        //return "user/userCentre";
         return "user/game2";
     }
 

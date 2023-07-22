@@ -44,6 +44,8 @@
 
     </div>
      <form style="position:absolute; bottom: 1rem" name="submitWPM" action="/submitWPM" method="post">
+        <!-- by A: added this line for ladderboard purpose -->
+        <input id="uid" name="uid" th:value="${uid}" hidden>
         <input id="wpm" style="background:transparent; border:none; outline:none; color:transparent" type="text" readonly onselectstart="return false" name="wpm">
         <input id="wpm_btn" style="background:transparent; border:none; outline:none; color:transparent" type="button" readonly onselectstart="return false">
     </form>

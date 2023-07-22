@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> feedback </title>
+    <title> Inbox </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/sendResult.css">
+    <link rel="stylesheet" href="/css/userInbox.css">
 </head>
 
-<body>s
+<body>
     <div class="container-fluid">
         <div class="row justify-content-center">
-
             <div class="" style="width:100%">
                 <!-- Added new nav bar and update css By: K -->
                 <form action="/user/buttonClicked" method="POST">
@@ -69,37 +68,48 @@
                         </div>
                     </div>
                 </form>
-
-
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
-            <div class="col-md-4 text-center justify-content-center" >
-                <!-- Link to function: handleButtonClick in UserController.java -->
-                <form action="/user/buttonClicked" method="POST">
-                    <div id="msgvalue">
-                        <p class="font-weight-bold" th:text="${feedback}"></p>
+            <div style="width: 75%">
+            
+                <div class="text-center" style="padding: 20px">
+                    <h1>Ladder Board</h1>
+                </div>
+                <div class="w-80" style="width: 100%; padding: 20px">
+                    <div>
+                        <div style="width: 100%">
+                            <table class="table table-striped">
+                                <tr>
+                                  <th>Rank</th>
+                                  <th>Username</th>
+                                  <th>wpm (latest 10 games)</th>
+                                </tr>
+                                <tr th:each="row:${ladderBoard}">
+                                    <td th:text="${row.rank}"></td>
+                                    <td th:text="${row.username}"></td>
+                                    <td th:text="${row.averageWPM}"></td>
+                                </tr>
+                              </table>
+                        </div>
                         <br>
                         <br>
-                        <br>
-                        <button class="btn btn-dark" type="submit" name="buttonValue" th:value="${btnValue}" th:text="${btnText}"></button>
-                        <!-- To identify the user identity -->
-                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                        <div class="text-center" style="padding: 20px">
+                            <h1>Your rank</h1>
+                        </div>
+                        <div style="width: 100%">
+                            <table class="table table-striped">
+                                <tr>
+                                  <th>Rank</th>
+                                  <th>Username</th>
+                                  <th>wpm (latest 10 games)</th>
+                                </tr>
+                                <td th:text="${userRank}"></td>
+                                <td th:text="${username}"></td>
+                                <td th:text="${userAvgWpm}"></td>
+                              </table>
+                        </div>
                     </div>
-                </form>
+                </div>
+                  
             </div>
         </div>
     </div>

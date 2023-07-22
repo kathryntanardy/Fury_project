@@ -9,13 +9,43 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <form action="/user/login">
+        <input style="position: absolute; top:1rem; left: 1rem" type="submit" value="Back to User Centre">
+    </form>
     <div class="timer" id="timer" oncopy="return false" onselectstart="return false"></div>
-    <h1 style="color:whitesmoke; position:absolute; bottom:3rem; font-size:4rem; color:rgb(70, 64, 64);font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif" oncopy="return false" onselectstart="return false">FURY</h1>
+    <h1 id="FURY" style="color:whitesmoke; position:absolute; bottom:3rem; font-size:4rem; color:rgb(70, 64, 64);font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif" oncopy="return false" onselectstart="return false">FURY</h1>
+
     <div class="container">
         <div id="quoteDisplay" class="quote-display" oncopy="return false" onselectstart="return false"></div>
         <textarea id="quoteInput" class="quote-input" autofocus onpaste="return false"></textarea>
+        Mode:        
+        <input type="button" onclick="renderNewQuote()" value="Random Quote">
+        <input type="button" onclick="renderEasyRandomWords()" value="Easy Random Words"> 
+        <input type="button" onclick="renderHardRandomWords()" value="Hard Random Words"> 
+        <input type="button" onclick="" value="Countdown">
+        <input type="button" onclick="location.reload()" value="Reset">
+
+
+        <br>
+        
+        Custom:
+        <!-- <input style="width: 90px; text-align:center" type="number" min="1" max="20" placeholder="# of words" name="numOfWords" id="numOfWords"> -->
+        <input style="width: 100px; text-align:center" type="number" min="4" max="9"  placeholder="word length" name="wordLength" id="wordLength">
+        <input style="width: 100px; text-align:center" type="text" maxlength="1" placeholder="first letter" name="firstLetter" id="firstLetter">
+        <input id="customWordsBtn" onclick="renderCustomWords()" type="submit" value="Generate"> 
+
+
+        <!-- <br> <br>
+        To-Do: 
+        <br>
+        - Countdown and New Formula<br>
+        - Forward the WPM and Accuracy data or Boxes showing previous WPM and Accuracy <br> -->
+
+
     </div>
      <form style="position:absolute; bottom: 1rem" name="submitWPM" action="/submitWPM" method="post">
+        <!-- by A: added this line for ladderboard purpose -->
+        <input id="uid" name="uid" th:value="${uid}" hidden>
         <input id="wpm" style="background:transparent; border:none; outline:none; color:transparent" type="text" readonly onselectstart="return false" name="wpm">
         <input id="wpm_btn" style="background:transparent; border:none; outline:none; color:transparent" type="button" readonly onselectstart="return false">
     </form>
