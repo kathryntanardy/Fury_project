@@ -289,12 +289,27 @@ public class UserController {
                 for(int i=0;i<10;i++){
                     listOf10.add(entireBoard.get(i));
                 }
+                entireBoard=listOf10;
             }
-            ladderBoard userInfo=ladderRepo.findByUid(Integer.parseInt(info.get("uid"))).get(0);
+            ladderBoard userInfo=null;
+            int uid=Integer.parseInt(info.get("uid"));
+            if(ladderRepo.findByUid(uid).size()==1){
+                userInfo=ladderRepo.findByUid(uid).get(0);
+            }
             model.addAttribute("ladderBoard", entireBoard);
-            model.addAttribute("userRank", userInfo.getRank());
-            model.addAttribute("username", userInfo.getUsername());
-            model.addAttribute("userAvgWpm", userInfo.getAverageWPM());
+            if(userInfo!=null){
+                model.addAttribute("userRank", userInfo.getRank());
+                model.addAttribute("username", userInfo.getUsername());
+                model.addAttribute("userAvgWpm", userInfo.getAverageWPM());
+                
+            }
+            else{
+                model.addAttribute("userRank","N/A");
+                model.addAttribute("username", userRepo.findByUid(uid).get(0).getUsername());
+                model.addAttribute("userAvgWpm", "N/A");
+                model.addAttribute("alert", "No ranking: You played less than 10 games!");
+            }
+            
             return "user/ladderBoard";
         }
         if (buttonValue.equals("LogOut")) {
