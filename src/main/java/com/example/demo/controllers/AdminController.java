@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -102,8 +103,22 @@ public class AdminController {
     public String handleButtonClick(@RequestParam("buttonValue") String buttonValue,
             @RequestParam Map<String, String> info, Model model, HttpServletRequest request, HttpSession session) {
         if (buttonValue.equals("Inbox")) {
-            List<userMessage> inbox = userMsgRepo.findAll();
+            int currentPage=Integer.parseInt(info.get("currentPage"));
+            List<userMessage> allInbox = userMsgRepo.findAll();
+            List<userMessage> inbox = new ArrayList<>();
+            Comparator<userMessage> sentDateComparator = Comparator.comparing(userMessage::getSentDate).reversed();
+            Collections.sort(allInbox, sentDateComparator);
+            for(int i=0;i<currentPage*5;i++){
+                if(i<allInbox.size()){
+                    inbox.add(allInbox.get(i));         
+                }
+                else{
+                    break;
+                }
+            }
             model.addAttribute("inbox", inbox);
+            model.addAttribute("currentPage", currentPage);
+            model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
             return "admin/adminInbox";
         }
         if (buttonValue.equals("Reply")) {
@@ -140,6 +155,36 @@ public class AdminController {
             return "admin/announcement";
         }
         return "admin/adminCentre";
+    }
+
+    @PostMapping("/admin/inbox")
+    public String switchPage(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,Model model){
+        int currentPage=Integer.parseInt(info.get("currentPage"));
+        List<userMessage> allInbox = userMsgRepo.findAll();
+        List<userMessage> inbox = new ArrayList<>();
+        Comparator<userMessage> sentDateComparator = Comparator.comparing(userMessage::getSentDate).reversed();
+        Collections.sort(allInbox, sentDateComparator);
+        int maxPage=(int)Math.ceil(allInbox.size()/5.0); 
+        if(buttonValue.equals("next") && currentPage<maxPage){
+            currentPage++;        
+        }
+        else if(buttonValue.equals("previous") && currentPage>1){
+            currentPage--;
+        }
+        for(int i=(currentPage-1)*5;i<(currentPage)*5;i++){
+            if(i<allInbox.size()){
+                inbox.add(allInbox.get(i));         
+            }
+            else{
+                break;
+            }
+        }
+        
+        System.out.println("Number of msg: " + allInbox.size());
+        model.addAttribute("inbox", inbox);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
+        return "admin/adminInbox";
     }
 
     @PostMapping("/admin/announcement")
