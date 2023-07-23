@@ -45,9 +45,9 @@
                                 Statistic
                             </button>
                             <button type="submit" name="buttonValue" value="Ladder" style="width: 100px; height: 100px; background:transparent; border: transparent;">
-                                <img src="/imageFiles/statistic.png" alt="statisticIcon" width="30px" height="30px">
+                                <img src="/imageFiles/leaderboard.png" alt="statisticIcon" width="33px" height="33px">
                                 <br>
-                                Ladder board
+                                Leaderboard
                             </button>
                             <button type="submit" name="buttonValue" value="ContactUs" style="width: 100px; height: 100px; background:transparent; border: transparent;">
                                 <img src="/imageFiles/phone.png" alt="phoneIcon" width="30px" height="30px">
@@ -72,7 +72,7 @@
             <div style="width: 75%">
             
                 <div class="text-center" style="padding: 20px">
-                    <h1>Ladder Board</h1>
+                    <h1>Leaderboard</h1>
                 </div>
                 <div class="w-80" style="width: 100%; padding: 20px">
                     <div>
@@ -81,7 +81,7 @@
                                 <tr>
                                   <th>Rank</th>
                                   <th>Username</th>
-                                  <th>wpm (latest 10 games)</th>
+                                  <th>WPM (Latest 10 Games)</th>
                                 </tr>
                                 <tr th:each="row:${ladderBoard}">
                                     <td th:text="${row.rank}"></td>
@@ -93,14 +93,14 @@
                         <br>
                         <br>
                         <div class="text-center" style="padding: 20px">
-                            <h1>Your rank</h1>
+                            <h1>Your Rank</h1>
                         </div>
                         <div style="width: 100%">
                             <table class="table table-striped">
                                 <tr>
                                   <th>Rank</th>
                                   <th>Username</th>
-                                  <th>wpm (latest 10 games)</th>
+                                  <th>WPM (Latest 10 Games)</th>
                                 </tr>
                                 <td th:text="${userRank}"></td>
                                 <td th:text="${username}"></td>

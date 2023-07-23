@@ -24,3 +24,11 @@ body {
 table {
     font-size: 20px;
 }
+
+#prevBtn {
+    background-color: transparent;
+}
+
+#nextBtn {
+    background-color: transparent;
+}

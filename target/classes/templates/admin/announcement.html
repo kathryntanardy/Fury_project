@@ -12,33 +12,51 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
 
-            <div class="" style="width:100%">
-                <!-- Added new nav bar and update css By: K -->
-                <form action="/admin/buttonClicked" method="POST">
-                    <div class="" style=" padding: 20px;">
-                        <div id="icons" style="float: right;"> 
-                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
-                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
-                                <br>
-                                Log Out</button>
-                            <button type="submit" name="buttonValue" value="announcement"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
-                                <img src="/imageFiles/statistic.png" alt="homeIcon" width="35px" height="35px">
-                                <br>
-                                Announcement</button>
-                            <button type="submit" name="buttonValue" value="trend"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
-                                    <img src="/imageFiles/statistic.png" alt="homeIcon" width="35px" height="35px">
-                                    <br>
-                                   Trend</button>
-                            <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+            <div class="w-100"style="width: 100px; padding: 20px;">
+                <div id="logo d-flex align-items-center" style="float: left;">
+                    <img src="/imageFiles/Fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                </div>
+
+                <!-- two additional buttons, can you implement the pathways for this?  -->
+                 <!-- <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                    <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                    <br>
+                    Log Out</button>
+
+                <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                    <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
+                    <br>
+                   Home</button> -->
+
+                   <form action="/admin/buttonClicked" method="POST">
+                    <div class="" style=" padding: 10px;">
+                        <div id="icons" class="text-center" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
                                 <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
                                 <br>
                                Home</button>
+                            
+                        
+                               <button type="submit" name="buttonValue" value="trend"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/statistic.png" alt="homeIcon" width="35px" height="35px">
+                                <br>
+                               Trend</button>
+
+                               <button type="submit" name="buttonValue" value="announcement"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/announcement.png" alt="logOutIcon" width="30px" height="35px">
+                                <br>
+                                Announcement</button>
+
+                               <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; ">
+                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="32px" height="35px">
+                                <br>
+                                Log Out</button>
+
+                                
                         </div>
                     </div>
                 </form>
-
-
-            </div>
+            </div> 
 
             
             <br>

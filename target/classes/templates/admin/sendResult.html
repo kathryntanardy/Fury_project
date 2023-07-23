@@ -7,6 +7,7 @@
     <title> feedback </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/adminSendResult.css">
 </head>
 
 <body style="background-color:lightgrey; font-family: Arial, Helvetica, sans-serif;">
@@ -18,23 +19,42 @@
                     <img src="/imageFiles/Fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
                 </div>
 
-                <form action="/admin/buttonClicked" method="POST">
-                    <div class="" style=" padding: 20px;">
-                        <div id="icons" style="float: right;"> 
-                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
-                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
-                                <br>
-                                Log Out</button>
-                            <button type="submit" name="buttonValue" value="trend"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
-                                    <img src="/imageFiles/statistic.png" alt="homeIcon" width="35px" height="35px">
-                                    <br>
-                                   Trend</button>
-                            <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                <!-- two additional buttons, can you implement the pathways for this?  -->
+                 <!-- <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                    <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                    <br>
+                    Log Out</button>
+
+                <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; float: right;">
+                    <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
+                    <br>
+                   Home</button> -->
+
+                   <form action="/admin/buttonClicked" method="POST">
+                    <div class="" style=" padding: 10px;">
+                        <div id="icons" class="text-center" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="back"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
                                 <img src="/imageFiles/home.png" alt="homeIcon" width="35px" height="35px">
                                 <br>
                                Home</button>
-
                             
+                        
+                               <button type="submit" name="buttonValue" value="trend"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/statistic.png" alt="homeIcon" width="35px" height="35px">
+                                <br>
+                               Trend</button>
+
+                               <button type="submit" name="buttonValue" value="announcement"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/announcement.png" alt="logOutIcon" width="30px" height="35px">
+                                <br>
+                                Announcement</button>
+
+                               <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent; ">
+                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="32px" height="35px">
+                                <br>
+                                Log Out</button>
+
+                                
                         </div>
                     </div>
                 </form>
@@ -66,7 +86,7 @@
                         <br>
                         <br>
                         <br>
-                        <button class="btn btn-dark" type="submit" name="buttonValue" th:value="${btnValue}" th:text="${btnText}"></button>
+                        <button id="backBtn" class="btn rounded-0" type="submit" name="buttonValue" th:value="${btnValue}" th:text="${btnText}"></button>
                     </div>
                 </form>
             </div>
