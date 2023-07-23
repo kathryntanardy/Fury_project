@@ -32,6 +32,7 @@ public class User {
         this.WPM = new ArrayList<Float>();
         this.averageWPM = 0;
         this.bestWPM = 0;
+        this.lastLoginDate=null;
     }
 
     public int getUid() {

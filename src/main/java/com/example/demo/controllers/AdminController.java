@@ -17,6 +17,8 @@ import com.example.demo.model.Admin;
 import com.example.demo.model.AdminRepository;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRepository;
+import com.example.demo.model.activeUsers;
+import com.example.demo.model.activeUsersRepository;
 import com.example.demo.model.adminMessage;
 import com.example.demo.model.adminMessageRepository;
 import com.example.demo.model.userMessage;
@@ -39,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private adminMessageRepository adminMsgRepo;
+
+    @Autowired
+    private activeUsersRepository activeUsersRepo;
 
     @GetMapping("/admin/login")
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
@@ -210,20 +215,31 @@ public class AdminController {
     }
 
     private String activeUserInYear(int year) {
-        List<User> allUsers = userRepo.findAll();
-        allUsers.sort(Comparator.comparing(User::getLastLoginDate));
-        int[] dataArr = new int[12];
+        // List<User> allUsers = userRepo.findAll();
+        // allUsers.sort(Comparator.comparing(User::getLastLoginDate));
+        List<activeUsers> row=activeUsersRepo.findByYear(year);
+        if(row.size()==0){
+            activeUsersRepo.save(new activeUsers(year));
+        }
+        row=activeUsersRepo.findByYear(year);
+        ArrayList<Integer> dataList = row.get(0).getMonthUserNum();
         String data = "";
-        for (User u : allUsers) {
-            LocalDate lastLogin = u.getLastLoginDate();
-            if (lastLogin.getYear() == year) {
-                int month = lastLogin.getMonthValue();
-                dataArr[month - 1]++;
-            }
+        for(Integer num:dataList){
+            data+=num+",";
         }
-        for (int i : dataArr) {
-            data += i + ",";
-        }
+
+
+        // for (User u : allUsers) {
+        //     LocalDate lastLogin = u.getLastLoginDate();
+        //     if (lastLogin.getYear() == year) {
+        //         int month = lastLogin.getMonthValue();
+        //         dataArr[month - 1]++;
+        //     }
+        // }
+        // for (int i : dataArr) {
+        //     data += i + ",";
+        // }
+
         return data.substring(0, data.length() - 1);
     }
 

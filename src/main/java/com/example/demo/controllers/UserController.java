@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.User;
 import com.example.demo.model.UserRepository;
+import com.example.demo.model.activeUsers;
+import com.example.demo.model.activeUsersRepository;
 import com.example.demo.model.adminMessage;
 import com.example.demo.model.adminMessageRepository;
 import com.example.demo.model.ladderBoard;
@@ -49,6 +51,9 @@ public class UserController {
 
     @Autowired
     private ladderRepository ladderRepo;
+
+    @Autowired
+    private activeUsersRepository activeUsersRepo;
 
     // @GetMapping("/signUp")
     // public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
@@ -179,16 +184,39 @@ public class UserController {
             return "user/signin";
         } else {
             User user = userList.get(0);
-            user.setLastLoginDate(LocalDate.now());
-            System.out.println("======================================");
-            System.out.println(user.getLastLoginDate());
-            System.out.println("======================================");
+            
             userRepo.save(user);
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
             model.addAttribute("uid", user.getUid());
+             handleActiveUser(user.getUid(),LocalDate.now());
             return "user/userCentre";
+        }
+    }
+
+    private void handleActiveUser(int uid,LocalDate loginDate){
+        User user=userRepo.findByUid(uid).get(0);
+        Boolean newLogin=false;
+
+        if(user.getLastLoginDate()==null){
+            newLogin=true;
+            user.setLastLoginDate(loginDate);
+            userRepo.save(user);
+        }
+
+        int lastLoginMonth=user.getLastLoginDate().getMonthValue();
+        user.setLastLoginDate(loginDate);
+        userRepo.save(user);
+        
+        if(activeUsersRepo.findByYear(loginDate.getYear()).size()==0){
+            activeUsersRepo.save(new activeUsers(LocalDate.now().getYear()));
+        }
+        
+        if(newLogin || lastLoginMonth!=loginDate.getMonthValue()){
+            activeUsers row=activeUsersRepo.findByYear(loginDate.getYear()).get(0);
+            row.addMonthUserNum(loginDate.getMonthValue());
+            activeUsersRepo.save(row);
         }
     }
 
