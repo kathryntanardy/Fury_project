@@ -18,30 +18,21 @@
     <div class="container">
         <div id="quoteDisplay" class="quote-display" oncopy="return false" onselectstart="return false"></div>
         <textarea id="quoteInput" class="quote-input" autofocus onpaste="return false"></textarea>
-        Mode:        
+         Standard:        
         <input type="button" onclick="renderNewQuote()" value="Random Quote">
         <input type="button" onclick="renderEasyRandomWords()" value="Easy Random Words"> 
         <input type="button" onclick="renderHardRandomWords()" value="Hard Random Words"> 
         <input type="button" onclick="" value="Countdown">
-        <input type="button" onclick="location.reload()" value="Reset">
-
-
         <br>
-        
         Custom:
-        <!-- <input style="width: 90px; text-align:center" type="number" min="1" max="20" placeholder="# of words" name="numOfWords" id="numOfWords"> -->
-        <input style="width: 100px; text-align:center" type="number" min="4" max="9"  placeholder="word length" name="wordLength" id="wordLength">
         <input style="width: 100px; text-align:center" type="text" maxlength="1" placeholder="first letter" name="firstLetter" id="firstLetter">
-        <input id="customWordsBtn" onclick="renderCustomWords()" type="submit" value="Generate"> 
-
-
-        <!-- <br> <br>
-        To-Do: 
+        or
+        <input style="width: 100px; text-align:center" type="number" min="12" max="25"  placeholder="# of words" name="numbers" id="numbers">
+        +
+        <input style="width: 100px; text-align:center" type="number" min="3" max="15"  placeholder="word length" name="wordLength" id="wordLength">
+        <input onclick="renderCustomWords()" type="submit" value="Generate"> 
         <br>
-        - Countdown and New Formula<br>
-        - Forward the WPM and Accuracy data or Boxes showing previous WPM and Accuracy <br> -->
-
-
+        <input type="button" onclick="location.reload()" value="Reset">
     </div>
      <form style="position:absolute; bottom: 1rem" name="submitWPM" action="/submitWPM" method="post">
         <!-- by A: added this line for ladderboard purpose -->
