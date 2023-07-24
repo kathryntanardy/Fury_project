@@ -173,9 +173,9 @@ async function renderCustomWords() {
             theLength = '9'
             document.getElementById('wordLength').value ='9'
         }
-        if (theLength != '' && theLength < 3) {
-            theLength = '3'
-            document.getElementById('wordLength').value ='3'
+        if (theLength != '' && theLength < 4) {
+            theLength = '4'
+            document.getElementById('wordLength').value ='4'
         } 
         else if (theLength != '' && theLength > 15) {
             theLength = '15'
