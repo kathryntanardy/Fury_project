@@ -154,11 +154,11 @@ async function renderCustomWords() {
     numbers = document.getElementById('numbers').value;
     theLength = document.getElementById('wordLength').value;
     
-    if ((theLength == '' && theFirstLetter == '' && numbers == '') || (numbers != '' && theFirstLetter != '') || (theFirstLetter.toLowerCase().charCodeAt() < 97 || theFirstLetter.toLowerCase().charCodeAt() > 122) ){
+    if ((theLength == '' && theFirstLetter == '' && numbers == '') || (numbers != '' && theFirstLetter != '') || (theFirstLetter.toLowerCase().charCodeAt() < 97 || theFirstLetter.toLowerCase().charCodeAt() > 122) || firstLetterBox.value.toLowerCase().charCodeAt() == 120 ){
         theFirstLetter = ''
         numbers = ''
     } else {
-        if (theFirstLetter.toLowerCase().charCodeAt() < 97 || theFirstLetter.toLowerCase().charCodeAt() > 122) {
+        if (theFirstLetter.toLowerCase().charCodeAt() < 97 || theFirstLetter.toLowerCase().charCodeAt() > 122 || firstLetterBox.value.toLowerCase().charCodeAt() == 120) {
             theFirstLetter = ''
         }
         if (numbers != '' && numbers < 12) {
@@ -217,7 +217,7 @@ function getTimerTime() {
 renderNewQuote()
 
 firstLetterBox.addEventListener('click', (event)=> { 
-    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122) {
+    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122 || firstLetterBox.value.toLowerCase().charCodeAt() == 120) {
         firstLetterBox.value = ''
     }
     if (firstLetterBox.value != '' && numbersBox.value != '') {
@@ -235,7 +235,7 @@ firstLetterBox.addEventListener('click', (event)=> {
 })
 
 numbersBox.addEventListener('click', (event)=> {
-    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122) {
+    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122 || firstLetterBox.value.toLowerCase().charCodeAt() == 120) {
         firstLetterBox.value = ''
     }
     if (firstLetterBox.value != '' && numbersBox.value != '') {
@@ -257,7 +257,7 @@ window.addEventListener('click', (event)=> {
         firstLetterBox.value = ''
         numbersBox.value = ''
     }
-    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122) {
+    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122 || firstLetterBox.value.toLowerCase().charCodeAt() == 120) {
         firstLetterBox.value = ''
     }
 })
