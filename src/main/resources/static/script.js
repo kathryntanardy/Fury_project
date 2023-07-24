@@ -13,7 +13,7 @@ let numbers;
 
 let firstLetterBox = document.getElementById('firstLetter');
 let numbersBox = document.getElementById('numbers');
-
+let wordLengthBox = document.getElementById('wordLength');
 
 quoteInputElement.addEventListener('keydown', (event) => {
     if (event.code == "Backspace" && numOfInputs > 0) {
