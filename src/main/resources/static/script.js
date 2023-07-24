@@ -224,6 +224,18 @@ firstLetterBox.addEventListener('click', (event)=> {
         firstLetterBox.value = ''
         numbersBox.value = ''
     }
+    if (numbersBox.value != '' && numbersBox.value < 12) {
+        numbersBox.value = '12';
+    } 
+    if (numbersBox.value != '' && numbersBox.value > 25) {
+        numbersBox.value = '25';
+    } 
+    if (wordLengthBox.value != '' && wordLengthBox.value < 4) {
+        wordLengthBox.value = '4'
+    }
+    if (wordLengthBox.value != '' && wordLengthBox.value > 15) {
+        wordLengthBox.value = '15'
+    }
     if (firstLetterBox.value == '' && numbersBox.value == '') {
         document.getElementById('firstLetter').removeAttribute("readonly");
         document.getElementById('numbers').removeAttribute("readonly");
@@ -242,6 +254,18 @@ numbersBox.addEventListener('click', (event)=> {
         firstLetterBox.value = ''
         numbersBox.value = ''
     }
+    if (numbersBox.value != '' && numbersBox.value < 12) {
+        numbersBox.value = '12';
+    } 
+    if (numbersBox.value != '' && numbersBox.value > 25) {
+        numbersBox.value = '25';
+    } 
+    if (wordLengthBox.value != '' && wordLengthBox.value < 4) {
+        wordLengthBox.value = '4'
+    }
+    if (wordLengthBox.value != '' && wordLengthBox.value > 15) {
+        wordLengthBox.value = '15'
+    }
     if (firstLetterBox.value == '' && numbersBox.value == '') {
         document.getElementById('firstLetter').removeAttribute("readonly");
         document.getElementById('numbers').removeAttribute("readonly");
@@ -259,5 +283,17 @@ window.addEventListener('click', (event)=> {
     }
     if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122 || firstLetterBox.value.toLowerCase().charCodeAt() == 120) {
         firstLetterBox.value = ''
+    } 
+    if (numbersBox.value != '' && numbersBox.value < 12) {
+        numbersBox.value = '12';
+    } 
+    if (numbersBox.value != '' && numbersBox.value > 25) {
+        numbersBox.value = '25';
+    } 
+    if (wordLengthBox.value != '' && wordLengthBox.value < 4) {
+        wordLengthBox.value = '4'
+    }
+    if (wordLengthBox.value != '' && wordLengthBox.value > 15) {
+        wordLengthBox.value = '15'
     }
 })
