@@ -16,7 +16,7 @@ let numbersBox = document.getElementById('numbers');
 
 
 quoteInputElement.addEventListener('keydown', (event) => {
-    if (event.code == "Backspace" && numOfInputs <= 0) {
+    if (event.code == "Backspace" && numOfInputs > 0) {
         --numOfInputs;
     }
 })
