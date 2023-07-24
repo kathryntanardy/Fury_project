@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> User Centre </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body style="background-color:lightgrey; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="" style="width: 100%">
+                <form action="/user/buttonClicked" method="POST">
+                    <div>
+                        <input id="uid" name="uid" th:value="${uid}" hidden>
+                    </div>
+
+                    <div class="" style=" padding: 20px;">
+                        <div id="logo" style="float: left">
+                            <img src="/imageFiles/fury.png" alt="Fury Logo" width="100" height="100" style="float: left;">
+                        </div>
+
+                        <div id="icons" style="float: right;"> 
+                            <button type="submit" name="buttonValue" value="Home" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/home.png" alt="homeIcon" width="30px" height="30px">
+                                <br>
+                                Home
+                            </button>
+
+                                <input id="currentPage" name="currentPage" value="1" hidden>
+                            <button type="submit" name="buttonValue" value="Inbox" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/mail.png" alt="mailIcon" width="40px" height="30px">
+                                <br>
+                                Inbox
+                            </button>
+                            <button type="submit" name="buttonValue" value="Statistic" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/statistic.png" alt="statisticIcon" width="30px" height="30px">
+                                <br>
+                                Statistic
+                            </button>
+                            <button type="submit" name="buttonValue" value="Ladder" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/leaderboard.png" alt="statisticIcon" width="33px" height="33px">
+                                <br>
+                                Leaderboard
+                            </button>
+                            <button type="submit" name="buttonValue" value="ContactUs" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/phone.png" alt="phoneIcon" width="30px" height="30px">
+                                <br>
+                                Contact Us
+                            </button>
+                            <button type="submit" name="buttonValue" value="Setting" style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/settings.png" alt="settingsIcon" width="30px" height="30px">
+                                <br>
+                                Setting
+                            </button>
+                            <button type="submit" name="buttonValue" value="LogOut"  style="width: 100px; height: 100px; background:transparent; border: transparent;">
+                                <img src="/imageFiles/logout.png" alt="logOutIcon" width="30px" height="30px">
+                                <br>
+                                Log Out
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                
+                
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            <h4>Update user info</h4>
+                            <p style="color: red;" name="result" th:text="${result}"></p>
+                            <form action="/user/update" method="post">
+                                <div>
+                                    <input id="uid" name="uid" th:value="${uid}" hidden>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input class="form-control" type="text" id="username" name="username" autofocus th:placeholder="'Current username: '+${username}" style="background-color: transparent; border: black solid 1px">
+                                    <p style="color: red;" name="usernameAlert" th:text="${usernameAlert}"></p>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" type="email" id="email" name="email" th:placeholder="'Current email: '+${email}"
+                                        style="background-color: transparent; border: black solid 1px">
+                                    <p style="color: red;" name="emailAlert" th:text="${emailAlert}"></p>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="password">New Password</label>
+                                    <input class="form-control" type="password" id="password" name="newPassword" placeholder="New Password"
+                                        style="background-color: transparent; border: black solid 1px">
+                                        <p style="color: red;" name="newPasswordAlert" th:text="${newPasswordAlert}"></p>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="reTypePassword">Confirm New Password</label>
+                                    <input class="form-control" type="password" id="reNewPassword" name="reNewPassword" placeholder="Re-type New Password"
+                                        style="background-color: transparent; border: black solid 1px">
+                                        <p style="color: red;" name="rePasswordAlert" th:text="${rePasswordAlert}"></p>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="password">Current Password</label>
+                                    <input class="form-control" type="password" id="password" name="password" placeholder="Password"
+                                        style="background-color: transparent; border: black solid 1px">
+                                        <p style="color: red;" name="passwordAlert" th:text="${passwordAlert}"></p>
+                                </div>
+            
+                                <br>
+            
+                                <div class="text-center">
+                                    <button class="btn btn-dark text-white" style="float:right" id="submit" type="Submit" value="Submit">Update user Info</button>
+                                </div>
+                            </form>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+

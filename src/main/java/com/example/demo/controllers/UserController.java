@@ -130,13 +130,6 @@ public class UserController {
         //return "user/usernameTaken";
     }
 
-    private Boolean isGoodEmailFormat(String email){
-        Boolean existSigns=email.indexOf('@')!=-1  && email.indexOf('.')!=-1;
-        Boolean onlyOneSign=email.indexOf('@', email.indexOf('@'))==-1 && email.indexOf('.', email.indexOf('.'))==-1;
-        Boolean goodSignFormat=email.indexOf('@', email.indexOf('.'))!=-1;
-
-        return existSigns && onlyOneSign && goodSignFormat;
-    }
 
     @GetMapping("/user/login")
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
@@ -340,6 +333,10 @@ public class UserController {
             
             return "user/ladderBoard";
         }
+        if(buttonValue.equals("Setting")){
+            return "user/setting";
+        }
+
         if (buttonValue.equals("LogOut")) {
             request.getSession().invalidate();
             return "user/signin";
@@ -350,6 +347,93 @@ public class UserController {
             model.addAttribute("username", user.get(0).getUsername());
             return "user/userCentre";
         }
+    }
+
+    @PostMapping("/user/setting")
+    public String handleSetting(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info,Model model){
+        int uid=Integer.parseInt(info.get("uid"));
+        model.addAttribute("uid", uid);
+        if(buttonValue.equals("update")){
+            User user=userRepo.findByUid(uid).get(0);
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("email", user.getEmailAddress());
+            return "user/userInfo";
+        }
+        return "user/delete";
+    }
+
+    @PostMapping("/user/update")
+    public String handleUpdate(@RequestParam Map<String, String> info,Model model){
+        int uid=Integer.parseInt(info.get("uid"));
+        User user=userRepo.findByUid(uid).get(0);
+        model.addAttribute("uid", uid);
+        String newUsername=info.get("username");
+        String newEmail=info.get("email");
+        String newPW=info.get("newPassword");
+        String ReNewPw=info.get("reNewPassword");
+        Boolean correctPW=info.get("password").equals(user.getPassword());
+        Boolean updated=false;
+        if(correctPW){
+            if(!newUsername.equals("")){
+                if(userRepo.findByUsername(newUsername).size()==0){
+                    user.setUsername(newUsername);
+                    updated=true;
+                }
+                else if(newUsername.equals(user.getUsername())){
+                    model.addAttribute("usernameAlert", "Same as your old username :D");
+                }
+                else{
+                    model.addAttribute("usernameAlert", "Username is already exist!");
+                }
+            }
+            if(!newEmail.equals("")){
+                if(isGoodEmailFormat(newEmail)){
+                    user.setEmailAddress(newEmail);
+                    updated=true;
+                }
+                else{
+                    model.addAttribute("emailAlert", "Invalid email format");
+                }
+            }
+            if(!newPW.equals("")){
+                Boolean gate=true;
+                if(!newPW.equals(ReNewPw)){
+                    model.addAttribute("rePasswordAlert", "New password not match");
+                    gate=false; 
+                }
+                if(newPW.equals(user.getPassword())){
+                    model.addAttribute("newPasswordAlert", "Same as your old password :D");
+                    gate=false;
+                }
+                if(gate){
+                    user.setEmailAddress(newEmail);
+                    updated=true;
+                }
+                
+            }
+        }
+        else if(info.get("password").equals("")){
+            model.addAttribute("passwordAlert", "Please enter password");
+        }
+        else {
+            model.addAttribute("passwordAlert", "Incorrect password");
+        }
+        if(updated){
+            model.addAttribute("result", "User info update success!");
+            userRepo.save(user);
+        }
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmailAddress());
+        return "user/userInfo";
+    
+    }
+
+    private Boolean isGoodEmailFormat(String email){
+        Boolean existSigns=email.indexOf('@')!=-1  && email.indexOf('.')!=-1;
+        Boolean onlyOneSign=email.indexOf('@', email.indexOf('@'))==-1 && email.indexOf('.', email.indexOf('.'))==-1;
+        Boolean goodSignFormat=email.indexOf('@', email.indexOf('.'))!=-1;
+
+        return existSigns && onlyOneSign && goodSignFormat;
     }
 
     // by 4
@@ -532,4 +616,6 @@ public class UserController {
         now=now.minusDays(diff);
         return now;
     }
+
+    
 }
