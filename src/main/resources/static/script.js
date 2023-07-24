@@ -9,6 +9,10 @@ let numOfCharacters;
 
 let theLength;
 let theFirstLetter;
+let numbers;
+
+let firstLetterBox = document.getElementById('firstLetter');
+let numbersBox = document.getElementById('numbers');
 
 
 quoteInputElement.addEventListener('keydown', (event) => {
@@ -22,7 +26,7 @@ quoteInputElement.addEventListener('input', () => {
     let arrayValue = quoteInputElement.value.split('')
     let correct = true;
     numOfCharacters = arrayQuote.length
-    
+
     if (timerStart === false) {
         startTimer();
         timerStart = true;
@@ -56,8 +60,8 @@ quoteInputElement.addEventListener('input', () => {
         clearInterval(intervalId);
         timerStart = false;
         alert("Finish the quote in: " + timerElement.innerText + " seconds");
-        let wpm = ((numOfInputs/5)/(timerElement.innerText/60)).toFixed(2);
-        let accuracy = ((numOfCharacters/numOfInputs)*100).toFixed(2);
+        let wpm = ((numOfInputs / 5) / (timerElement.innerText / 60)).toFixed(2);
+        let accuracy = ((numOfCharacters / numOfInputs) * 100).toFixed(2);
         alert("WPM: " + wpm + " WPM");
         alert("Accuracy: " + accuracy + "%");
         document.getElementById('wpm').value = wpm;
@@ -70,24 +74,28 @@ function getRandomQuote() {
     return fetch(RANDOM_QUOTE_API_URL).then(response => response.json()).then(data => data.content).catch(error => console.error('Error:', error));
 }
 function getEasyRandomWords() {
-    return fetch('https://random-word-api.vercel.app/api?words=13').then(response=> response.text());
+    return fetch('https://random-word-api.vercel.app/api?words=13').then(response => response.text());
 }
-function getHardRandomWords () {
+function getHardRandomWords() {
     return fetch('https://random-word-api.herokuapp.com/word?number=12').then(response => response.text());
 }
 function getCustomWords() {
-    if (theFirstLetter == '' && theLength != '') {
-        return fetch('https://random-word-api.vercel.app/api?words=15&length='+theLength).then(response => response.text());
-
+    if (theFirstLetter != '' && numbers == '' && theLength == '') {
+        return fetch('https://random-word-api.vercel.app/api?words=15&letter=' + theFirstLetter).then(response => response.text());
     }
-    else if (theLength == '' && theFirstLetter != '') {
-        return fetch('https://random-word-api.vercel.app/api?words=15&letter='+ theFirstLetter).then(response => response.text());
+    else if (theFirstLetter == '' && numbers != '' && theLength == '') {
+        return fetch('https://random-word-api.herokuapp.com/word?number=' + numbers).then(response => response.text());
     }
-    else if(theLength != '' && theFirstLetter != '') {
+    else if (theFirstLetter == '' && numbers == '' && theLength != '') {
+        return fetch('https://random-word-api.herokuapp.com/word?number=15&length=' + theLength).then(response => response.text());
+    }
+    else if (theFirstLetter != '' && numbers == '' && theLength != '') {
         return fetch('https://random-word-api.vercel.app/api?words=15&length=' + theLength + '&letter=' + theFirstLetter).then(response => response.text());
     }
+    else if (theFirstLetter == '' && numbers != '' && theLength != ''){
+        return fetch('https://random-word-api.herokuapp.com/word?number=' + numbers + '&length=' + theLength).then(response => response.text());
+    }
 }
-
 
 async function renderNewQuote() {
     let quote = await getRandomQuote()
@@ -101,10 +109,11 @@ async function renderNewQuote() {
     timer.innerText = 0;
     document.getElementById('wpm').value = '';
 }
+
 async function renderHardRandomWords() {
-    let quote = await getHardRandomWords();
+    let words = await getHardRandomWords();
     quoteDisplayElement.innerHTML = '';
-    quote.split('').forEach(character => {
+    words.split('').forEach(character => {
         if (character == ',') {
             let characterSpan = document.createElement('span');
             characterSpan.innerText = ' ';
@@ -121,9 +130,9 @@ async function renderHardRandomWords() {
     document.getElementById('wpm').value = '';
 }
 async function renderEasyRandomWords() {
-    let quote = await getEasyRandomWords();
+    let words = await getEasyRandomWords();
     quoteDisplayElement.innerHTML = '';
-    quote.split('').forEach(character => {
+    words.split('').forEach(character => {
         if (character == ',') {
             let characterSpan = document.createElement('span');
             characterSpan.innerText = ' ';
@@ -141,30 +150,40 @@ async function renderEasyRandomWords() {
 }
 
 async function renderCustomWords() {
-    theLength = document.getElementById('wordLength').value;
     theFirstLetter = document.getElementById('firstLetter').value;
-    if (theLength == '' && theFirstLetter == '') {
-    }
-    else {
-        if (theLength > 9) {
+    numbers = document.getElementById('numbers').value;
+    theLength = document.getElementById('wordLength').value;
+    
+    if ((theLength == '' && theFirstLetter == '' && numbers == '') || (numbers != '' && theFirstLetter != '') || (theFirstLetter.toLowerCase().charCodeAt() < 97 || theFirstLetter.toLowerCase().charCodeAt() > 122) ){
+        theFirstLetter = ''
+        numbers = ''
+    } else {
+        if (theFirstLetter.toLowerCase().charCodeAt() < 97 || theFirstLetter.toLowerCase().charCodeAt() > 122) {
+            theFirstLetter = ''
+        }
+        if (numbers != '' && numbers < 12) {
+            numbers = '12'
+            numbersBox.value = numbers;
+        }
+        else if (numbers != '' && numbers > 25) {
+            numbers = '25'
+            numbersBox.value = numbers;
+        }
+        if (theFirstLetter != '' && theLength > 9) {
             theLength = '9'
-            document.getElementById('wordLength').value = '9'
+            document.getElementById('wordLength').value ='9'
         }
-        if (theLength < 4) {
-            theLength = '4'
-            document.getElementById('wordLength').value = '4'
-        }
-
-       if ((theFirstLetter.toLowerCase().charCodeAt() >= 97 && theFirstLetter.toLowerCase().charCodeAt() <= 122)){ // Uppercase
-            theFirstLetter = theFirstLetter.toLowerCase();
-        }
-        else {
-            theFirstLetter = '';
-            document.getElementById('firstLetter').value = '';
+        if (theLength != '' && theLength < 3) {
+            theLength = '3'
+            document.getElementById('wordLength').value ='3'
         } 
-        let quote = await getCustomWords();
+        else if (theLength != '' && theLength > 15) {
+            theLength = '15'
+            document.getElementById('wordLength').value ='15'
+        }
+        let custom = await getCustomWords();
         quoteDisplayElement.innerHTML = '';
-        quote.split('').forEach(character => {
+        custom.split('').forEach(character => {
             if (character == ',') {
                 let characterSpan = document.createElement('span');
                 characterSpan.innerText = ' ';
@@ -196,3 +215,49 @@ function getTimerTime() {
 }
 
 renderNewQuote()
+
+firstLetterBox.addEventListener('click', (event)=> { 
+    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122) {
+        firstLetterBox.value = ''
+    }
+    if (firstLetterBox.value != '' && numbersBox.value != '') {
+        firstLetterBox.value = ''
+        numbersBox.value = ''
+    }
+    if (firstLetterBox.value == '' && numbersBox.value == '') {
+        document.getElementById('firstLetter').removeAttribute("readonly");
+        document.getElementById('numbers').removeAttribute("readonly");
+    }
+    else if (numbersBox.value != '') {
+        document.getElementById('firstLetter').setAttribute("readonly","readonly");
+        document.getElementById('numbers').removeAttribute("readonly");
+    }
+})
+
+numbersBox.addEventListener('click', (event)=> {
+    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122) {
+        firstLetterBox.value = ''
+    }
+    if (firstLetterBox.value != '' && numbersBox.value != '') {
+        firstLetterBox.value = ''
+        numbersBox.value = ''
+    }
+    if (firstLetterBox.value == '' && numbersBox.value == '') {
+        document.getElementById('firstLetter').removeAttribute("readonly");
+        document.getElementById('numbers').removeAttribute("readonly");
+    }
+    else if (firstLetterBox.value != '') {
+        document.getElementById('numbers').setAttribute("readonly","readonly");
+        document.getElementById('firstLetter').removeAttribute("readonly");
+    }
+})
+
+window.addEventListener('click', (event)=> {
+    if (firstLetterBox.value != '' && numbersBox.value != '') {
+        firstLetterBox.value = ''
+        numbersBox.value = ''
+    }
+    if (firstLetterBox.value.toLowerCase().charCodeAt() < 97 || firstLetterBox.value.toLowerCase().charCodeAt() > 122) {
+        firstLetterBox.value = ''
+    }
+})
