@@ -56,21 +56,22 @@ public class UserController {
     private activeUsersRepository activeUsersRepo;
 
     // @GetMapping("/signUp")
-    // public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
-    //     System.out.println("sampe sini");
-    //     List<User> alreadyExist = userRepo.findByUsername(account.get("username"));
-    //     if (alreadyExist.isEmpty()) {
-    //         String username = account.get("username");
-    //         String password = account.get("password");
-    //         String email = account.get("email");
-    //         userRepo.save(new User(username, password, email));
-    //         response.setStatus(201);
-    //         return "user/signin";
-    //     }
-    //     return "user/usernameTaken";
+    // public String signUp(@RequestParam Map<String, String> account,
+    // HttpServletResponse response, Model model) {
+    // System.out.println("sampe sini");
+    // List<User> alreadyExist = userRepo.findByUsername(account.get("username"));
+    // if (alreadyExist.isEmpty()) {
+    // String username = account.get("username");
+    // String password = account.get("password");
+    // String email = account.get("email");
+    // userRepo.save(new User(username, password, email));
+    // response.setStatus(201);
+    // return "user/signin";
+    // }
+    // return "user/usernameTaken";
     // }
     @GetMapping("/user/signUp")
-    public String goSignUp(){
+    public String goSignUp() {
         return "user/signup";
     }
 
@@ -78,62 +79,61 @@ public class UserController {
     public String signUp(@RequestParam Map<String, String> account, HttpServletResponse response, Model model) {
         System.out.println("sampe sini");
         List<User> alreadyExist = userRepo.findByUsername(account.get("username"));
-        Boolean emptyUsername=account.get("username").equals("");
-        Boolean emptyPassword=account.get("password").equals("");
-        Boolean emptyRePassword=account.get("retypePassword").equals("");
-        Boolean emptyEmail=account.get("email").equals("");
-        Boolean badSignUp=false;
-        if(emptyUsername){
+        Boolean emptyUsername = account.get("username").equals("");
+        Boolean emptyPassword = account.get("password").equals("");
+        Boolean emptyRePassword = account.get("retypePassword").equals("");
+        Boolean emptyEmail = account.get("email").equals("");
+        Boolean badSignUp = false;
+        if (emptyUsername) {
             model.addAttribute("usernameAlert", "Username is required");
-            badSignUp=true;
+            badSignUp = true;
         }
-        if(emptyPassword){
+        if (emptyPassword) {
             model.addAttribute("passwordAlert", "Password is required");
-            badSignUp=true;
+            badSignUp = true;
         }
-        if(emptyRePassword){
+        if (emptyRePassword) {
             model.addAttribute("rePasswordAlert", "Please confirm your password");
-            badSignUp=true;
+            badSignUp = true;
         }
-        if(emptyEmail){
+        if (emptyEmail) {
             model.addAttribute("emailAlert", "Email is required");
-            badSignUp=true;
+            badSignUp = true;
         }
-        if(!emptyPassword && !emptyRePassword && !account.get("password").equals(account.get("retypePassword"))){
+        if (!emptyPassword && !emptyRePassword && !account.get("password").equals(account.get("retypePassword"))) {
             model.addAttribute("rePasswordAlert", "Not same as password");
-            badSignUp=true;
+            badSignUp = true;
         }
-        if(!emptyUsername && alreadyExist.size()!=0){
+        if (!emptyUsername && alreadyExist.size() != 0) {
             model.addAttribute("usernameAlert", "Username already exsit!");
-            badSignUp=true;
+            badSignUp = true;
         }
 
-        if(badSignUp){
+        if (badSignUp) {
             return "user/signup";
         }
         String username = account.get("username");
         String password = account.get("password");
-        String email=account.get("email");
-        User newUser=new User(username, password, email);
+        String email = account.get("email");
+        User newUser = new User(username, password, email);
         newUser.setRegisterDate(LocalDate.now());
         userRepo.save(newUser);
         response.setStatus(201);
         return "user/signin";
 
         // if (alreadyExist.isEmpty()) {
-        //     String username = account.get("username");
-        //     String password = account.get("password");
-        //     //userRepo.save(new User(username, password, email));
-        //     response.setStatus(201);
-        //     return "user/login";
+        // String username = account.get("username");
+        // String password = account.get("password");
+        // //userRepo.save(new User(username, password, email));
+        // response.setStatus(201);
+        // return "user/login";
         // }
-        //return "user/usernameTaken";
+        // return "user/usernameTaken";
     }
-
 
     @GetMapping("/user/login")
     public String goSignin(@RequestParam Map<String, String> info, Model model, HttpSession session) {
-       User user = (User) session.getAttribute("session_user");
+        User user = (User) session.getAttribute("session_user");
         if (user == null) {
             return "user/signin";
         } else {
@@ -177,37 +177,37 @@ public class UserController {
             return "user/signin";
         } else {
             User user = userList.get(0);
-            
+
             userRepo.save(user);
             request.getSession().setAttribute("session_user", user);
             model.addAttribute("user", user);
             model.addAttribute("username", user.getUsername());
             model.addAttribute("uid", user.getUid());
-             handleActiveUser(user.getUid(),LocalDate.now());
+            handleActiveUser(user.getUid(), LocalDate.now());
             return "user/userCentre";
         }
     }
 
-    private void handleActiveUser(int uid,LocalDate loginDate){
-        User user=userRepo.findByUid(uid).get(0);
-        Boolean newLogin=false;
+    private void handleActiveUser(int uid, LocalDate loginDate) {
+        User user = userRepo.findByUid(uid).get(0);
+        Boolean newLogin = false;
 
-        if(user.getLastLoginDate()==null){
-            newLogin=true;
+        if (user.getLastLoginDate() == null) {
+            newLogin = true;
             user.setLastLoginDate(loginDate);
             userRepo.save(user);
         }
 
-        int lastLoginMonth=user.getLastLoginDate().getMonthValue();
+        int lastLoginMonth = user.getLastLoginDate().getMonthValue();
         user.setLastLoginDate(loginDate);
         userRepo.save(user);
-        
-        if(activeUsersRepo.findByYear(loginDate.getYear()).size()==0){
+
+        if (activeUsersRepo.findByYear(loginDate.getYear()).size() == 0) {
             activeUsersRepo.save(new activeUsers(LocalDate.now().getYear()));
         }
-        
-        if(newLogin || lastLoginMonth!=loginDate.getMonthValue()){
-            activeUsers row=activeUsersRepo.findByYear(loginDate.getYear()).get(0);
+
+        if (newLogin || lastLoginMonth != loginDate.getMonthValue()) {
+            activeUsers row = activeUsersRepo.findByYear(loginDate.getYear()).get(0);
             row.addMonthUserNum(loginDate.getMonthValue());
             activeUsersRepo.save(row);
         }
@@ -227,34 +227,33 @@ public class UserController {
             return "user/ContactUs";
         }
         if (buttonValue.equals("Inbox")) {
-            int currentPage=Integer.parseInt(info.get("currentPage"));
-            int uid=Integer.parseInt(info.get("uid"));
+            int currentPage = Integer.parseInt(info.get("currentPage"));
+            int uid = Integer.parseInt(info.get("uid"));
             // User user = (User) session.getAttribute("session_user");
             // System.out.println("==================");
             // System.out.println("uid: "+user.getUid());
             // System.out.println("==================");
-            List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
-            List<adminMessage> allInbox=new ArrayList<>();
-            List<adminMessage> inbox=new ArrayList<>();
+            List<adminMessage> allAdminMessages = adminMsgRepo.findAll();
+            List<adminMessage> allInbox = new ArrayList<>();
+            List<adminMessage> inbox = new ArrayList<>();
             Comparator<adminMessage> sentDateComparator = Comparator.comparing(adminMessage::getSentDate).reversed();
-            for(adminMessage m:allAdminMessages){
-                if(m.getToUid()==uid || m.getToUid()==0){
+            for (adminMessage m : allAdminMessages) {
+                if (m.getToUid() == uid || m.getToUid() == 0) {
                     allInbox.add(m);
-                } 
+                }
             }
             Collections.sort(allInbox, sentDateComparator);
-            for(int i=0;i<currentPage*5;i++){
-                if(i<allInbox.size()){
-                    inbox.add(allInbox.get(i));         
-                }
-                else{
+            for (int i = 0; i < currentPage * 5; i++) {
+                if (i < allInbox.size()) {
+                    inbox.add(allInbox.get(i));
+                } else {
                     break;
                 }
             }
             System.out.println("Number of msg: " + allInbox.size());
             model.addAttribute("inbox", inbox);
             model.addAttribute("currentPage", currentPage);
-            model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
+            model.addAttribute("maxPage", (int) Math.ceil(allInbox.size() / 5.0));
 
             return "user/userInbox";
         }
@@ -283,16 +282,16 @@ public class UserController {
                 for (Float f : userRecords) {
                     lastTen += f + ",";
                 }
-                //model.addAttribute("recordSize", recordSize);
+                // model.addAttribute("recordSize", recordSize);
             } else if (recordSize > 10) {
                 for (int k = 0; k < 10; k++) {
                     lastTen = userRecords.get(recordSize - 1 - k) + "," + lastTen;
                 }
-                //model.addAttribute("recordSize", 10);
+                // model.addAttribute("recordSize", 10);
             }
 
-            if(recordSize > 0){
-                lastTen=lastTen.substring(0, lastTen.length()-1);
+            if (recordSize > 0) {
+                lastTen = lastTen.substring(0, lastTen.length() - 1);
             }
 
             System.out.println("----------------------");
@@ -303,37 +302,36 @@ public class UserController {
             model.addAttribute("userRecords", lastTen);
             return "user/statistic";
         }
-        if(buttonValue.equals("Ladder")){
-            List<ladderBoard>entireBoard=ladderRepo.findAll();
-            if(entireBoard.size()>10){
-                List<ladderBoard> listOf10=new ArrayList<>();
-                for(int i=0;i<10;i++){
+        if (buttonValue.equals("Ladder")) {
+            List<ladderBoard> entireBoard = ladderRepo.findAll();
+            if (entireBoard.size() > 10) {
+                List<ladderBoard> listOf10 = new ArrayList<>();
+                for (int i = 0; i < 10; i++) {
                     listOf10.add(entireBoard.get(i));
                 }
-                entireBoard=listOf10;
+                entireBoard = listOf10;
             }
-            ladderBoard userInfo=null;
-            int uid=Integer.parseInt(info.get("uid"));
-            if(ladderRepo.findByUid(uid).size()==1){
-                userInfo=ladderRepo.findByUid(uid).get(0);
+            ladderBoard userInfo = null;
+            int uid = Integer.parseInt(info.get("uid"));
+            if (ladderRepo.findByUid(uid).size() == 1) {
+                userInfo = ladderRepo.findByUid(uid).get(0);
             }
             model.addAttribute("ladderBoard", entireBoard);
-            if(userInfo!=null){
+            if (userInfo != null) {
                 model.addAttribute("userRank", userInfo.getRank());
                 model.addAttribute("username", userInfo.getUsername());
                 model.addAttribute("userAvgWpm", userInfo.getAverageWPM());
-                
-            }
-            else{
-                model.addAttribute("userRank","N/A");
+
+            } else {
+                model.addAttribute("userRank", "N/A");
                 model.addAttribute("username", userRepo.findByUid(uid).get(0).getUsername());
                 model.addAttribute("userAvgWpm", "N/A");
                 model.addAttribute("alert", "No ranking: You played less than 10 games!");
             }
-            
+
             return "user/ladderBoard";
         }
-        if(buttonValue.equals("Setting")){
+        if (buttonValue.equals("Setting")) {
             return "user/setting";
         }
 
@@ -350,11 +348,12 @@ public class UserController {
     }
 
     @PostMapping("/user/setting")
-    public String handleSetting(@RequestParam("buttonValue") String buttonValue,@RequestParam Map<String, String> info,Model model){
-        int uid=Integer.parseInt(info.get("uid"));
+    public String handleSetting(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,
+            Model model) {
+        int uid = Integer.parseInt(info.get("uid"));
         model.addAttribute("uid", uid);
-        if(buttonValue.equals("update")){
-            User user=userRepo.findByUid(uid).get(0);
+        if (buttonValue.equals("update")) {
+            User user = userRepo.findByUid(uid).get(0);
             model.addAttribute("username", user.getUsername());
             model.addAttribute("email", user.getEmailAddress());
             return "user/userInfo";
@@ -363,75 +362,71 @@ public class UserController {
     }
 
     @PostMapping("/user/update")
-    public String handleUpdate(@RequestParam Map<String, String> info,Model model){
-        int uid=Integer.parseInt(info.get("uid"));
-        User user=userRepo.findByUid(uid).get(0);
+    public String handleUpdate(@RequestParam Map<String, String> info, Model model) {
+        int uid = Integer.parseInt(info.get("uid"));
+        User user = userRepo.findByUid(uid).get(0);
         model.addAttribute("uid", uid);
-        String newUsername=info.get("username");
-        String newEmail=info.get("email");
-        String newPW=info.get("newPassword");
-        String ReNewPw=info.get("reNewPassword");
-        Boolean correctPW=info.get("password").equals(user.getPassword());
-        Boolean updated=false;
-        if(correctPW){
-            if(!newUsername.equals("")){
-                if(userRepo.findByUsername(newUsername).size()==0){
+        String newUsername = info.get("username");
+        String newEmail = info.get("email");
+        String newPW = info.get("newPassword");
+        String ReNewPw = info.get("reNewPassword");
+        Boolean correctPW = info.get("password").equals(user.getPassword());
+        Boolean updated = false;
+        if (correctPW) {
+            if (!newUsername.equals("")) {
+                if (userRepo.findByUsername(newUsername).size() == 0) {
                     user.setUsername(newUsername);
-                    updated=true;
-                }
-                else if(newUsername.equals(user.getUsername())){
+                    updated = true;
+                } else if (newUsername.equals(user.getUsername())) {
                     model.addAttribute("usernameAlert", "Same as your old username :D");
-                }
-                else{
+                } else {
                     model.addAttribute("usernameAlert", "Username is already exist!");
                 }
             }
-            if(!newEmail.equals("")){
-                if(isGoodEmailFormat(newEmail)){
+            if (!newEmail.equals("")) {
+                if (isGoodEmailFormat(newEmail)) {
                     user.setEmailAddress(newEmail);
-                    updated=true;
-                }
-                else{
+                    updated = true;
+                } else {
                     model.addAttribute("emailAlert", "Invalid email format");
                 }
             }
-            if(!newPW.equals("")){
-                Boolean gate=true;
-                if(!newPW.equals(ReNewPw)){
+            if (!newPW.equals("")) {
+                Boolean gate = true;
+                if (!newPW.equals(ReNewPw)) {
                     model.addAttribute("rePasswordAlert", "New password not match");
-                    gate=false; 
+                    gate = false;
                 }
-                if(newPW.equals(user.getPassword())){
+                if (newPW.equals(user.getPassword())) {
                     model.addAttribute("newPasswordAlert", "Same as your old password :D");
-                    gate=false;
+                    gate = false;
                 }
-                if(gate){
+                if (gate) {
                     user.setEmailAddress(newEmail);
-                    updated=true;
+                    updated = true;
                 }
-                
+
             }
-        }
-        else if(info.get("password").equals("")){
+        } else if (info.get("password").equals("")) {
             model.addAttribute("passwordAlert", "Please enter password");
-        }
-        else {
+        } else {
             model.addAttribute("passwordAlert", "Incorrect password");
         }
-        if(updated){
+        if (updated) {
             model.addAttribute("result", "User info update success!");
             userRepo.save(user);
         }
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmailAddress());
         return "user/userInfo";
-    
+
     }
 
-    private Boolean isGoodEmailFormat(String email){
-        Boolean existSigns=email.indexOf('@')!=-1  && email.indexOf('.')!=-1;
-        Boolean onlyOneSign=email.indexOf('@', email.indexOf('@'))==-1 && email.indexOf('.', email.indexOf('.'))==-1;
-        Boolean goodSignFormat=email.indexOf('@', email.indexOf('.'))!=-1;
+    private Boolean isGoodEmailFormat(String email) {
+        Boolean existSigns = email.indexOf('@') != -1 && email.indexOf('.') != -1;
+        Boolean onlyOneSign = email.indexOf('@', email.indexOf('@')) == -1
+                && email.indexOf('.', email.indexOf('.')) == -1;
+        Boolean goodSignFormat = email.indexOf('@', email.indexOf('.')) != -1;
 
         return existSigns && onlyOneSign && goodSignFormat;
     }
@@ -442,56 +437,52 @@ public class UserController {
     public String readUserInbox(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,
             Model model) {
         model.addAttribute("uid", info.get("uid"));
-        int currentPage=Integer.parseInt(info.get("currentPage"));
+        int currentPage = Integer.parseInt(info.get("currentPage"));
         adminMessage msg = adminMsgRepo.findByMid(Integer.parseInt(buttonValue)).get(0);
         msg.setRead("Y");
         adminMsgRepo.save(msg);
         model.addAttribute("msg", msg);
         model.addAttribute("currentPage", currentPage);
-        //model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
+        // model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
         return "user/userReadInbox";
     }
 
-
     @PostMapping("/user/inbox")
-    public String switchPage(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,Model model){
-        List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
-        List<adminMessage> allInbox=new ArrayList<>();
-        List<adminMessage> inbox=new ArrayList<>();
-        int uid=Integer.parseInt(info.get("uid"));
+    public String switchPage(@RequestParam("buttonValue") String buttonValue, @RequestParam Map<String, String> info,
+            Model model) {
+        List<adminMessage> allAdminMessages = adminMsgRepo.findAll();
+        List<adminMessage> allInbox = new ArrayList<>();
+        List<adminMessage> inbox = new ArrayList<>();
+        int uid = Integer.parseInt(info.get("uid"));
         Comparator<adminMessage> sentDateComparator = Comparator.comparing(adminMessage::getSentDate).reversed();
-        for(adminMessage m:allAdminMessages){
-            if(m.getToUid()==uid || m.getToUid()==0){
+        for (adminMessage m : allAdminMessages) {
+            if (m.getToUid() == uid || m.getToUid() == 0) {
                 allInbox.add(m);
-            } 
+            }
         }
         Collections.sort(allInbox, sentDateComparator);
-        int currentPage=Integer.parseInt(info.get("currentPage"));
-        int maxPage=(int)Math.ceil(allInbox.size()/5.0); 
-        if(buttonValue.equals("next") && currentPage<maxPage){
-            currentPage++;        
-        }
-        else if(buttonValue.equals("previous") && currentPage>1){
+        int currentPage = Integer.parseInt(info.get("currentPage"));
+        int maxPage = (int) Math.ceil(allInbox.size() / 5.0);
+        if (buttonValue.equals("next") && currentPage < maxPage) {
+            currentPage++;
+        } else if (buttonValue.equals("previous") && currentPage > 1) {
             currentPage--;
         }
-        for(int i=(currentPage-1)*5;i<(currentPage)*5;i++){
-            if(i<allInbox.size()){
-                inbox.add(allInbox.get(i));         
-            }
-            else{
+        for (int i = (currentPage - 1) * 5; i < (currentPage) * 5; i++) {
+            if (i < allInbox.size()) {
+                inbox.add(allInbox.get(i));
+            } else {
                 break;
             }
         }
-        
+
         System.out.println("Number of msg: " + allInbox.size());
         model.addAttribute("uid", info.get("uid"));
         model.addAttribute("inbox", inbox);
         model.addAttribute("currentPage", currentPage);
-        model.addAttribute("maxPage", (int)Math.ceil(allInbox.size()/5.0));
+        model.addAttribute("maxPage", (int) Math.ceil(allInbox.size() / 5.0));
         return "user/userInbox";
     }
-        
-    
 
     // by 4
     // add msg to database
@@ -536,33 +527,31 @@ public class UserController {
         return "user/sendResult";
     }
 
-    private void handleLadderBoard(User user){
-        List<Float> last10=new ArrayList<>();
-        int WPMsize=user.getWPM().size();
-        Float last10Avg=0f;
-        if(WPMsize>=10f){
-            for(int i=WPMsize-10;i<WPMsize;i++){
+    private void handleLadderBoard(User user) {
+        List<Float> last10 = new ArrayList<>();
+        int WPMsize = user.getWPM().size();
+        Float last10Avg = 0f;
+        if (WPMsize >= 10f) {
+            for (int i = WPMsize - 10; i < WPMsize; i++) {
                 last10.add(user.getWPM().get(i));
-                last10Avg+=user.getWPM().get(i);
+                last10Avg += user.getWPM().get(i);
             }
-            last10Avg/=10f;
-            List<ladderBoard> row=ladderRepo.findByUid(user.getUid());
-            if(row.size()==0){
-                ladderRepo.save(new ladderBoard(user.getUid(),user.getUsername(), last10Avg));
-            }
-            else{
+            last10Avg /= 10f;
+            List<ladderBoard> row = ladderRepo.findByUid(user.getUid());
+            if (row.size() == 0) {
+                ladderRepo.save(new ladderBoard(user.getUid(), user.getUsername(), last10Avg));
+            } else {
                 row.get(0).setAverageWPM(last10Avg);
             }
-            
-            List<ladderBoard> entireBoard=ladderRepo.findAll();
+
+            List<ladderBoard> entireBoard = ladderRepo.findAll();
             Comparator<ladderBoard> avgWpmComparator = Comparator.comparing(ladderBoard::getAverageWPM).reversed();
             Collections.sort(entireBoard, avgWpmComparator);
-            for (int i=0;i<entireBoard.size();i++){
-                entireBoard.get(i).setRank(i+1);
+            for (int i = 0; i < entireBoard.size(); i++) {
+                entireBoard.get(i).setRank(i + 1);
                 ladderRepo.save(entireBoard.get(i));
             }
         }
-
 
     }
 
@@ -572,10 +561,11 @@ public class UserController {
         User user = (User) session.getAttribute("session_user");
         user.addRecords(Float.parseFloat(wpm.get("wpm")));
         userRepo.save(user);
-        //by A, it wont affect your system, just adding info for to the ladder board : D
+        // by A, it wont affect your system, just adding info for to the ladder board :
+        // D
         handleLadderBoard(userRepo.findByUid(Integer.parseInt(wpm.get("uid"))).get(0));
-        //done
-        //return "user/userCentre";
+        // done
+        // return "user/userCentre";
         return "user/game2";
     }
 
@@ -591,31 +581,36 @@ public class UserController {
     }
 
     @PostMapping("/user/get10Msg")
-    public String get10msg(@RequestParam Map<String, String> info,Model model, HttpSession session){
-       int uid=Integer.parseInt(info.get("uid"));
-            for(int i=1;i<=10;i++){
-                adminMsgRepo.save(new adminMessage("Test", uid, "Test subject"+i, "Test content"+i,ranDateB4(LocalDate.now()),"N"));
+    public String get10msg(@RequestParam Map<String, String> info, Model model, HttpSession session) {
+        int uid = Integer.parseInt(info.get("uid"));
+        for (int i = 1; i <= 10; i++) {
+            adminMsgRepo.save(new adminMessage("Test", uid, "Test subject" + i, "Test content" + i,
+                    ranDateB4(LocalDate.now()), "N"));
+        }
+        List<adminMessage> allAdminMessages = adminMsgRepo.findAll();
+        List<adminMessage> inbox = new ArrayList<>();
+        for (adminMessage m : allAdminMessages) {
+            if (m.getToUid() == uid || m.getToUid() == 0) {
+                inbox.add(m);
             }
-            List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
-            List<adminMessage> inbox=new ArrayList<>();
-            for(adminMessage m:allAdminMessages){
-                if(m.getToUid()==uid || m.getToUid()==0){
-                    inbox.add(m);
-                } 
-            }
-            System.out.println("Number of msg: " + inbox.size());
-            model.addAttribute("inbox", inbox);
-            return "user/userInbox";
+        }
+        System.out.println("Number of msg: " + inbox.size());
+        model.addAttribute("inbox", inbox);
+        return "user/userInbox";
 
     }
 
-    private LocalDate ranDateB4(LocalDate now){
-        LocalDate firstDate=LocalDate.parse(now.getYear()+"-01-01");
-        int diff=(int)ChronoUnit.DAYS.between(firstDate,now);
-        diff=new Random().nextInt(diff);
-        now=now.minusDays(diff);
+    private LocalDate ranDateB4(LocalDate now) {
+        LocalDate firstDate = LocalDate.parse(now.getYear() + "-01-01");
+        int diff = (int) ChronoUnit.DAYS.between(firstDate, now);
+        diff = new Random().nextInt(diff);
+        now = now.minusDays(diff);
         return now;
     }
 
-    
+    @GetMapping("/forgotPassword")
+    public String goForgotPassword() {
+        return "/user/forgotPassword";
+    }
+
 }
