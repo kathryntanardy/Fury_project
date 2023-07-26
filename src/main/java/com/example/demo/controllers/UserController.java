@@ -31,6 +31,7 @@ import com.example.demo.model.ladderBoard;
 import com.example.demo.model.ladderRepository;
 import com.example.demo.model.userMessage;
 import com.example.demo.model.userMessageRepository;
+import com.example.demo.service.EmailSenderService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,6 +55,9 @@ public class UserController {
 
     @Autowired
     private activeUsersRepository activeUsersRepo;
+
+    @Autowired
+    private EmailSenderService service;
 
     // @GetMapping("/signUp")
     // public String signUp(@RequestParam Map<String, String> account,
@@ -611,6 +615,15 @@ public class UserController {
     @GetMapping("/forgotPassword")
     public String goForgotPassword() {
         return "/user/forgotPassword";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
+        String email = info.get("email");
+        service.sendEmail("ktanardy@gmail.com", "test", "test");
+        return "redirect:/forgotPassword";
+        // try to implement this part , by k . e: just do a java logic like if username
+        // is found by findbyEmail adress do what
     }
 
 }
