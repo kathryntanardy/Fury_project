@@ -59,6 +59,8 @@ public class UserController {
     @Autowired
     private EmailSenderService service;
 
+    Random random = new Random(1000);
+
     // @GetMapping("/signUp")
     // public String signUp(@RequestParam Map<String, String> account,
     // HttpServletResponse response, Model model) {
@@ -620,10 +622,22 @@ public class UserController {
     @PostMapping("/forgotPassword")
     public String forgotPassword(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
         String email = info.get("email");
-        service.sendEmail("ktanardy@gmail.com", "test", "test");
-        return "redirect:/forgotPassword";
-        // try to implement this part , by k . e: just do a java logic like if username
-        // is found by findbyEmail adress do what
+        List<User> userList = userRepo.findByEmailAddress(email);
+        User user;
+
+        if (!userList.isEmpty()) {
+            user = userRepo.findByEmailAddress(info.get("email")).get(0);
+            int otp = random.nextInt(9999);
+            System.out.println(otp);
+            user.setPassword(Integer.toString(otp));
+            userRepo.save(user);
+            service.sendEmail(email, "Your new password is " + otp, "Password Reset");
+            return "user/verificationPage";
+        } else {
+            model.addAttribute("emailNotFoundAlert", "Account Not Found");
+            return "user/forgotPassword";
+        }
+
     }
 
 }
