@@ -59,14 +59,18 @@ quoteInputElement.addEventListener('input', () => {
     if (correct) {
         clearInterval(intervalId);
         timerStart = false;
-        alert("Finish the quote in: " + timerElement.innerText + " seconds");
-        let wpm = ((numOfInputs / 5) / (timerElement.innerText / 60)).toFixed(2);
-        let accuracy = ((numOfCharacters / numOfInputs) * 100).toFixed(2);
-        alert("WPM: " + wpm + " WPM");
-        alert("Accuracy: " + accuracy + "%");
-        document.getElementById('wpm').value = wpm;
-        document.getElementsByName('submitWPM')[0].submit();
-        renderNewQuote();
+         if (timerElement.innerText == '') {
+            renderNewQuote();
+        } else {
+            alert("Finish the quote in: " + timerElement.innerText + " seconds");
+            let wpm = ((numOfInputs / 5) / (timerElement.innerText / 60)).toFixed(2);
+            let accuracy = ((numOfCharacters / numOfInputs) * 100).toFixed(2);
+            alert("WPM: " + wpm + " WPM");
+            alert("Accuracy: " + accuracy + "%");
+            document.getElementById('wpm').value = wpm;
+            document.getElementsByName('submitWPM')[0].submit();
+            renderNewQuote();
+        }
     }
 })
 
