@@ -627,10 +627,12 @@ public class UserController {
 
         if (!userList.isEmpty()) {
             user = userRepo.findByEmailAddress(info.get("email")).get(0);
+            model.addAttribute("uid", user.getUid());
             int otp = random.nextInt(9999);
             System.out.println(otp);
             user.setPassword(Integer.toString(otp));
             userRepo.save(user);
+            System.out.println(user.getUid());
             service.sendEmail(email, "Your new password is " + otp, "Password Reset");
             return "user/verificationPage";
         } else {
@@ -640,19 +642,55 @@ public class UserController {
 
     }
 
+    @PostMapping("/submitOTP")
+    public String submitOTP(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
+        int uid = Integer.parseInt(info.get("uid"));
+        model.addAttribute("uid", uid);
+        User user = userRepo.findByUid(uid).get(0);
+        String newPassword = info.get("password");
+        System.out.println(newPassword);
+        System.out.println(user.getPassword());
+
+        if (newPassword.equals(user.getPassword())) {
+            return "user/resetPassword";
+        }
+
+        model.addAttribute("passwordDontMatch", "Password doesn't match. Please try again.");
+        return "user/verificationPage";
+
+    }
+
+    @PostMapping("/resetPassword")
+    public String resetPassword(@RequestParam Map<String, String> info,
+            HttpServletResponse response, Model model) {
+        int uid = Integer.parseInt(info.get("uid"));
+        model.addAttribute("uid", uid);
+        User user = userRepo.findByUid(uid).get(0);
+        String firstPassword = info.get("password");
+        String secondPassword = info.get("repassword");
+
+        if (!firstPassword.equals(secondPassword)) {
+            model.addAttribute("passwordDontMatch", "Passwords do not match");
+            return "user/resetPassword";
+        }
+
+        user.setPassword(firstPassword);
+        userRepo.save(user);
+        return "user/resetPasswordSuccess";
+    }
 
     @GetMapping("/abstract")
-    public String goAbstract(){
+    public String goAbstract() {
         return "/user/abstract";
     }
 
-     @GetMapping("/TOS")
-    public String goTOS(){
+    @GetMapping("/TOS")
+    public String goTOS() {
         return "/user/TOS";
     }
 
-     @GetMapping("/FAQ")
-    public String goFAQ(){
+    @GetMapping("/FAQ")
+    public String goFAQ() {
         return "/user/FAQ";
     }
 }
