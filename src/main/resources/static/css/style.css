@@ -1,25 +1,25 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     margin: 0;
     background-color: lightgrey;
 }
 
 body,
 .quote-input {
-    font-size: 1.2rem;
+    font-size: 20px;
     font-family: monospace;
 }
 
@@ -70,4 +70,12 @@ body,
 .incorrect {
     color: red;
     text-decoration: line-through;
+}
+
+#resetBtn {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
 }
