@@ -640,4 +640,19 @@ public class UserController {
 
     }
 
+
+    @GetMapping("/abstract")
+    public String goAbstract(){
+        return "/user/abstract";
+    }
+
+     @GetMapping("/TOS")
+    public String goTOS(){
+        return "/user/TOS";
+    }
+
+     @GetMapping("/FAQ")
+    public String goFAQ(){
+        return "/user/FAQ";
+    }
 }
