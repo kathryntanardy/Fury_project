@@ -290,7 +290,7 @@ public class AdminController {
 
     private String commulativUserInYear(int year) {
         List<User> allUsers = userRepo.findAll();
-        allUsers.sort(Comparator.comparing(User::getLastLoginDate));
+        allUsers.sort(Comparator.comparing(User::getRegisterDate));
         int[] dataArr = new int[12];
         String data = "";
         for (User u : allUsers) {
