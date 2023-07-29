@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Sign In </title>
+    <title> Welcome </title>
     <script type="text/javascript" src="./js/signin.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -12,10 +12,10 @@
 </head>
 
 <!-- created index.html file for the front page, by k -->
-<body style="background-color:lightgrey; position:relative; top:3rem; font-family: Arial, Helvetica, sans-serif;">
+<body style="background-color:lightgrey; position:relative; top:3rem; font-family: Arial, Helvetica, sans-serif; padding: 20px;">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-6 text-center">
+            <div class="col-md-10 text-center">
                 <br>
                 <img src="fury.png" alt="Fury Logo" width="150" height="150" style="display: block;
                 margin-left: auto;
@@ -24,34 +24,57 @@
                 margin-bottom: 30px;">
                 <br>
                 
-                <p style="text-align: center;">Welcome to Fury</p>
+                <h2 style="text-align: center;">Welcome to Fury</h2>
+                <br>
                 <p> Hone your typing skills now! </p>
                 <br>
-        
-               
-                    <!-- <a href="/user/goLogin" style="color: white;">
-                        <button class="btn btn-dark">Sign in</button></a> -->
-                        <form action="/user/login" method="submit">
-                            <button class="btn btn-dark">Sign in</button></a>
-                        </form>
-                    <br>
-            
-                    <form action="/abstract" method="submit">
-                        <button class="btn btn-dark"> About </button></a>
-                    </form>
-                    <br>
-
-                    <form action="/TOS" method="submit">
-                        <button class = "btn btn-dark"> Terms of Service </button></a>                
-                    </form>
-
-                    <br>
+            </div>
                 
-                    <form action="/FAQ" method="submit"> 
-                        <button class = "btn btn-dark"> FAQ </button></a>
-                    </div>
+            <div class="col-md-6 text-center">
+                <div class="d-inline" style="margin: 20px;">
+                    <form class="d-inline" action="/user/login" method="submit" style="padding: 20px;">
+                    <a href="/user/signin">
+                        <button type="submit">
+                            <img src="/imageFiles/login.png" alt="signInIcon" width="40px" height="40px;"><br>
+                            Sign in</button>
+                        </a>
                     </form>
+
+                    <a href="abstract.html" style="padding: 20px;">
+                        <button>
+                            <img src="imageFiles/about.png" alt="aboutIcon" width="40px" height="40px">
+                            <br>
+                            About</button>
+                    </a>
+
+                    <a href="abstract.html" style="padding:20px;">
+                        <button id="about">
+                            <img src="imageFiles/tos.png" alt="aboutIcon" width="40px" height="40px">
+                            <br>
+                            Terms of
+                            <br>
+                            Service</button>
+                    </a>
+                    
+                        
+                 
+              
                 </div>
+
+     
+                    
+                    
+               
+                
+                   
+               
+
+                
+               
+
+                   
+    
+        
 
             </div>
         </div>
