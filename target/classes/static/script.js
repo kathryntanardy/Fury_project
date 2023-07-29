@@ -102,6 +102,9 @@ function getCustomWords() {
 }
 
 async function renderNewQuote() {
+    clearInterval(intervalId);
+    timerStart = false;
+    timerElement.innerText == ''
     let quote = await getRandomQuote()
     quoteDisplayElement.innerHTML = '';
     quote.split('').forEach(character => {
@@ -115,6 +118,9 @@ async function renderNewQuote() {
 }
 
 async function renderHardRandomWords() {
+    clearInterval(intervalId);
+    timerStart = false;
+    timerElement.innerText == ''
     let words = await getHardRandomWords();
     quoteDisplayElement.innerHTML = '';
     words.split('').forEach(character => {
@@ -134,6 +140,9 @@ async function renderHardRandomWords() {
     document.getElementById('wpm').value = '';
 }
 async function renderEasyRandomWords() {
+    clearInterval(intervalId);
+    timerStart = false;
+    timerElement.innerText == ''
     let words = await getEasyRandomWords();
     quoteDisplayElement.innerHTML = '';
     words.split('').forEach(character => {
@@ -154,6 +163,9 @@ async function renderEasyRandomWords() {
 }
 
 async function renderCustomWords() {
+    clearInterval(intervalId);
+    timerStart = false;
+    timerElement.innerText == ''
     theFirstLetter = document.getElementById('firstLetter').value;
     numbers = document.getElementById('numbers').value;
     theLength = document.getElementById('wordLength').value;

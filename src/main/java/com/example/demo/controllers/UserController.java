@@ -622,40 +622,58 @@ public class UserController {
     @PostMapping("/forgotPassword")
     public String forgotPassword(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
         String email = info.get("email");
+        model.addAttribute("email", email);
+        System.out.println(email);
         List<User> userList = userRepo.findByEmailAddress(email);
         User user;
 
         if (!userList.isEmpty()) {
             user = userRepo.findByEmailAddress(info.get("email")).get(0);
             model.addAttribute("uid", user.getUid());
-            int otp = random.nextInt(9999);
+            String otp = Integer.toString(random.nextInt(9999));
             System.out.println(otp);
-            user.setPassword(Integer.toString(otp));
-            userRepo.save(user);
+            // user.setPassword(Integer.toString(otp));
+            model.addAttribute("verificationCode", otp);
+            // userRepo.save(user);
             System.out.println(user.getUid());
-            service.sendEmail(email, "Your new password is " + otp, "Password Reset");
+            service.sendEmail(email, "Your verification code is " + otp, "Verification Code");
             return "user/verificationPage";
         } else {
             model.addAttribute("emailNotFoundAlert", "Account Not Found");
             return "user/forgotPassword";
         }
+    }
 
+    @GetMapping("/resendCode")
+    public String goResend() {
+        return "resendCode";
+    }
+
+    @PostMapping("/resendCode")
+    public String resendCode(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
+        int uid = Integer.parseInt(info.get("uid"));
+        User user = userRepo.findByUid(uid).get(0);
+        model.addAttribute("uid", uid);
+        String email = user.getEmailAddress();
+        String otp = Integer.toString(random.nextInt(9999));
+        model.addAttribute("verificationCode", otp);
+        service.sendEmail(email, "Your verification code is " + otp, "Verification Code");
+        return "user/verificationPage";
     }
 
     @PostMapping("/submitOTP")
     public String submitOTP(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
         int uid = Integer.parseInt(info.get("uid"));
+        String otp = info.get("verificationCode");
         model.addAttribute("uid", uid);
         User user = userRepo.findByUid(uid).get(0);
-        String newPassword = info.get("password");
-        System.out.println(newPassword);
-        System.out.println(user.getPassword());
+        String inputOTP = info.get("code");
 
-        if (newPassword.equals(user.getPassword())) {
+        if (otp.equals(inputOTP)) {
             return "user/resetPassword";
         }
 
-        model.addAttribute("passwordDontMatch", "Password doesn't match. Please try again.");
+        model.addAttribute("wrongCode", "Incorrect code.");
         return "user/verificationPage";
 
     }

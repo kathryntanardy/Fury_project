@@ -37,13 +37,16 @@
                     <div>
                         <input id="uid" name="uid" th:value="${uid}" hidden>
                     </div>
+                    <div>
+                        <input id="verificationCode" name="verificationCode" th:value="${verificationCode}" hidden>
+                    </div>
                     <br>
                     
 
                     <!-- <p style="font-size: 20px;">Enter New Password</p> -->
-                    <p style="color: rgb(50, 48, 48); font-size: 20px">Your new verification password has been sent to your email. Please enter password below.</p>
-                    <input type="text" id="password" name="password" placeholder="Enter here" required>
-                    <p style="color: red;" name="passwordDontMatch" th:text="${passwordDontMatch}"></p>
+                    <p style="color: rgb(50, 48, 48); font-size: 20px">Your one time verification code has been sent to your email. Please enter code below.</p>
+                    <input type="text" id="code" name="code" placeholder="Enter here" required>
+                    <p style="color: red;" name="wrongCode" th:text="${wrongCode}"></p>
     
      
 
@@ -61,7 +64,14 @@
                 <br>
 
                 <div class="text-center justify-content-center">
-                    <a style="color: grey" class="btn rounded-0" href="/user/signUp">Don't have an account yet? Create Account </a>
+                    <form action="/forgotPassword" method="post">
+                        <div>
+                            <input id="email" name="email" th:value="${email}" hidden>
+                        </div>
+
+                        <input id="submit" type="submit" style="float:center; justify-content:center; background-color: transparent; color: grey; border: transparent; font-size: 15px; width: 100%" value="Didn't receive an email yet? Resend code."> 
+                    </form>
+                    <!-- <a style="color: grey" class="btn rounded-0" th:href="@{/resendCode}">Didn't receive an email yet? Resend code. </a> -->
                     <br>
     
                 </div>
