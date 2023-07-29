@@ -644,40 +644,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/resendCode")
-    public String goResend() {
-        return "resendCode";
-    }
-
-    @PostMapping("/resendCode")
-    public String resendCode(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
-        int uid = Integer.parseInt(info.get("uid"));
-        User user = userRepo.findByUid(uid).get(0);
-        model.addAttribute("uid", uid);
-        String email = user.getEmailAddress();
-        String otp = Integer.toString(random.nextInt(9999));
-        model.addAttribute("verificationCode", otp);
-        service.sendEmail(email, "Your verification code is " + otp, "Verification Code");
-        return "user/verificationPage";
-    }
-
-    @PostMapping("/submitOTP")
-    public String submitOTP(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
-        int uid = Integer.parseInt(info.get("uid"));
-        String otp = info.get("verificationCode");
-        model.addAttribute("uid", uid);
-        User user = userRepo.findByUid(uid).get(0);
-        String inputOTP = info.get("code");
-
-        if (otp.equals(inputOTP)) {
-            return "user/resetPassword";
-        }
-
-        model.addAttribute("wrongCode", "Incorrect code.");
-        return "user/verificationPage";
-
-    }
-
     @PostMapping("/resetPassword")
     public String resetPassword(@RequestParam Map<String, String> info,
             HttpServletResponse response, Model model) {
