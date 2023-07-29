@@ -616,7 +616,7 @@ public class UserController {
 
     @GetMapping("/forgotPassword")
     public String goForgotPassword() {
-        return "/user/forgotPassword";
+        return "user/forgotPassword";
     }
 
     @PostMapping("/forgotPassword")
