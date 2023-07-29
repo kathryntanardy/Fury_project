@@ -1,0 +1,15 @@
+#password {
+    background-color: transparent;
+    width: 100%;
+    border: 3px solid black;
+    height: 50px;
+    padding: 20px;
+}
+
+#submit {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    width: 200px;
+    height: 45px;
+}
