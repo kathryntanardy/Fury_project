@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300; url='/timeOutMessage.html'" />
     <title>Verification Page</title>
     <script type="text/javascript" src="signin.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -47,11 +48,43 @@
                     <p style="color: rgb(50, 48, 48); font-size: 20px">Your one time verification code has been sent to your email. Please enter code below.</p>
                     <input type="text" id="code" name="code" placeholder="Enter here" required>
                     <p style="color: red;" name="wrongCode" th:text="${wrongCode}"></p>
-    
-     
+                    
+                    <div class="text-center justify-content-center d-inline">
+                        <p id="timer">Time Remaining: 05:00</p>
+                    </div>
+                
+                    <script type="text/javascript">
+                        var minute = 4;
+                        var second = 59;
 
-                    <br>
-                    <br>
+                        setInterval(function(){
+                            if(minute == 0 && second == 1){
+                                document.getElementById("timer").innerHTML = "00:00";
+                            }
+                            else{
+                                second--;
+                                if (second == 0){
+                                    minute--;
+                                    second = 60;
+
+
+                                    if(minute == 0){
+                                        minute = minute;
+                                    }
+                                }
+                                if(minute.toString().length == 1){
+                                    minute = "0"+minute;
+                                }
+                                if(second.toString().length == 1){
+                                    second = "0"+second;
+                                }
+
+                                document.getElementById("timer").innerHTML = "Time Remaining: " + minute + ":" + second;
+
+                            }
+                        },1000);
+                    </script>
+    
                     <br>
 
 

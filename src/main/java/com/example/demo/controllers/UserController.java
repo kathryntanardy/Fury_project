@@ -663,4 +663,21 @@ public class UserController {
         return "user/resetPasswordSuccess";
     }
 
+    @PostMapping("/submitOTP")
+    public String submitOTP(@RequestParam Map<String, String> info, HttpServletResponse response, Model model) {
+        int uid = Integer.parseInt(info.get("uid"));
+        String otp = info.get("verificationCode");
+        model.addAttribute("uid", uid);
+        User user = userRepo.findByUid(uid).get(0);
+        String inputOTP = info.get("code");
+
+        if (otp.equals(inputOTP)) {
+            return "user/resetPassword";
+        }
+
+        model.addAttribute("wrongCode", "Incorrect code.");
+        return "user/verificationPage";
+
+    }
+
 }
