@@ -200,6 +200,7 @@ class DemoApplicationTests {
 				}
 			}
 		}
+		adminMsgRepo.delete(testReply);
 		userMsgRepo.delete(testMessage);
 		assertEquals(true, testPass);
 	}
