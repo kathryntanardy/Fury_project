@@ -59,7 +59,7 @@ public class UserController {
     @Autowired
     private EmailSenderService service;
 
-    Random random = new Random(1000);
+    Random random = new Random(System.currentTimeMillis());
 
     // @GetMapping("/signUp")
     // public String signUp(@RequestParam Map<String, String> account,
@@ -317,7 +317,7 @@ public class UserController {
                 }
                 entireBoard = listOf10;
             }
-            if(entireBoard.size()>0){
+            if (entireBoard.size() > 0) {
                 Comparator<ladderBoard> rankComparator = Comparator.comparing(ladderBoard::getRank);
                 Collections.sort(entireBoard, rankComparator);
             }
@@ -387,9 +387,9 @@ public class UserController {
                 if (userRepo.findByUsername(newUsername).size() == 0) {
                     user.setUsername(newUsername);
                     updated = true;
-                    List<ladderBoard> board=ladderRepo.findAll();
-                    for(ladderBoard row:board){
-                        if(row.getUid()==user.getUid()){
+                    List<ladderBoard> board = ladderRepo.findAll();
+                    for (ladderBoard row : board) {
+                        if (row.getUid() == user.getUid()) {
                             row.setUsername(newUsername);
                             ladderRepo.save(row);
                         }
@@ -419,7 +419,8 @@ public class UserController {
                     gate = false;
                 }
                 if (gate) {
-                    user.setPassword(ReNewPw);;
+                    user.setPassword(ReNewPw);
+                    ;
                     updated = true;
                 }
 
@@ -442,14 +443,14 @@ public class UserController {
 
     private Boolean isGoodEmailFormat(String email) {
         Boolean existSigns = email.indexOf('@') != -1 && email.indexOf('.') != -1;
-        Boolean onlyOneSign = email.indexOf('@', email.indexOf('@')+1) == -1
-                && email.indexOf('.', email.indexOf('.')+1) == -1;
+        Boolean onlyOneSign = email.indexOf('@', email.indexOf('@') + 1) == -1
+                && email.indexOf('.', email.indexOf('.') + 1) == -1;
         Boolean goodSignFormat = email.indexOf('@', email.indexOf('.')) == -1;
-        System.out.println("existSigns: "+existSigns);
-        System.out.println("onlyOneSign: "+onlyOneSign);
-        System.out.println("email.indexOf('@', email.indexOf('@')): "+email.indexOf('@', email.indexOf('@')));
-        System.out.println("email.indexOf('.', email.indexOf('.')): "+email.indexOf('.', email.indexOf('.')));
-        System.out.println("goodSignFormat: "+goodSignFormat);
+        System.out.println("existSigns: " + existSigns);
+        System.out.println("onlyOneSign: " + onlyOneSign);
+        System.out.println("email.indexOf('@', email.indexOf('@')): " + email.indexOf('@', email.indexOf('@')));
+        System.out.println("email.indexOf('.', email.indexOf('.')): " + email.indexOf('.', email.indexOf('.')));
+        System.out.println("goodSignFormat: " + goodSignFormat);
         return existSigns && onlyOneSign && goodSignFormat;
     }
 
@@ -646,7 +647,13 @@ public class UserController {
         if (!userList.isEmpty()) {
             user = userRepo.findByEmailAddress(info.get("email")).get(0);
             model.addAttribute("uid", user.getUid());
-            String otp = Integer.toString(random.nextInt(9999));
+            // String otp = Integer.toString(random.nextInt(9999));
+            int[] rand = new int[500];
+            for (int i = 0; i < 100; i++) {
+                rand[i] = Math.abs(random.nextInt()) / 1000000;
+            }
+            int randomInt = random.nextInt(99);
+            String otp = Integer.toString(rand[randomInt]);
             System.out.println(otp);
             // user.setPassword(Integer.toString(otp));
             model.addAttribute("verificationCode", otp);
