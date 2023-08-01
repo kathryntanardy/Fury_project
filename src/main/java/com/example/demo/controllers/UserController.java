@@ -317,6 +317,10 @@ public class UserController {
                 }
                 entireBoard = listOf10;
             }
+            if(entireBoard.size()>0){
+                Comparator<ladderBoard> rankComparator = Comparator.comparing(ladderBoard::getRank);
+                Collections.sort(entireBoard, rankComparator);
+            }
             ladderBoard userInfo = null;
             int uid = Integer.parseInt(info.get("uid"));
             if (ladderRepo.findByUid(uid).size() == 1) {
