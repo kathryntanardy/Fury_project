@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -52,20 +53,42 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testUserAvgWpm(){
-		Boolean testPass=true;
-		List<User> allUsers=userRepoTest.findAll();
-		for(User u: allUsers){
-			List<Float> wpmList=u.getWPM();
-			Float sum=0f;
-			Float avg=0f;
-			if(wpmList.size()!=0){
-				for(Float wpm:wpmList){
-					sum+=wpm;
+	void testAddRecords() {
+		User user = new User("test", "test", "test@gmail.com");
+		user.addRecords(250);
+		ArrayList<Float> wpm = user.getWPM();
+		if (wpm.isEmpty()) {
+			fail();
+		} else {
+			assertTrue(true);
+		}
+	}
+
+	@Test
+	void testLogIn() {
+		User user = new User("test", "test", "test@gmail.com");
+		if (user.getLastLoginDate() == null) {
+			assertTrue(true);
+		} else {
+			fail();
+		}
+	}
+
+	@Test
+	void testUserAvgWpm() {
+		Boolean testPass = true;
+		List<User> allUsers = userRepoTest.findAll();
+		for (User u : allUsers) {
+			List<Float> wpmList = u.getWPM();
+			Float sum = 0f;
+			Float avg = 0f;
+			if (wpmList.size() != 0) {
+				for (Float wpm : wpmList) {
+					sum += wpm;
 				}
-				avg=sum/wpmList.size();
-				if(u.getAverageWPM()!=avg){
-					testPass=false;
+				avg = sum / wpmList.size();
+				if (u.getAverageWPM() != avg) {
+					testPass = false;
 					break;
 				}
 			}
@@ -74,20 +97,20 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testUserBestWpm(){
-		Boolean testPass=true;
-		List<User> allUsers=userRepoTest.findAll();
-		for(User u: allUsers){
-			List<Float> wpmList=u.getWPM();
-			Float best=0f;
-			if(wpmList.size()!=0){
-				for(Float wpm:wpmList){
-					if(wpm>best){
-						best=wpm;
+	void testUserBestWpm() {
+		Boolean testPass = true;
+		List<User> allUsers = userRepoTest.findAll();
+		for (User u : allUsers) {
+			List<Float> wpmList = u.getWPM();
+			Float best = 0f;
+			if (wpmList.size() != 0) {
+				for (Float wpm : wpmList) {
+					if (wpm > best) {
+						best = wpm;
 					}
 				}
-				if(u.getBestWPM()!=best){
-					testPass=false;
+				if (u.getBestWPM() != best) {
+					testPass = false;
 					break;
 				}
 			}
@@ -96,16 +119,17 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testUserContactUs(){
-		Boolean testPass=false;
-		LocalDate testDate=LocalDate.now();
-		userMessage testMessage=new userMessage(-1, "testSubject", "testContent", "testSolved", testDate);
+	void testUserContactUs() {
+		Boolean testPass = false;
+		LocalDate testDate = LocalDate.now();
+		userMessage testMessage = new userMessage(-1, "testSubject", "testContent", "testSolved", testDate);
 		userMsgRepo.save(testMessage);
-		List<userMessage> userMsgList=userMsgRepo.findAll();
-		for(userMessage m:userMsgList){
-			if(m.getFromUid()==-1){
-				if(m.getSubject().equals("testSubject") && m.getContent().equals("testContent") && m.getSolved().equals("testSolved") && m.getSentDate().equals(testDate)){
-					testPass=true;
+		List<userMessage> userMsgList = userMsgRepo.findAll();
+		for (userMessage m : userMsgList) {
+			if (m.getFromUid() == -1) {
+				if (m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
+						&& m.getSolved().equals("testSolved") && m.getSentDate().equals(testDate)) {
+					testPass = true;
 				}
 			}
 		}
@@ -114,16 +138,17 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testUserInbox(){
-		Boolean testPass=false;
-		LocalDate testDate=LocalDate.now();
-		adminMessage testMessage=new adminMessage("testType", -1, "testSubject", "testContent", testDate, "testRead");
+	void testUserInbox() {
+		Boolean testPass = false;
+		LocalDate testDate = LocalDate.now();
+		adminMessage testMessage = new adminMessage("testType", -1, "testSubject", "testContent", testDate, "testRead");
 		adminMsgRepo.save(testMessage);
-		List<adminMessage> allAdminMessages=adminMsgRepo.findAll();
-		for(adminMessage m: allAdminMessages){
-			if(m.getToUid()==-1){
-				if(m.getSubject().equals("testSubject") && m.getContent().equals("testContent") && m.getSentDate().equals(testDate) && m.getRead().equals("testRead")){
-					testPass=true;
+		List<adminMessage> allAdminMessages = adminMsgRepo.findAll();
+		for (adminMessage m : allAdminMessages) {
+			if (m.getToUid() == -1) {
+				if (m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
+						&& m.getSentDate().equals(testDate) && m.getRead().equals("testRead")) {
+					testPass = true;
 				}
 			}
 		}
@@ -132,17 +157,16 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testUserLeaderBoard(){
-		Boolean testPass=true;
-		List<ladderBoard> ranking=ladderRepo.findAll();
-		int rank=ranking.get(0).getRank();
-		for(int i=1;i<ranking.size();i++){
-			int nextRank=ranking.get(i).getRank();
-			if(nextRank>rank){
-				rank=nextRank;
-			}
-			else{
-				testPass=false;
+	void testUserLeaderBoard() {
+		Boolean testPass = true;
+		List<ladderBoard> ranking = ladderRepo.findAll();
+		int rank = ranking.get(0).getRank();
+		for (int i = 1; i < ranking.size(); i++) {
+			int nextRank = ranking.get(i).getRank();
+			if (nextRank > rank) {
+				rank = nextRank;
+			} else {
+				testPass = false;
 				break;
 			}
 		}
@@ -150,27 +174,29 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testAdminInboxAndReply(){
-		Boolean testPass=false;
-		LocalDate testDate=LocalDate.now();
-		userMessage testMessage=new userMessage(-1, "testSubject", "testContent", "testSolved", testDate);
+	void testAdminInboxAndReply() {
+		Boolean testPass = false;
+		LocalDate testDate = LocalDate.now();
+		userMessage testMessage = new userMessage(-1, "testSubject", "testContent", "testSolved", testDate);
 		userMsgRepo.save(testMessage);
-		List<userMessage> userMsgList=userMsgRepo.findAll();
-		for(userMessage m:userMsgList){
-			if(m.getFromUid()==-1){
-				if(m.getSubject().equals("testSubject") && m.getContent().equals("testContent") && m.getSolved().equals("testSolved") && m.getSentDate().equals(testDate)){
-					testPass=true;
+		List<userMessage> userMsgList = userMsgRepo.findAll();
+		for (userMessage m : userMsgList) {
+			if (m.getFromUid() == -1) {
+				if (m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
+						&& m.getSolved().equals("testSolved") && m.getSentDate().equals(testDate)) {
+					testPass = true;
 				}
 			}
 		}
-		testPass=false;
-		adminMessage testReply=new adminMessage("testReply",-1,"testSubject","testContent",testDate,"testRead");
+		testPass = false;
+		adminMessage testReply = new adminMessage("testReply", -1, "testSubject", "testContent", testDate, "testRead");
 		adminMsgRepo.save(testReply);
-		List<adminMessage> adminMsgList=adminMsgRepo.findAll();
-		for(adminMessage m:adminMsgList){
-			if(m.getType().equals("testReply")){
-				if(m.getToUid()==0 && m.getSubject().equals("testSubject") && m.getContent().equals("testContent") && m.getSentDate().equals(testDate) && m.getRead().equals("testRead")){
-					testPass=true;
+		List<adminMessage> adminMsgList = adminMsgRepo.findAll();
+		for (adminMessage m : adminMsgList) {
+			if (m.getType().equals("testReply")) {
+				if (m.getToUid() == 0 && m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
+						&& m.getSentDate().equals(testDate) && m.getRead().equals("testRead")) {
+					testPass = true;
 				}
 			}
 		}
@@ -179,16 +205,17 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testAdminAnouncement(){
-		Boolean testPass=false;
-		LocalDate testDate=LocalDate.now();
-		adminMessage testMessage=new adminMessage("testType",0,"testSubject","testContent",testDate,"testRead");
+	void testAdminAnouncement() {
+		Boolean testPass = false;
+		LocalDate testDate = LocalDate.now();
+		adminMessage testMessage = new adminMessage("testType", 0, "testSubject", "testContent", testDate, "testRead");
 		adminMsgRepo.save(testMessage);
-		List<adminMessage> adminMsgList=adminMsgRepo.findAll();
-		for(adminMessage m:adminMsgList){
-			if(m.getType().equals("testType")){
-				if(m.getToUid()==0 && m.getSubject().equals("testSubject") && m.getContent().equals("testContent") && m.getSentDate().equals(testDate) && m.getRead().equals("testRead")){
-					testPass=true;
+		List<adminMessage> adminMsgList = adminMsgRepo.findAll();
+		for (adminMessage m : adminMsgList) {
+			if (m.getType().equals("testType")) {
+				if (m.getToUid() == 0 && m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
+						&& m.getSentDate().equals(testDate) && m.getRead().equals("testRead")) {
+					testPass = true;
 				}
 			}
 		}
@@ -197,21 +224,21 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	void testAdminActiveUser(){
-		int testMonth=LocalDate.now().getMonthValue();
-		int testYear=LocalDate.now().getYear();
-		List<User> allUser=userRepoTest.findAll();
-		int activeThisMonth=0;
-		for(User u:allUser){
-			if(u.getLastLoginDate().getYear()==testYear && u.getLastLoginDate().getMonthValue()==testMonth){
+	void testAdminActiveUser() {
+		int testMonth = LocalDate.now().getMonthValue();
+		int testYear = LocalDate.now().getYear();
+		List<User> allUser = userRepoTest.findAll();
+		int activeThisMonth = 0;
+		for (User u : allUser) {
+			if (u.getLastLoginDate().getYear() == testYear && u.getLastLoginDate().getMonthValue() == testMonth) {
 				activeThisMonth++;
 			}
 		}
 		System.out.println(activeThisMonth);
-		activeUsers row=activeRepo.findByYear(testYear).get(0);
-		
-		assertEquals(true, row.getMonthUserNum().get(testMonth-1)==activeThisMonth);
+		activeUsers row = activeRepo.findByYear(testYear).get(0);
+
+		assertEquals(true, row.getMonthUserNum().get(testMonth - 1) == activeThisMonth);
 
 	}
-	
+
 }
