@@ -38,7 +38,7 @@ public class activeUsers {
     }
 
     public void addMonthUserNum(int month){
-        this.monthUserNum.set(month, this.monthUserNum.get(month)+1);
+        this.monthUserNum.set(month, this.monthUserNum.get(month-1)+1);
     }
     
 }
