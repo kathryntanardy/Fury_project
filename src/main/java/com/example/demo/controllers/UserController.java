@@ -383,6 +383,13 @@ public class UserController {
                 if (userRepo.findByUsername(newUsername).size() == 0) {
                     user.setUsername(newUsername);
                     updated = true;
+                    List<ladderBoard> board=ladderRepo.findAll();
+                    for(ladderBoard row:board){
+                        if(row.getUid()==user.getUid()){
+                            row.setUsername(newUsername);
+                            ladderRepo.save(row);
+                        }
+                    }
                 } else if (newUsername.equals(user.getUsername())) {
                     model.addAttribute("usernameAlert", "Same as your old username :D");
                 } else {
