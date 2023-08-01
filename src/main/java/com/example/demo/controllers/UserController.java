@@ -408,7 +408,7 @@ public class UserController {
                     gate = false;
                 }
                 if (gate) {
-                    user.setEmailAddress(newEmail);
+                    user.setPassword(ReNewPw);;
                     updated = true;
                 }
 
@@ -422,6 +422,7 @@ public class UserController {
             model.addAttribute("result", "User info update success!");
             userRepo.save(user);
         }
+        userRepo.save(user);
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmailAddress());
         return "user/userInfo";
@@ -430,10 +431,14 @@ public class UserController {
 
     private Boolean isGoodEmailFormat(String email) {
         Boolean existSigns = email.indexOf('@') != -1 && email.indexOf('.') != -1;
-        Boolean onlyOneSign = email.indexOf('@', email.indexOf('@')) == -1
-                && email.indexOf('.', email.indexOf('.')) == -1;
-        Boolean goodSignFormat = email.indexOf('@', email.indexOf('.')) != -1;
-
+        Boolean onlyOneSign = email.indexOf('@', email.indexOf('@')+1) == -1
+                && email.indexOf('.', email.indexOf('.')+1) == -1;
+        Boolean goodSignFormat = email.indexOf('@', email.indexOf('.')) == -1;
+        System.out.println("existSigns: "+existSigns);
+        System.out.println("onlyOneSign: "+onlyOneSign);
+        System.out.println("email.indexOf('@', email.indexOf('@')): "+email.indexOf('@', email.indexOf('@')));
+        System.out.println("email.indexOf('.', email.indexOf('.')): "+email.indexOf('.', email.indexOf('.')));
+        System.out.println("goodSignFormat: "+goodSignFormat);
         return existSigns && onlyOneSign && goodSignFormat;
     }
 

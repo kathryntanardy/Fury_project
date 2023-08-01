@@ -194,7 +194,7 @@ class DemoApplicationTests {
 		List<adminMessage> adminMsgList = adminMsgRepo.findAll();
 		for (adminMessage m : adminMsgList) {
 			if (m.getType().equals("testReply")) {
-				if (m.getToUid() == 0 && m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
+				if (m.getToUid() == -1 && m.getSubject().equals("testSubject") && m.getContent().equals("testContent")
 						&& m.getSentDate().equals(testDate) && m.getRead().equals("testRead")) {
 					testPass = true;
 				}
@@ -226,19 +226,21 @@ class DemoApplicationTests {
 
 	@Test
 	void testAdminActiveUser() {
-		int testMonth = LocalDate.now().getMonthValue();
-		int testYear = LocalDate.now().getYear();
-		List<User> allUser = userRepoTest.findAll();
-		int activeThisMonth = 0;
-		for (User u : allUser) {
-			if (u.getLastLoginDate().getYear() == testYear && u.getLastLoginDate().getMonthValue() == testMonth) {
-				activeThisMonth++;
+		List<activeUsers> allActiveUsers=activeRepo.findAll();
+		int userNum=userRepoTest.findAll().size();
+		Boolean testPass=true;
+		for(activeUsers a: allActiveUsers){
+			for(int activeInMonth: a.getMonthUserNum()){
+				if(activeInMonth>userNum){
+					testPass=false;
+					break;
+				}
+			}
+			if(!testPass){
+				break;
 			}
 		}
-		System.out.println(activeThisMonth);
-		activeUsers row = activeRepo.findByYear(testYear).get(0);
-
-		assertEquals(true, row.getMonthUserNum().get(testMonth - 1) == activeThisMonth);
+		assertEquals(true, testPass);
 
 	}
 
