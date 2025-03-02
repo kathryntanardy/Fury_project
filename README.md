@@ -1,5 +1,3 @@
-# CMPT276_gp18
-
 Description:
 
 Fury is a web service that contains a user/admin center.
